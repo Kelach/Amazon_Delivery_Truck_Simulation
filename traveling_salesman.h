@@ -42,14 +42,8 @@ namespace TravelingSalesman {
          * @param other address to which distance is computed
          * @returns magnitude of Cartesian or Manhattan distance
         */
-        double distance(const Address& other){
-            // returns Cartesian distance
-            return sqrt( (i-other.i)^2 + (j-other.j)^2);
+        double distance(const Address& other);
             
-            // returns Manhattan distance
-            //return abs(i-other.i) + abs(j-other.j);
-
-        };
     };
 
     /**
