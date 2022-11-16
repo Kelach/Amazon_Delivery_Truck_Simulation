@@ -1,5 +1,5 @@
 # ignore my settings.json file -- kelechi
-/vscode
+vscode/
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
