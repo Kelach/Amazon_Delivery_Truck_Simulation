@@ -7,7 +7,7 @@
  * 
  * Header file for Traveling Salesman Project library
 */
-
+#include <math.h>          
 #ifndef TRAVELLING_SALESMAN_H
 #define TRAVELLING_SALESMAN_H
 
@@ -43,7 +43,11 @@ namespace TravelingSalesman {
          * @returns magnitude of Cartesian or Manhattan distance
         */
         double distance(const Address& other){
+            // returns Cartesian distance
+            return sqrt( (i-other.i)^2 + (j-other.j)^2);
             
+            // returns Manhattan distance
+            //return abs(i-other.i) + abs(j-other.j);
 
         };
     };
