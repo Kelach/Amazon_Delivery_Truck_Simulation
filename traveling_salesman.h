@@ -9,6 +9,7 @@
 */    
 #ifndef TRAVELLING_SALESMAN_H
 #define TRAVELLING_SALESMAN_H
+#include <vector>
 
 namespace TravelingSalesman {
 
@@ -27,7 +28,6 @@ namespace TravelingSalesman {
          * @param deliver_by (WIP) number of days after day 0 by which the order must be fulfilled
         */
         Address(int i, int j, int deliver_by);
-
         /**
          * @brief Destructor for Address class.
         */
@@ -44,9 +44,45 @@ namespace TravelingSalesman {
         double distance(const Address& other);
             
     };
-
     /**
-     * @todo Define attributes of AddressList class
+     * @class AddressList
+     * @brief Holds a vector of Addresses
+    */
+    class AddressList{
+        private:
+            std::vector<Address> address_list;
+        public:
+        AddressList();
+        /**
+         * @brief Constructor for AddressList class.
+         * @param address_list vector of Object type "Address"
+        */
+        AddressList(std::vector<Address> address_list);
+        /**
+         * @brief Destructor for AddressList class.
+        */
+        ~AddressList();
+        /**
+         * @brief Appends a new Address object
+         * @param new_address New Address object to be appended
+         * @returns None
+        */
+        void add_address(Address new_address);
+        /**
+         * @brief Calculates distance one has to visit all addresses in order
+         * @returns Total distance
+        */
+        double length();
+        /**
+         * @brief Calculates distance one has to visit all addresses in order
+         * @param main the Address (relative origin point) from which the closest address is determined
+         * @returns Address closest to input Addresss
+        */
+        Address index_closest_to(Address main);
+    };
+    /**
+     * @todo Define attributes of AddressList class (Done I think)
+     * 
      * @todo Define attributes of Route class
     */
 }
