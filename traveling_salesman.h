@@ -52,9 +52,12 @@ namespace TravelingSalesman {
         private:
             std::vector<Address> address_list;
         public:
+        /**
+         * @brief Default constructor for AddressList class
+        */
         AddressList();
         /**
-         * @brief Constructor for AddressList class.
+         * @brief Parameterized constructor for AddressList class
          * @param address_list vector of Object type "Address"
         */
         AddressList(std::vector<Address> address_list);
@@ -82,8 +85,9 @@ namespace TravelingSalesman {
     };
     /**
      * @todo Define attributes of AddressList class (Done I think)
-     * 
+     * @todo Implement AddressList methods in TS.cpp
      * @todo Define attributes of Route class
+     * 
     */
 }
 
