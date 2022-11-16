@@ -6,8 +6,7 @@
  * Route
  * 
  * Header file for Traveling Salesman Project library
-*/
-#include <math.h>          
+*/    
 #ifndef TRAVELLING_SALESMAN_H
 #define TRAVELLING_SALESMAN_H
 
