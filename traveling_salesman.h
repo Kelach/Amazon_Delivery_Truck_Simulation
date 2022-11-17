@@ -84,8 +84,31 @@ namespace TravelingSalesman {
         Address index_closest_to(Address main);
     };
 
+    /**
+     * @class Route
+     * @brief Container class for an AddressList of delivery addresses and an Address for the delivery hub.
+    */
     class Route {
-        //
+        private:
+        AddressList address_list;
+        Address hub;
+        public:
+        /**
+         * @brief Default constructor for Route class.
+        */
+        Route();
+
+        /**
+         * @brief Paramaterized constructor for Route class.
+         * @param address_list AddressList of delivery addresses.
+         * @param hub Address of base station.
+        */
+       Route(AddressList address_list, Address hub);
+
+        /**
+         * @brief Destructor for Route class.
+        */
+        ~Route();
     };
 
     /**
