@@ -10,9 +10,15 @@ using namespace TravelingSalesman; // we may not want to keep this
 int main(){
 
     
+    // Address Distance Tester
     Address addy1(1, 2, 10);
     Address addy2(4, 5, 10);
     // Address addy2(4, 3, 13);
     std::cout << "Distance: " << addy1.distance(addy2) << std::endl;
+    
+    // AddressList add_address tester
+    // AddressList length() tester
+
+    
     return 0;
 }

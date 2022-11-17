@@ -28,6 +28,13 @@ double Address::distance(const Address& other){
 AddressList::AddressList(){}; 
 AddressList::AddressList(std::vector<Address> address_list) : address_list(address_list){}; 
 void AddressList::add_address(Address new_address){
+    // same address checker
+    // for (Address addy: address_list){
+    //     if (addy == new_address){
+    //         std::cout << "adding duplicate Address Object" << std::endl;
+    //     }
+    // }
+    address_list.push_back(new_address);
     // add new address to vector of addresses
 }
 double AddressList::length(){
