@@ -83,6 +83,11 @@ namespace TravelingSalesman {
         */
         Address index_closest_to(Address main);
     };
+
+    class Route {
+        //
+    }
+
     /**
      * @todo Define attributes of AddressList class (Done I think)
      * @todo Implement AddressList methods in TS.cpp
