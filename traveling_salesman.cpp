@@ -34,12 +34,11 @@ double AddressList::length(){
     double total_distance = 0;
     for (int i=0;i++;i<address_list.size()){
         if  (i != address_list.size()-1){
+            std::cout<<"hi there bob" << std::endl;
         }
     }
     // return total length of all addresses
 }
-
-
 // End of AddressList Class Methods
 
 
