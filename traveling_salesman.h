@@ -86,7 +86,7 @@ namespace TravelingSalesman {
 
     class Route {
         //
-    }
+    };
 
     /**
      * @todo Define attributes of AddressList class (Done I think)
