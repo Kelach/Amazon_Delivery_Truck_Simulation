@@ -31,16 +31,18 @@ void AddressList::add_address(Address new_address){
     // add new address to vector of addresses
 }
 double AddressList::length(){
+
+    // for each address, we calculate the distance to next address.
+    // (except for the last address).
     double total_distance = 0;
     for (int i=0;i++;i<address_list.size()){
         if  (i != address_list.size()-1){
-            std::cout<<"hi there bob" << std::endl;
+            Address current_address = address_list.at(i);
+            Address next_address = address_list.at(i+1);
+            total_distance += current_address.distance(next_address);
         }
     }
-    // return total length of all addresses
+
+    return total_distance;
 }
 // End of AddressList Class Methods
-
-// HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-
-
