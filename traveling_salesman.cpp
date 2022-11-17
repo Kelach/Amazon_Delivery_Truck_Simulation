@@ -31,6 +31,11 @@ void AddressList::add_address(Address new_address){
     // add new address to vector of addresses
 }
 double AddressList::length(){
+    double total_distance = 0;
+    for (int i=0;i++;i<address_list.size()){
+        if  (i != address_list.size()-1){
+        }
+    }
     // return total length of all addresses
 }
 
