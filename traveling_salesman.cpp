@@ -25,8 +25,12 @@ double Address::distance(const Address& other){
 // End of Address Class Methods
 
 // AddressList Class Methods
-AddressList::AddressList(){};
-AddressList::AddressList(std::vector<Address> address_list) : address_list(address_list){};
+AddressList::AddressList(){}; 
+AddressList::AddressList(std::vector<Address> address_list) : address_list(address_list){}; 
+void AddressList::add_address(Address new_address){
+
+}
+
 
 // End of AddressList Class Methods
 
