@@ -28,7 +28,10 @@ double Address::distance(const Address& other){
 AddressList::AddressList(){}; 
 AddressList::AddressList(std::vector<Address> address_list) : address_list(address_list){}; 
 void AddressList::add_address(Address new_address){
-
+    // add new address to vector of addresses
+}
+double AddressList::length(){
+    // return total length of all addresses
 }
 
 
