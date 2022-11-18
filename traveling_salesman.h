@@ -82,6 +82,12 @@ namespace TravelingSalesman {
          * @returns length of vector address_list
         */
         int size();
+        /**
+         * @brief accessor method for address_list (0-indexed)
+         * @param i index of address
+         * @returns address Object corresponding to index
+        */
+        Address at(int i);
 
         /**
          * @brief Calculates distance one has to visit all addresses in order

@@ -61,4 +61,7 @@ double AddressList::length(){
 int AddressList::size(){
     return address_list.size();
 }
+Address AddressList::at(int i){
+    return address_list.at(i);
+}
 // End of AddressList Class Methods
