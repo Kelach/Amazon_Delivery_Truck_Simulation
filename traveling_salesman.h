@@ -77,6 +77,12 @@ namespace TravelingSalesman {
         */
         double length();
         /**
+         * @brief accessor method for address_list vector length
+         * @returns length of vector address_list
+        */
+        int size();
+
+        /**
          * @brief Calculates distance one has to visit all addresses in order
          * @param main the Address (relative origin point) from which the closest address is determined
          * @returns Address closest to input Addresss
