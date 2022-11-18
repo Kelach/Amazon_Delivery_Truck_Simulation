@@ -27,22 +27,28 @@ double Address::distance(const Address& other){
 // AddressList Class Methods
 AddressList::AddressList(){}; 
 AddressList::AddressList(std::vector<Address> address_list) : address_list(address_list){}; 
+AddressList::~AddressList(){};
+
 void AddressList::add_address(Address new_address){
-    // same address checker
-    // for (Address addy: address_list){
-    //     if (addy == new_address){
-    //         std::cout << "adding duplicate Address Object" << std::endl;
-    //     }
-    // }
-    address_list.push_back(new_address);
+    // Checks if address already current exists
+    for (Address addy: address_list){
+        if (std::addressof(addy) == std::addressof(new_address)){
+            std::cout << "Ignoring duplicate address" << std::endl;
+            return;
+        }
+    }
+    
     // add new address to vector of addresses
+    address_list.push_back(new_address);
+
+
 }
 double AddressList::length(){
 
     // for each address, we calculate the distance to next address.
     // (except for the last address).
     double total_distance = 0;
-    for (int i=0;i++;i<address_list.size()){
+    for (int i=0;i < address_list.size();i++){
         if  (i != address_list.size()-1){
             Address current_address = address_list.at(i);
             Address next_address = address_list.at(i+1);
@@ -51,5 +57,8 @@ double AddressList::length(){
     }
 
     return total_distance;
+}
+int AddressList::size(){
+    return address_list.size();
 }
 // End of AddressList Class Methods
