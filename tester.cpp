@@ -23,7 +23,7 @@ int main(){
     address_list.add_address(addy1);
 
     for (int i =0;i<address_list.size();i++){
-        std::cout << "address" << i << std::endl;
+        std::cout << "address " << i << std::endl;
     }
 
     // AddressList length() tester
