@@ -27,6 +27,11 @@ double Address::distance(const Address& other){
 bool Address::operator==(const Address& rhs){
     return (rhs.i==i && rhs.j==j && rhs.deliver_by==deliver_by);
 }
+
+std::vector<int> Address::get_coords(){
+    return std::vector<int> {i, j};
+}
+
 // End of Address Class Methods
 
 // AddressList Class Methods
@@ -49,6 +54,13 @@ void AddressList::add_address(Address new_address){
     address_list.push_back(new_address);
 
 
+}
+void AddressList::display(){
+    for (auto addy:address_list){
+        std::vector<int> point = addy.get_coords();
+        std::cout << "(" << point[0]
+            << ", " << point[1] << ") ";
+    }
 }
 double AddressList::length(){
 
@@ -85,16 +97,27 @@ int AddressList::index_closest_to(Address main){
             minDistance = main.distance(addy);
         }
     }
-    return minIndex+1;
+    return minIndex;
 }
-// AddressList AddressList::greedy_route(){
-//     Address current_address(0, 0, 0);
-//     for (auto adddress : address_list){
-//         int index = address_list.index_closest_to(current_address);
-//     }
-    
-    
+Address AddressList::pop(int i){
+    Address popped_addy = address_list.at(i);
+    address_list.erase(address_list.begin()+i);
+    return popped_addy;
+}
 
-// }
+AddressList AddressList::greedy_route(Address hub){
+    AddressList current_route(address_list);
+    AddressList new_route;
+    for (auto adddress : address_list){
+
+        int index = current_route.index_closest_to(hub);
+        new_route.add_address( current_route.at(index) );
+        current_route.pop( index );
+        hub = new_route.at( new_route.size()-1 );
+    }
+return new_route;
+    
+}
+
 
 // End of AddressList Class Methods
