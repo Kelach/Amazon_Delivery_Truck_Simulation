@@ -43,6 +43,12 @@ namespace TravelingSalesman {
          * @returns magnitude of Cartesian or Manhattan distance
         */
         double distance(const Address& other);
+        /**
+         * @brief equality operator of Address Objects
+         * @param rhs "right-hand side" address Object to be compared
+         * @returns True if Objects are equal (same cordinates and delivery date)
+        */
+        bool operator==(const Address& rhs);
             
     };
     /**
@@ -88,13 +94,18 @@ namespace TravelingSalesman {
          * @returns address Object corresponding to index
         */
         Address at(int i);
-
         /**
-         * @brief Calculates distance one has to visit all addresses in order
-         * @param main the Address (relative origin point) from which the closest address is determined
-         * @returns Address closest to input Addresss
+         * @brief Locates closest Address nearby
+         * @param main Address (relative origin point) from which the closest address is determined
+         * @returns index of Address closest to "main" Addresss
         */
-        Address index_closest_to(Address main);
+        int index_closest_to(Address main);
+        /**
+         * @brief Constructs quicker route to reach a list of addresses
+         * @returns Re-constructed AddressList object with optimized route
+        */
+        AddressList greedy_route();
+
     };
 
     /**

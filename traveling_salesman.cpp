@@ -22,17 +22,24 @@ double Address::distance(const Address& other){
     //Manhattan distance
     //return abs(i-other.i) + abs(j-other.j);
 };
+
+// not very robust
+bool Address::operator==(const Address& rhs){
+    return (rhs.i==i && rhs.j==j && rhs.deliver_by==deliver_by);
+}
 // End of Address Class Methods
 
 // AddressList Class Methods
 AddressList::AddressList(){}; 
-AddressList::AddressList(std::vector<Address> address_list) : address_list(address_list){}; 
+AddressList::AddressList(std::vector<Address> address_list) : address_list(address_list){}
+    
 AddressList::~AddressList(){};
 
 void AddressList::add_address(Address new_address){
     // Checks if address already current exists
+
     for (Address addy: address_list){
-        if (std::addressof(addy) == std::addressof(new_address)){
+        if (addy == new_address){
             std::cout << "Ignoring duplicate address" << std::endl;
             return;
         }
@@ -64,4 +71,30 @@ int AddressList::size(){
 Address AddressList::at(int i){
     return address_list.at(i);
 }
+int AddressList::index_closest_to(Address main){
+    double minDistance = 10^8;
+    int minIndex = 0;
+    // for each element (conditionally), 
+    // updates minDistance and minIndex
+    for (int i=0;i<address_list.size();i++){
+        Address addy = address_list.at(i);
+        
+        if ( (addy==main)==false 
+            && main.distance(addy) < minDistance){
+            minIndex = i;
+            minDistance = main.distance(addy);
+        }
+    }
+    return minIndex+1;
+}
+// AddressList AddressList::greedy_route(){
+//     Address current_address(0, 0, 0);
+//     for (auto adddress : address_list){
+//         int index = address_list.index_closest_to(current_address);
+//     }
+    
+    
+
+// }
+
 // End of AddressList Class Methods
