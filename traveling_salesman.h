@@ -136,9 +136,10 @@ namespace TravelingSalesman {
     };
 
     /**
-     * @todo Define attributes of AddressList class (Done I think)
-     * @todo Implement AddressList methods in TS.cpp
-     * @todo Define attributes of Route class
+     * @todo Make insert() and erase() methods for AddresList
+     * @todo Complete greedy_route() method & test 
+     * @todo Make swap method (for next part)
+     * @todo Implement Kernighan-Lin algorithm
      * 
     */
 }
