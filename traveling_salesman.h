@@ -116,7 +116,7 @@ namespace TravelingSalesman {
          * @brief Constructs quicker route to reach a list of addresses
          * @returns Re-constructed AddressList object with optimized route
         */
-        AddressList greedy_route(Address hub);
+        AddressList greedy_route(Address we_are_here);
 
         /**
          * @brief removes ith Address from address_list

@@ -105,15 +105,15 @@ Address AddressList::pop(int i){
     return popped_addy;
 }
 
-AddressList AddressList::greedy_route(Address hub){
+AddressList AddressList::greedy_route(Address we_are_here){
     AddressList current_route(address_list);
     AddressList new_route;
     for (auto adddress : address_list){
 
-        int index = current_route.index_closest_to(hub);
+        int index = current_route.index_closest_to(we_are_here);
         new_route.add_address( current_route.at(index) );
         current_route.pop( index );
-        hub = new_route.at( new_route.size()-1 );
+        we_are_here = new_route.at( new_route.size()-1 );
     }
 return new_route;
     
