@@ -43,7 +43,17 @@ namespace TravelingSalesman {
          * @returns magnitude of Cartesian or Manhattan distance
         */
         double distance(const Address& other);
-            
+        /**
+         * @brief equality operator of Address Objects
+         * @param rhs "right-hand side" address Object to be compared
+         * @returns True if Objects are equal (same cordinates and delivery date)
+        */
+        bool operator==(const Address& rhs);
+        /**
+         * @brief accessor method to retrieve i,j coordinates of an Address
+         * @returns vector with i,j coordinates (in respective order)
+        */
+        std::vector<int> get_coords();
     };
     /**
      * @class AddressList
@@ -57,32 +67,70 @@ namespace TravelingSalesman {
          * @brief Default constructor for AddressList class
         */
         AddressList();
+
         /**
          * @brief Parameterized constructor for AddressList class
          * @param address_list vector of Object type "Address"
         */
         AddressList(std::vector<Address> address_list);
+
         /**
          * @brief Destructor for AddressList class.
         */
         ~AddressList();
+        
         /**
          * @brief Appends a new Address object
          * @param new_address New Address object to be appended
          * @returns None
         */
         void add_address(Address new_address);
+
         /**
          * @brief Calculates distance one has to visit all addresses in order
          * @returns Total distance
         */
         double length();
+
         /**
-         * @brief Calculates distance one has to visit all addresses in order
-         * @param main the Address (relative origin point) from which the closest address is determined
-         * @returns Address closest to input Addresss
+         * @brief accessor method for address_list vector length
+         * @returns length of vector address_list
         */
-        Address index_closest_to(Address main);
+        int size();
+
+        /**
+         * @brief accessor method for address_list (0-indexed)
+         * @param i index of address
+         * @returns address Object corresponding to index
+        */
+        Address at(int i);
+
+        /**
+         * @brief Locates closest Address nearby
+         * @param main Address (relative origin point) from which the closest address is determined
+         * @returns index of Address closest to "main" Addresss
+        */
+        int index_closest_to(Address main);
+
+        /**
+         * @brief Constructs quicker route to reach a list of addresses
+         * @returns Re-constructed AddressList object with optimized route
+        */
+        AddressList greedy_route(Address we_are_here);
+
+        /**
+         * @brief removes ith Address from address_list
+         * @param i 0-based index at which the Address is located 
+         * @returns Address removed from address_list
+        */
+        Address pop(int i);
+
+        /**
+         * @brief Displays route
+        */
+        void display();
+
+
     };
 
     /**
@@ -113,9 +161,10 @@ namespace TravelingSalesman {
     };
 
     /**
-     * @todo Define attributes of AddressList class (Done I think)
-     * @todo Implement AddressList methods in TS.cpp
-     * @todo Define attributes of Route class
+     * @todo Make pop() methods for AddresList
+     * @todo Complete greedy_route() method & test 
+     * @todo Make swap method (for next part)
+     * @todo Implement Kernighan-Lin algorithm
      * 
     */
 }
