@@ -69,8 +69,8 @@ namespace TravelingSalesman {
      * @brief Holds a vector of Addresses
     */
     class AddressList{
-        private:
-            std::vector<Address> address_list;
+        protected:
+        std::vector<Address> address_list;
         public:
         /**
          * @brief Default constructor for AddressList class
@@ -148,20 +148,26 @@ namespace TravelingSalesman {
 
     /**
      * @class Route
-     * @brief Container class for an AddressList of delivery addresses and an Address for the delivery hub.
+     * @brief AddressList with a hub Address.
     */
-    class Route {
+    class Route : public AddressList {
         private:
-        AddressList address_list;
         Address hub;
         public:
+
+        /**
+         * @brief Paramaterized constructor for Route class.
+         * @param address_list Address vector of delivery addresses.
+         * @param hub Address of base station.
+        */
+        Route(std::vector<Address> address_list, Address hub);
 
         /**
          * @brief Paramaterized constructor for Route class.
          * @param address_list AddressList of delivery addresses.
          * @param hub Address of base station.
         */
-        Route(AddressList address_list, Address hub);
+        Route(const AddressList& address_list, Address hub);
 
         /**
          * @brief Destructor for Route class.

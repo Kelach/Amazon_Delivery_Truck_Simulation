@@ -146,7 +146,9 @@ std::vector<Address> AddressList::get_list() {
 
 // Route Class methods
 
-Route::Route(AddressList address_list, Address hub) : address_list(address_list), hub(hub) {}
+Route::Route(std::vector<Address> address_list, Address hub) : AddressList(address_list), hub(hub) {}
+
+Route::Route(const AddressList& address_list, Address hub) : AddressList(address_list), hub(hub) {} // Note that this uses a copy constructor
 
 Route::~Route() {}
 
@@ -161,7 +163,7 @@ void Route::to_dat(string fname) {
     // First, write hub
     file << coords[0] << " " << coords[1] << '\n';
     // Then, write AddressList
-    for (Address address : address_list.get_list()) {
+    for (Address address : address_list) {
         coords = address.get_coords();
         file << coords[0] << " " << coords[1] << '\n';
     }
@@ -183,7 +185,7 @@ void Route::to_tikz(string fname) {
     // First, write hub
     file << "\\draw (" << coords[0] << ", " << coords[1] << ") -- ";
     // Then, write AddressList
-    for (Address address : address_list.get_list()) {
+    for (Address address : address_list) {
         coords_prev = coords;
         coords = address.get_coords();
         file << "(" << coords[0] << ", " << coords[1] << ");\n\\filldraw (" << coords_prev[0] << ", " << coords_prev[1] << ") circle (2pt);\n\\draw (" << coords[0] << ", " << coords[1] << ") --";
