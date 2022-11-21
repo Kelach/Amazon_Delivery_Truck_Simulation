@@ -62,7 +62,7 @@ int main(){
 
     // Route class test
     Route route(address_list, hub);
-    route.to_dat();
-    route.to_tikz();
+    route.to_dat("..\\dataout\\" + get_now() + ".dat");
+    route.to_tikz("..\\dataout\\" + get_now() + ".tikz");
     return 0;
 }

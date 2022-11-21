@@ -19,7 +19,7 @@ using namespace TravelingSalesman;
 string TravelingSalesman::get_now() {
     time_t current_time;
     tm* current_tm;
-    char buff[12];
+    char buff[50];
     time(&current_time);
     current_tm = localtime(&current_time);
     strftime(buff, sizeof(buff), "%Y%m%d%H%M%S", current_tm);
