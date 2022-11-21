@@ -108,12 +108,10 @@ Address AddressList::pop(int i){
 AddressList AddressList::greedy_route(Address we_are_here){
     AddressList current_route(address_list);
     AddressList new_route;
-    for (auto adddress : address_list){
-
+    while (current_route.size() > 0) {
         int index = current_route.index_closest_to(we_are_here);
         new_route.add_address( current_route.at(index) );
-        current_route.pop( index );
-        we_are_here = new_route.at( new_route.size()-1 );
+        we_are_here = current_route.pop( index );
     }
 return new_route;
     
