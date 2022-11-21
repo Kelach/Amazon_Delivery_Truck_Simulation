@@ -14,12 +14,9 @@
 using std::string;
 
 using namespace TravelingSalesman;
-using TravelingSalesman::get_now;
 
 
-string get_now() {
-    return "YYYYMMDDHHMMSS";
-    /*
+string TravelingSalesman::get_now() {
     time_t current_time;
     tm* current_tm;
     char buff[12];
@@ -28,7 +25,6 @@ string get_now() {
     strftime(buff, sizeof(buff), "%Y%m%d%H%M%S", current_tm);
     string ret(buff);
     return ret;
-    */
 }
 
 // Address Class Methods

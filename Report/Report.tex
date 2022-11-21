@@ -1,6 +1,7 @@
 \documentclass[letterpaper]{article}
 
 \usepackage{hyperref}
+\usepackage{tikz}
 
 \title{Amazon Delivery Truck Simulation}
 \author{Hanna Butt \thanks{HFB352} \and Ashton Cole \thanks{AVC687, \href{mailto:ashtonc24@utexas.edu}{ashtonc24@utexas.edu}} \and Kelechi Emeruwa \thanks{KEE688}}
@@ -25,6 +26,18 @@
     Hmm, maybe insert a table comparing number of nodes/trucks to program execution time. What rate does it increase at $(O(n), O(n^2), \&c.)$
 
     \subsection{Simple Single-Truck Case}
+
+    \begin{tikzpicture}
+        \draw (0, 0) -- (0, 3);
+        \filldraw (0, 0) circle (2pt);
+        \draw (0, 3) --(0, 5);
+        \filldraw (0, 3) circle (2pt);
+        \draw (0, 5) --(0, 1);
+        \filldraw (0, 5) circle (2pt);
+        \draw (0, 1) --(4, 5);
+        \filldraw (0, 1) circle (2pt);
+        \draw (4, 5) --(0, 0);
+    \end{tikzpicture}
 
     \subsection{Difficult Single-Truck Case}
 
