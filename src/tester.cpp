@@ -61,8 +61,8 @@ int main(){
     // AddressList new_route = address_list.greedy_route(hub).display();
 
     // Route class test
-    Route route(address_list, hub);
-    route.to_dat("..\\dataout\\" + get_now() + ".dat");
-    route.to_tikz("..\\dataout\\" + get_now() + ".tikz");
+    Route route1(address_list, hub);
+    route1.to_dat("..\\dataout\\graph" + get_now() + "unsorted.dat");
+    route1.to_tikz("..\\dataout\\graph" + get_now() + "unsorted.tikz");
     return 0;
 }
