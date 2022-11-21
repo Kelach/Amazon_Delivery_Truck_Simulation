@@ -1,0 +1,1 @@
+g++ .\\$1.cpp .\\traveling_salesman.cpp -o .\\$1.exe
