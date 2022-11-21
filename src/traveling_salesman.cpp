@@ -4,14 +4,35 @@
  * Function definition file for Traveling Salesman Project library
 */
 
+#include "traveling_salesman.h"   
 #include <iostream>  
-#include "traveling_salesman.h"           
+#include <fstream>
+#include <ctime>
 #include <math.h>
 #include <vector>
-using namespace TravelingSalesman;
+#include <string>
+using std::string;
 
+using namespace TravelingSalesman;
+using TravelingSalesman::get_now;
+
+
+string get_now() {
+    return "YYYYMMDDHHMMSS";
+    /*
+    time_t current_time;
+    tm* current_tm;
+    char buff[12];
+    time(&current_time);
+    current_tm = localtime(&current_time);
+    strftime(buff, sizeof(buff), "%Y%m%d%H%M%S", current_tm);
+    string ret(buff);
+    return ret;
+    */
+}
 
 // Address Class Methods
+
 Address::Address(int i, int j, int deliver_by) : i(i), j(j), deliver_by(deliver_by) {};
 Address::~Address(){};
 
@@ -117,5 +138,60 @@ return new_route;
     
 }
 
+std::vector<Address> AddressList::get_list() {
+    return address_list;
+}
 
 // End of AddressList Class Methods
+
+// Route Class methods
+
+Route::Route(AddressList address_list, Address hub) : address_list(address_list), hub(hub) {}
+
+Route::~Route() {}
+
+void Route::to_dat() {
+    to_dat(get_now() + ".dat");
+}
+
+void Route::to_dat(string fname) {
+    std::ofstream file;
+    file.open(fname);
+    std::vector<int> coords = hub.get_coords();
+    // First, write hub
+    file << coords[0] << " " << coords[1] << '\n';
+    // Then, write AddressList
+    for (Address address : address_list.get_list()) {
+        coords = address.get_coords();
+        file << coords[0] << " " << coords[1] << '\n';
+    }
+    // Finally, write hub
+    coords = hub.get_coords();
+    file << coords[0] << " " << coords[1];
+    file.close();
+}
+
+void Route::to_tikz() {
+    to_tikz(get_now() + ".tikz");
+}
+
+void Route::to_tikz(string fname) {
+    std::ofstream file;
+    file.open(fname);
+    std::vector<int> coords = hub.get_coords();
+    std::vector<int> coords_prev;
+    // First, write hub
+    file << "\\draw (" << coords[0] << ", " << coords[1] << ") -- ";
+    // Then, write AddressList
+    for (Address address : address_list.get_list()) {
+        coords_prev = coords;
+        coords = address.get_coords();
+        file << "(" << coords[0] << ", " << coords[1] << ");\n\\filldraw (" << coords_prev[0] << ", " << coords_prev[1] << ") circle (2pt);\n\\draw (" << coords[0] << ", " << coords[1] << ") --";
+    }
+    // Finally, write hub
+    coords = hub.get_coords();
+    file << "(" << coords[0] << ", " << coords[1] << ");";
+    file.close();
+}
+
+// End of Route Class Methods

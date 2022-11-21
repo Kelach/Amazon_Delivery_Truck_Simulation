@@ -10,9 +10,20 @@
 
 #ifndef TRAVELLING_SALESMAN_H
 #define TRAVELLING_SALESMAN_H
+
 #include <vector>
 
+#include <string>
+using std::string;
+
 namespace TravelingSalesman {
+    class MyTime {
+        /**
+         * @brief Returns current time as string for use in file names.
+         * @returns string in format YYYYMMDDHHMMSS
+        */
+        string get_now();
+    };
 
     /**
      * @class Address
@@ -130,7 +141,11 @@ namespace TravelingSalesman {
         */
         void display();
 
-
+        /**
+         * @brief Returns vector of AddressList.
+         * @returns Address vector of addresses in AddressList, in order.
+        */
+        std::vector<Address> get_list();
     };
 
     /**
@@ -142,22 +157,47 @@ namespace TravelingSalesman {
         AddressList address_list;
         Address hub;
         public:
-        /**
-         * @brief Default constructor for Route class.
-        */
-        Route();
 
         /**
          * @brief Paramaterized constructor for Route class.
          * @param address_list AddressList of delivery addresses.
          * @param hub Address of base station.
         */
-       Route(AddressList address_list, Address hub);
+        Route(AddressList address_list, Address hub);
 
         /**
          * @brief Destructor for Route class.
         */
         ~Route();
+
+        /**
+         * @brief Writes the Route to a .dat file.
+         * 
+         * Creates a matrix with rows corresponding to each Address and columns representing the i and j coordinates. The first and last row are the hub, while the coordinates in between are the Address objects in the AddressList, in order.
+         * 
+         * @param fname name of the file
+        */
+       void to_dat(string fname);
+
+        /**
+         * @brief Writes the Route to a .dat file.
+         * 
+         * Creates a matrix with rows corresponding to each Address and columns representing the i and j coordinates. The first and last row are the hub, while the coordinates in between are the Address objects in the AddressList, in order. By default, the file name is in the format yyyymmddhhmmss.dat
+        */
+       void to_dat();
+
+       /**
+         * @brief Writes the Route to a .txt file to TikZ specification, for use in LaTeX.
+         * @param fname name of the file
+        */
+       void to_tikz(string fname);
+
+       /**
+         * @brief Writes the Route to a .txt file to TikZ specification, for use in LaTeX.
+         * 
+         * By default, file name is in the format yyyymmddhhmmss.tikz
+        */
+       void to_tikz();
     };
 
     /**

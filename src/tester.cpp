@@ -60,5 +60,9 @@ int main(){
 
     // AddressList new_route = address_list.greedy_route(hub).display();
 
+    // Route class test
+    Route route(address_list, hub);
+    route.to_dat();
+    route.to_tikz();
     return 0;
 }
