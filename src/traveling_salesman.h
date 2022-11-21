@@ -17,13 +17,11 @@
 using std::string;
 
 namespace TravelingSalesman {
-    class MyTime {
-        /**
-         * @brief Returns current time as string for use in file names.
-         * @returns string in format YYYYMMDDHHMMSS
-        */
-        string get_now();
-    };
+    /**
+     * @brief Returns current time as string for use in file names.
+     * @returns string in format YYYYMMDDHHMMSS
+    */
+    string get_now();
 
     /**
      * @class Address
