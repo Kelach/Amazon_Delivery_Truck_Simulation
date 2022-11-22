@@ -11,12 +11,9 @@ int main(){
 
     
     // Address Distance Tester
-    Address addy1(0, 1, 10);
-    Address addy2(0, 3, 10);
-    Address addy3(0, 5, 13);
-    Address addy4(4, 5, 13);
-    Address addy5(4, 5, 13);
-
+    Address addy1(1, 1, 10);
+    Address addy2(3, 3, 10);
+    
 
     std::cout << "Distance: " << addy1.distance(addy2) << std::endl;
     
@@ -37,7 +34,9 @@ int main(){
         << address_list.size() << std::endl;
 
     // AddressList length() tester
+    address_list.add_address(addy1);
     address_list.add_address(addy2);
+    Address addy3(3, 2, 10);
     address_list.add_address(addy3);
 
     std::cout << "Total travel distance: " 
@@ -48,8 +47,12 @@ int main(){
         address_list.index_closest_to(addy1) 
         << std::endl;
 
-    address_list.add_address(addy1);
+    Address addy4(1, 3, 10);
+    Address addy5(1, 2, 10);
+    Address addy6(3, 1, 10);
     address_list.add_address(addy4);
+    address_list.add_address(addy5);
+    address_list.add_address(addy6);
 
     // Route class test 1
     Route address_route(address_list, Address(0, 0, 0));
@@ -57,12 +60,18 @@ int main(){
     address_route.display();
     std::cout << std::endl;
     std::cout << "greedy route: " << std::endl;
-    address_route.greedy_route().display();
+    Route greedy = address_route.greedy_route();
+    greedy.display();
     std::cout << std::endl;
     std::cout << "opt2 route: " << std::endl;
-    address_route.opt2().display();
+    Route opt2 = address_route.opt2();
+    opt2.display();
+    std::cout << std::endl;
+    std::cout << "Greedy length: " << greedy.length()
+        << std::endl << "Opt2 Length: " 
+        << opt2.length() << std::endl;
 
-    // Route class test 2
+    Route class test 2
     Address hub(0, 0, 0);
     Route route1(address_list, hub);
     route1.to_dat("..\\dataout\\graph" + get_now() + "unsorted.dat");
