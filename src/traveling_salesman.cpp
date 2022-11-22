@@ -211,7 +211,7 @@ void Route::swap(Route& route2, int i, int j, int n, int m){
         new_route1.add_address(address_vec.at(k));
     }
     for (int k=n;k<m;k++){
-        new_route1.add_address(address_vec.at(k));
+        new_route1.add_address(route2.at(k));
     }
     for (int k=j;k<address_vec.size();k++){
         new_route1.add_address(address_vec.at(k));
@@ -219,16 +219,16 @@ void Route::swap(Route& route2, int i, int j, int n, int m){
 
     // Route2, append start, then segment of other vector, then end
     for (int k=0;k<n;k++){
-        new_route2.add_address(address_vec.at(k));
+        new_route2.add_address(route2.at(k));
     }
     for (int k=i;k<j;k++){
         new_route2.add_address(address_vec.at(k));
     }
     for (int k=m;k<route2.size();k++){
-        new_route2.add_address(address_vec.at(k));
+        new_route2.add_address(route2.at(k));
     }
     route2 = new_route2;
-    address_vec =new_route1.get_vec()
+    address_vec = new_route1.get_vec();
 
 }
 void Route::display(){

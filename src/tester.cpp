@@ -47,12 +47,9 @@ int main(){
         address_list.index_closest_to(addy1) 
         << std::endl;
 
-    Address addy4(1, 3, 10);
-    Address addy5(1, 2, 10);
-    Address addy6(3, 1, 10);
-    address_list.add_address(addy4);
-    address_list.add_address(addy5);
-    address_list.add_address(addy6);
+    address_list.add_address(Address(1, 3, 10));
+    address_list.add_address(Address(1, 2, 10));
+    address_list.add_address(Address(3, 1, 10));
 
     // Route class test 1
     Route address_route(address_list, Address(0, 0, 0));
@@ -71,10 +68,39 @@ int main(){
         << std::endl << "Opt2 Length: " 
         << opt2.length() << std::endl;
 
-    Route class test 2
-    Address hub(0, 0, 0);
-    Route route1(address_list, hub);
-    route1.to_dat("..\\dataout\\graph" + get_now() + "unsorted.dat");
-    route1.to_tikz("..\\dataout\\graph" + get_now() + "unsorted.tikz");
-    return 0;
+    std::cout << std::endl << std::endl;
+    Route route1(std::vector<Address>{}, Address(0, 0, 0));
+    route1.add_address(Address(2, 0, 10));
+    route1.add_address(Address(3, 2, 10));
+    route1.add_address(Address(2, 3, 10));
+    route1.add_address(Address(0, 2, 10));
+    Route route2(std::vector<Address>{}, Address(0, 0, 0));
+    route2.add_address(Address(3, 1, 10));
+    route2.add_address(Address(2, 1, 10));
+    route2.add_address(Address(1, 2, 10));
+    route2.add_address(Address(1, 3, 10));
+
+    std::cout << "before swap: " << std::endl
+        << "route 1: ";
+    route1.display();
+    std::cout << std::endl << "route 2: ";
+    route2.display();
+    std::cout << std::endl << std::endl;
+    
+    route1.swap(route2, 0, 0, 0, 0);
+    
+    std::cout << "after swap: " << std::endl
+    << "route 1: ";
+    route1.display();
+    std::cout << std::endl << "route 2: ";
+    route2.display();
+    std::cout << std::endl;
+    // Route route2;
+    // route1.multi_opt2(route2)
+    // Route class test 2
+    // Address hub(0, 0, 0);
+    // Route route1(address_list, hub);
+    // route1.to_dat("..\\dataout\\graph" + get_now() + "unsorted.dat");
+    // route1.to_tikz("..\\dataout\\graph" + get_now() + "unsorted.tikz");
+    // return 0;
 }
