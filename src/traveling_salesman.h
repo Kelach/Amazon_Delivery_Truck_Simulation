@@ -17,6 +17,7 @@
 using std::string;
 
 namespace TravelingSalesman {
+    
     /**
      * @brief Returns current time as string for use in file names.
      * @returns string in format YYYYMMDDHHMMSS
@@ -31,6 +32,7 @@ namespace TravelingSalesman {
     private:
         int i, j, deliver_by;
     public:
+        
         /**
          * @brief Constructor for Address class.
          * @param i horizontal coordinate of address in arbitrary units
@@ -52,17 +54,23 @@ namespace TravelingSalesman {
          * @returns magnitude of Cartesian or Manhattan distance
         */
         double distance(const Address& other);
+        
         /**
          * @brief equality operator of Address Objects
          * @param rhs "right-hand side" address Object to be compared
          * @returns True if Objects are equal (same cordinates and delivery date)
         */
         bool operator==(const Address& rhs);
+        
         /**
          * @brief accessor method to retrieve i,j coordinates of an Address
          * @returns vector with i,j coordinates (in respective order)
         */
         std::vector<int> get_coords();
+        /**
+         * @brief displays the cartesian coordinates of an Address point
+        */
+        void display();
     };
     /**
      * @class AddressList
@@ -70,7 +78,7 @@ namespace TravelingSalesman {
     */
     class AddressList{
         protected:
-        std::vector<Address> address_list;
+        std::vector<Address> address_vec;
         public:
         /**
          * @brief Default constructor for AddressList class
@@ -79,9 +87,9 @@ namespace TravelingSalesman {
 
         /**
          * @brief Parameterized constructor for AddressList class
-         * @param address_list vector of Object type "Address"
+         * @param address_vec vector of Object type "Address"
         */
-        AddressList(std::vector<Address> address_list);
+        AddressList(std::vector<Address> address_vec);
 
         /**
          * @brief Destructor for AddressList class.
@@ -102,13 +110,13 @@ namespace TravelingSalesman {
         double length();
 
         /**
-         * @brief accessor method for address_list vector length
-         * @returns length of vector address_list
+         * @brief accessor method for address_vec vector length
+         * @returns length of vector address_vec
         */
         int size();
 
         /**
-         * @brief accessor method for address_list (0-indexed)
+         * @brief accessor method for address_vec (0-indexed)
          * @param i index of address
          * @returns address Object corresponding to index
         */
@@ -122,20 +130,14 @@ namespace TravelingSalesman {
         int index_closest_to(Address main);
 
         /**
-         * @brief Constructs quicker route to reach a list of addresses
-         * @returns Re-constructed AddressList object with optimized route
-        */
-        AddressList greedy_route(Address we_are_here);
-
-        /**
-         * @brief removes ith Address from address_list
+         * @brief removes ith Address from address_vec
          * @param i 0-based index at which the Address is located 
-         * @returns Address removed from address_list
+         * @returns Address removed from address_vec
         */
         Address pop(int i);
 
         /**
-         * @brief Displays route
+         * @brief Displays a row of all cartesian points in an AddressList object
         */
         void display();
 
@@ -160,11 +162,11 @@ namespace TravelingSalesman {
          * @param address_list Address vector of delivery addresses.
          * @param hub Address of base station.
         */
-        Route(std::vector<Address> address_list, Address hub);
+        Route(std::vector<Address> address_vec, Address hub);
 
         /**
          * @brief Paramaterized constructor for Route class.
-         * @param address_list AddressList of delivery addresses.
+         * @param address_vec AddressList of delivery addresses.
          * @param hub Address of base station.
         */
         Route(const AddressList& address_list, Address hub);
@@ -173,6 +175,29 @@ namespace TravelingSalesman {
          * @brief Destructor for Route class.
         */
         ~Route();
+
+        /**
+         * @brief Constructs new route based on greedy method algorithm.
+         * 
+         * Iteratively caculates the next shortest address until all addresses have been reached starting at the hub.
+         * 
+         * @returns newly constructed Route with same starting hub
+        */
+        Route greedy_route();
+        
+        /**
+         * @brief Uses the opt-2 heuristic to construct a new (shorter) route. 
+         * 
+         * See https://en.wikipedia.org/wiki/2-opt for more on the heuristic.
+         * 
+         * @returns Route Object.
+        */
+        Route opt2();
+
+        /**
+         * @brief Displays a row of all cartesian coordinate points within a given Route 
+        */
+        void display();
 
         /**
          * @brief Writes the Route to a .dat file.
