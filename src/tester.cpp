@@ -59,8 +59,9 @@ int main(){
     std::cout << "new route: " << std::endl;
     address_route.greedy_route().display();
 
-    Route route(address_list, hub);
-    route.to_dat("..\\dataout\\" + get_now() + ".dat");
-    route.to_tikz("..\\dataout\\" + get_now() + ".tikz");
+    // Route class test
+    Route route1(address_list, hub);
+    route1.to_dat("..\\dataout\\graph" + get_now() + "unsorted.dat");
+    route1.to_tikz("..\\dataout\\graph" + get_now() + "unsorted.tikz");
     return 0;
 }

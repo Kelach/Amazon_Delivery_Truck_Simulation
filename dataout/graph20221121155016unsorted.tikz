@@ -7,3 +7,5 @@
 \draw (0, 1) --(4, 5);
 \filldraw (0, 1) circle (2pt);
 \draw (4, 5) --(0, 0);
+\filldraw (4, 5) circle (2pt);
+\filldraw [red] (0, 0) circle (4pt);

@@ -220,8 +220,9 @@ void Route::to_tikz(string fname) {
         file << "(" << coords[0] << ", " << coords[1] << ");\n\\filldraw (" << coords_prev[0] << ", " << coords_prev[1] << ") circle (2pt);\n\\draw (" << coords[0] << ", " << coords[1] << ") --";
     }
     // Finally, write hub
+    coords_prev = coords;
     coords = hub.get_coords();
-    file << "(" << coords[0] << ", " << coords[1] << ");";
+    file << "(" << coords[0] << ", " << coords[1] << ");\n\\filldraw (" << coords_prev[0] << ", " << coords_prev[1] << ") circle (2pt);\n\\filldraw [red] (" << coords[0] << ", " << coords[1] << ") circle (4pt);";
     file.close();
 }
 
