@@ -51,15 +51,19 @@ int main(){
     address_list.add_address(addy1);
     address_list.add_address(addy4);
 
-    // Route class test
+    // Route class test 1
     Route address_route(address_list, Address(0, 0, 0));
     std::cout << "old route: " << std::endl;
     address_route.display();
     std::cout << std::endl;
-    std::cout << "new route: " << std::endl;
+    std::cout << "greedy route: " << std::endl;
     address_route.greedy_route().display();
+    std::cout << std::endl;
+    std::cout << "opt2 route: " << std::endl;
+    address_route.opt2().display();
 
-    // Route class test
+    // Route class test 2
+    Address hub(0, 0, 0);
     Route route1(address_list, hub);
     route1.to_dat("..\\dataout\\graph" + get_now() + "unsorted.dat");
     route1.to_tikz("..\\dataout\\graph" + get_now() + "unsorted.tikz");
