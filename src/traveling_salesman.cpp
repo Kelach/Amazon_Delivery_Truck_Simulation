@@ -130,6 +130,12 @@ std::vector<Address> AddressList::get_list() {
     return address_vec;
 }
 
+std::vector<Address> AddressList::reverse(int i, int j){
+    std::vector<Address> copy_vec(address_vec);
+    std::reverse(copy_vec.begin()+i, copy_vec.begin()+j);
+    return copy_vec;
+}
+
 // End of AddressList Class Methods
 
 // Route Class methods
@@ -159,21 +165,18 @@ Route Route::opt2(){
     double current_length = address_list.length();
 
     for (int i=0 ; i<address_list.size(); i++){
-        for (int j=i+1; j < add_address.size(); j++){
-            AddressList new_list(address_list.reverse(i, j))
-            if ( new_list.length()  < address_list.length() ){        
+        for (int j=i+1; j < address_list.size(); j++){
+            AddressList new_list(address_list.reverse(i, j));
+            if ( new_list.length() < address_list.length() ){        
                 
                 address_list = new_list;
-                current_length = new_list.length()
+                current_length = new_list.length();
             }
         }
 
     }
-
-    std::reverse(address_vec.begin()+1,address_vec.begin()+3);
-    
-    Route modified_route(address_vec, Address(0, 0, 0));
-    return modified_route;
+    Route new_route(address_list, hub);
+    return new_route;
 }
 void Route::display(){
     hub.display();

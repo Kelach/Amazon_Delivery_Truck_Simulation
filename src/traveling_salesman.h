@@ -146,7 +146,19 @@ namespace TravelingSalesman {
          * @returns Address vector of addresses in AddressList, in order.
         */
         std::vector<Address> get_list();
+        
+        /**
+         * @brief Returns a vector where the ith through jth elements are in reversed order
+         * @param i starting 0-based index of reverse range
+         * @param j ending 0-based index of reverse range
+         * @returns Modified Address vector 
+        */
+        std::vector<Address> reverse(int i, int j);
+
+
     };
+
+
 
     /**
      * @class Route
