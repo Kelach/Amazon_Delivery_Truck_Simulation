@@ -105,19 +105,22 @@ Address AddressList::at(int i){
     return address_vec.at(i);
 }
 int AddressList::index_closest_to(Address main){
-    double minDistance = 10^8;
+    double minDistance = pow(2, 32)-1; // large integer number
     int minIndex = 0;
-    // for each element (conditionally), 
+    // for each element (under given condition), 
     // updates minDistance and minIndex
     for (int i=0;i<address_vec.size();i++){
         Address addy = address_vec.at(i);
         
-        if ( (addy==main)==false 
-            && main.distance(addy) < minDistance){
+        if ( ((addy==main)==false) 
+            && (main.distance(addy) < minDistance)){
             minIndex = i;
             minDistance = main.distance(addy);
+            
+        } else{
         }
     }
+
     return minIndex;
 }
 Address AddressList::pop(int i){
@@ -153,6 +156,7 @@ Route Route::greedy_route(){
     // this could probably be better implemented with pointers
     while (current_list.size() > 0) {
         int index = current_list.index_closest_to(we_are_here);
+        // std::cout << index << std::endl;
         new_list.add_address( current_list.at(index) );
         we_are_here = current_list.pop( index );
     }
@@ -162,15 +166,30 @@ return new_route;
 }
 Route Route::opt2(){
     AddressList address_list(address_vec);
+
     double current_length = address_list.length();
 
-    for (int i=0 ; i<address_list.size(); i++){
-        for (int j=i+1; j < address_list.size(); j++){
-            AddressList new_list(address_list.reverse(i, j));
+    for (int m=1 ; m<address_list.size(); m++){
+        for (int n=0; n < m; n++){
+            AddressList new_list(address_list.reverse(n, m+1));
             if ( new_list.length() < address_list.length() ){        
-                
+                // std::cout << "new list: ";
+                // new_list.display();
+                // std::cout << std::endl;
+                // std::cout << "old list: ";
+                // address_list.display();
+                // std::cout << std::endl << "because: "
+                //     << new_list.length() << " < " 
+                //     << address_list.length() << std::endl;
                 address_list = new_list;
                 current_length = new_list.length();
+            } else {
+                // std::cout << "skipping list: ";
+                // new_list.display();
+                // std::cout << std::endl << "keeping list: ";
+                // address_list.display();
+                // std::cout << "length: " << address_list.length()
+                //     << std::endl;
             }
         }
 
