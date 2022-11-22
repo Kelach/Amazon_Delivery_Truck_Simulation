@@ -48,19 +48,17 @@ int main(){
         address_list.index_closest_to(addy1) 
         << std::endl;
 
-    // AddressList greedy_route() tester
     address_list.add_address(addy1);
     address_list.add_address(addy4);
-    Address hub(0, 0, 0);
-    std::cout << "old route: " << std::endl;
-    address_list.display();
-    std::cout << std::endl;
-    std::cout << "new route: " << std::endl;
-    address_list.greedy_route(hub).display();
-
-    // AddressList new_route = address_list.greedy_route(hub).display();
 
     // Route class test
+    Route address_route(address_list, Address(0, 0, 0));
+    std::cout << "old route: " << std::endl;
+    address_route.display();
+    std::cout << std::endl;
+    std::cout << "new route: " << std::endl;
+    address_route.greedy_route().display();
+
     Route route(address_list, hub);
     route.to_dat("..\\dataout\\" + get_now() + ".dat");
     route.to_tikz("..\\dataout\\" + get_now() + ".tikz");
