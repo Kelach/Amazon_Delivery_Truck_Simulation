@@ -197,6 +197,9 @@ Route Route::opt2(){
     Route new_route(address_list, hub);
     return new_route;
 }
+void Route::multi_opt2(Route path2){
+    
+}
 void Route::display(){
     hub.display();
     AddressList decoy(address_vec);

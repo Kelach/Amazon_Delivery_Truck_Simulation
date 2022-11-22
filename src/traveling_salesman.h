@@ -196,7 +196,7 @@ namespace TravelingSalesman {
          * @returns newly constructed Route with same starting hub
         */
         Route greedy_route();
-        
+       
         /**
          * @brief Uses the opt-2 heuristic to construct a new (shorter) route. 
          * 
@@ -206,6 +206,14 @@ namespace TravelingSalesman {
         */
         Route opt2();
 
+        /**
+         * @brief Uses the opt-2 heuristic to optimize TWO Route Objects simeltaneously 
+         * 
+         * @see https://en.wikipedia.org/wiki/2-opt for more on the heuristic.
+         * 
+        */
+        void multi_opt2(Route path2);
+        
         /**
          * @brief Displays a row of all cartesian coordinate points within a given Route 
         */
@@ -242,11 +250,10 @@ namespace TravelingSalesman {
     };
 
     /**
-     * @todo Make pop() methods for AddresList
-     * @todo Complete greedy_route() method & test 
-     * @todo Make swap method (for next part)
-     * @todo Implement Kernighan-Lin algorithm
-     * 
+     * @todo use opt2 heuristic for multipath problem
+     * @todo 
+     * @todo  
+     * @todo  
     */
 }
 
