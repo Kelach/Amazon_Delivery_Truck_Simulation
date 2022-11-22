@@ -145,7 +145,7 @@ namespace TravelingSalesman {
          * @brief Returns vector of AddressList.
          * @returns Address vector of addresses in AddressList, in order.
         */
-        std::vector<Address> get_list();
+        std::vector<Address> get_vec();
         
         /**
          * @brief Returns a vector where the ith through jth elements are in reversed order
@@ -187,6 +187,12 @@ namespace TravelingSalesman {
          * @brief Destructor for Route class.
         */
         ~Route();
+        
+        /**
+         * @brief Accessor method for Route hub
+         * @returns The hub (Address Object) of the Route
+        */
+        Address get_hub();
 
         /**
          * @brief Constructs new route based on greedy method algorithm.
@@ -207,11 +213,24 @@ namespace TravelingSalesman {
         Route opt2();
 
         /**
+         * @brief Swaps segment of Route with the segments of another Route
+         * @param route2 Route to be swapped with
+         * @param i Starting index of route 1 segment
+         * @param j Ending index of route 1 segment
+         * @param n Starting index of route 2 segment
+         * @param m Ending index of route 2 segment
+         * @see https://en.wikipedia.org/wiki/2-opt for more on the heuristic.
+         * 
+         * @returns None
+        */         
+        void swap(Route& route2, int i, int j, int n, int m);
+        
+        /**
          * @brief Uses the opt-2 heuristic to optimize TWO Route Objects simeltaneously 
          * 
          * @see https://en.wikipedia.org/wiki/2-opt for more on the heuristic.
          * 
-        */
+        */        
         void multi_opt2(Route path2);
         
         /**

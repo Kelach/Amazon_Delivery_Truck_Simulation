@@ -129,7 +129,7 @@ Address AddressList::pop(int i){
     return popped_addy;
 }
 
-std::vector<Address> AddressList::get_list() {
+std::vector<Address> AddressList::get_vec() {
     return address_vec;
 }
 
@@ -148,7 +148,9 @@ Route::Route(std::vector<Address> address_vec, Address hub) : AddressList(addres
 Route::Route(const AddressList& address_vec, Address hub) : AddressList(address_vec), hub(hub) {} // Note that this uses a copy constructor
 
 Route::~Route() {}
-
+Address Route::get_hub(){
+    return hub;
+}
 Route Route::greedy_route(){
     AddressList current_list(address_vec);
     AddressList new_list;
@@ -199,6 +201,35 @@ Route Route::opt2(){
 }
 void Route::multi_opt2(Route path2){
     
+}
+void Route::swap(Route& route2, int i, int j, int n, int m){
+    Route new_route1(std::vector<Address>{}, hub);
+    Route new_route2(std::vector<Address>{}, route2.get_hub());
+    
+    // Route1, append start, then segment of other vector, then end
+    for (int k=0;k<i;k++){
+        new_route1.add_address(address_vec.at(k));
+    }
+    for (int k=n;k<m;k++){
+        new_route1.add_address(address_vec.at(k));
+    }
+    for (int k=j;k<address_vec.size();k++){
+        new_route1.add_address(address_vec.at(k));
+    }
+
+    // Route2, append start, then segment of other vector, then end
+    for (int k=0;k<n;k++){
+        new_route2.add_address(address_vec.at(k));
+    }
+    for (int k=i;k<j;k++){
+        new_route2.add_address(address_vec.at(k));
+    }
+    for (int k=m;k<route2.size();k++){
+        new_route2.add_address(address_vec.at(k));
+    }
+    route2 = new_route2;
+    address_vec =new_route1.get_vec()
+
 }
 void Route::display(){
     hub.display();
