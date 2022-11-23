@@ -148,12 +148,14 @@ namespace TravelingSalesman {
         std::vector<Address> get_vec();
         
         /**
-         * @brief Returns a vector where the ith through jth elements are in reversed order
+         * @brief Reverse order of given range of elements in a vector
          * @param i starting 0-based index of reverse range
          * @param j ending 0-based index of reverse range
-         * @returns Modified Address vector 
+         * @param byref if true, the modified vector will take the place current address_vec, 
+         * otherwise the current_vec will not be updated to the modified vector
+         * @returns Modified Address vector (byref=false) or empty vector (byref=true)
         */
-        std::vector<Address> reverse(int i, int j);
+        std::vector<Address> reverse(int i, int j, bool byref=false);
 
 
     };
@@ -231,7 +233,7 @@ namespace TravelingSalesman {
          * @see https://en.wikipedia.org/wiki/2-opt for more on the heuristic.
          * 
         */        
-        void multi_opt2(Route path2);
+        void multi_opt2(Route& path2);
         
         /**
          * @brief Displays a row of all cartesian coordinate points within a given Route 
