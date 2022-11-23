@@ -278,9 +278,6 @@ namespace TravelingSalesman {
 
     /**
      * @todo use opt2 heuristic for multipath problem
-     * @todo 
-     * @todo  
-     * @todo  
     */
 }
 
