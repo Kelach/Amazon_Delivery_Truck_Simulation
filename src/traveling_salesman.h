@@ -173,14 +173,14 @@ namespace TravelingSalesman {
 
         /**
          * @brief Paramaterized constructor for Route class.
-         * @param address_list Address vector of delivery addresses.
+         * @param address_vec Address vector of delivery addresses.
          * @param hub Address of base station.
         */
         Route(std::vector<Address> address_vec, Address hub);
 
         /**
          * @brief Paramaterized constructor for Route class.
-         * @param address_vec AddressList of delivery addresses.
+         * @param address_list AddressList of delivery addresses.
          * @param hub Address of base station.
         */
         Route(const AddressList& address_list, Address hub);
