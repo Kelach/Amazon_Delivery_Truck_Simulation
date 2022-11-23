@@ -241,6 +241,12 @@ namespace TravelingSalesman {
         void display();
 
         /**
+         * @brief Calculates distance needed starting from hub to reach all addresses and return back to hub.
+         * @returns Total distance
+        */
+        double length();
+        
+        /**
          * @brief Writes the Route to a .dat file.
          * 
          * Creates a matrix with rows corresponding to each Address and columns representing the i and j coordinates. The first and last row are the hub, while the coordinates in between are the Address objects in the AddressList, in order.

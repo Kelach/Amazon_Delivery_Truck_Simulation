@@ -65,24 +65,21 @@ AddressList::~AddressList(){};
 
 void AddressList::add_address(Address new_address){
     // Checks if address already current exists
-
     for (Address addy: address_vec){
         if (addy == new_address){
             std::cout << "Ignoring duplicate address" << std::endl;
             return;
         }
     }
-    
-    // add new address to vector of addresses
     address_vec.push_back(new_address);
-
-
 }
+
 void AddressList::display(){
-    for (Address addy : address_vec){
+    for (Address& addy : address_vec){
         addy.display();
     }
 }
+
 double AddressList::length(){
 
     // for each address, we calculate the distance to next address.
@@ -157,6 +154,11 @@ Route::~Route() {}
 Address Route::get_hub(){
     return hub;
 }
+double Route::length(){
+    AddressList copy(address_vec);
+    return copy.length() + hub.distance(address_vec.at(0)) + hub.distance(address_vec.at(address_vec.size()-1));
+    // return this->length();
+}
 Route Route::greedy_route(){
     AddressList current_list(address_vec);
     AddressList new_list;
@@ -191,14 +193,13 @@ Route Route::opt2(){
                 //     << address_list.length() << std::endl;
                 address_list = new_list;
                 current_length = new_list.length();
-            } else {
+            } 
                 // std::cout << "skipping list: ";
                 // new_list.display();
                 // std::cout << std::endl << "keeping list: ";
                 // address_list.display();
                 // std::cout << "length: " << address_list.length()
                 //     << std::endl;
-            }
         }
 
     }
@@ -328,7 +329,7 @@ void Route::swap(Route& route2, int i, int j, int n, int m){
     //         //     << route2.size() << "\nrange: " 
     //         //     << i << ", " << j << " \n\n";
     //     }
-    
+
     // Route1:
     // retain start
     // std::cout << "route 1:\n";
