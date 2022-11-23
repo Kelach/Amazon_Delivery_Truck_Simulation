@@ -265,8 +265,11 @@ namespace TravelingSalesman {
        /**
          * @brief Writes the Route to a .txt file to TikZ specification, for use in LaTeX.
          * @param fname name of the file
+         * @param hub_color color of hub, red by default
+         * @param address_color color of addresses, black by default
+         * @param route_color color of lines, black by default
         */
-       void to_tikz(string fname);
+       void to_tikz(string fname, string hub_color = "red", string address_color = "black", string route_color = "black");
 
        /**
          * @brief Writes the Route to a .txt file to TikZ specification, for use in LaTeX.

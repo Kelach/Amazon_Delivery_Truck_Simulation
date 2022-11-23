@@ -429,23 +429,23 @@ void Route::to_tikz() {
     to_tikz(get_now() + ".tikz");
 }
 
-void Route::to_tikz(string fname) {
+void Route::to_tikz(string fname, string hub_color, string address_color, string route_color) {
     std::ofstream file;
     file.open(fname);
     std::vector<int> coords = hub.get_coords();
     std::vector<int> coords_prev;
     // First, write hub
-    file << "\\draw (" << coords[0] << ", " << coords[1] << ") -- ";
+    file << "\\draw [" << route_color << "] (" << coords[0] << ", " << coords[1] << ") -- ";
     // Then, write AddressList
     for (Address address : address_vec) {
         coords_prev = coords;
         coords = address.get_coords();
-        file << "(" << coords[0] << ", " << coords[1] << ");\n\\filldraw (" << coords_prev[0] << ", " << coords_prev[1] << ") circle (2pt);\n\\draw (" << coords[0] << ", " << coords[1] << ") --";
+        file << "(" << coords[0] << ", " << coords[1] << ");\n\\filldraw [" << address_color << "] (" << coords_prev[0] << ", " << coords_prev[1] << ") circle (2pt);\n\\draw [" << route_color << "] (" << coords[0] << ", " << coords[1] << ") --";
     }
     // Finally, write hub
     coords_prev = coords;
     coords = hub.get_coords();
-    file << "(" << coords[0] << ", " << coords[1] << ");\n\\filldraw (" << coords_prev[0] << ", " << coords_prev[1] << ") circle (2pt);\n\\filldraw [red] (" << coords[0] << ", " << coords[1] << ") circle (4pt);";
+    file << "(" << coords[0] << ", " << coords[1] << ");\n\\filldraw (" << coords_prev[0] << ", " << coords_prev[1] << ") [" << address_color << "] circle (2pt);\n\\filldraw [" << hub_color << "] (" << coords[0] << ", " << coords[1] << ") circle (4pt);";
     file.close();
 }
 

@@ -69,6 +69,13 @@ int main(){
         << opt2.length() << std::endl;
 
     std::cout << std::endl << std::endl;
+
+    address_route.to_dat("..\\dataout\\graph" + get_now() + "old.dat");
+    address_route.to_tikz("..\\dataout\\graph" + get_now() + "old.tikz");
+    greedy.to_dat("..\\dataout\\graph" + get_now() + "greedy.dat");
+    greedy.to_tikz("..\\dataout\\graph" + get_now() + "greedy.tikz", "red", "blue", "blue");
+    opt2.to_dat("..\\dataout\\graph" + get_now() + "opt2.dat");
+    opt2.to_tikz("..\\dataout\\graph" + get_now() + "opt2.tikz", "red", "green", "green");
     
     Route route1(std::vector<Address>{}, Address(0, 0, 0));
     route1.add_address(Address(2, 0, 10));
@@ -89,6 +96,11 @@ int main(){
     route2.display();
     std::cout << std::endl << std::endl;
 
+    route1.to_dat("..\\dataout\\graph" + get_now() + "unswapped.dat");
+    route1.to_tikz("..\\dataout\\graph" + get_now() + "unswapped.tikz");
+    route2.to_dat("..\\dataout\\graph" + get_now() + "unswapped.dat");
+    route2.to_tikz("..\\dataout\\graph" + get_now() + "unswapped.tikz", "red", "gray", "gray");
+
     route1.multi_opt2(route2);
 
     std::cout << "after swap: " << std::endl
@@ -97,6 +109,11 @@ int main(){
     std::cout << std::endl << "route 2: ";
     route2.display();
     std::cout << std::endl;
+
+    route1.to_dat("..\\dataout\\graph" + get_now() + "swapped.dat");
+    route1.to_tikz("..\\dataout\\graph" + get_now() + "swapped.tikz");
+    route2.to_dat("..\\dataout\\graph" + get_now() + "swapped.dat");
+    route2.to_tikz("..\\dataout\\graph" + get_now() + "swapped.tikz", "red", "gray", "gray");
 
     // Route route2;
     // route1.multi_opt2(route2)
