@@ -2,6 +2,25 @@
 
 \usepackage{hyperref}
 \usepackage{tikz}
+\usepackage{listings}
+
+\definecolor{code_green}{rgb}{0, 0.6, 0}
+
+\lstdefinestyle{Code_Style}{
+    basicstyle=\ttfamily,
+    commentstyle=\color{code_green},
+    keywordstyle=\color{blue},
+    breakatwhitespace=false,
+    breaklines=true,
+    keepspaces=true,
+    numbers=left,
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4
+}
+
+\lstset{style=Code_Style}
 
 \title{Amazon Delivery Truck Simulation}
 \author{Hanna Butt \thanks{HFB352} \and Ashton Cole \thanks{AVC687, \href{mailto:ashtonc24@utexas.edu}{ashtonc24@utexas.edu}} \and Kelechi Emeruwa \thanks{KEE688}}
@@ -16,22 +35,19 @@
 
     \section{Introduction}
     \label{section:Introduction}
-    Introduce the context and the problem here. Also talk about project context (we're in COE 322 fall 2022, this is a final group project, bla bla bla).
-
-    Here's a paragraph that lays out a roadmap for the report. In Section \ref{section:Methodology} we discuss the algorithm used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations.
+    Introduce the context and the problem here. Also talk about project context (we're in COE 322 fall 2022, this is a final group project, bla bla bla). Here's a paragraph that lays out a roadmap for the report.
+    
+    In Section \ref{section:Methodology} we discuss the algorithm used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations.
 
     \section{Methodology}
     \label{section:Methodology}
-    Notes: Talk about how we're solving the problem (C++, TACC super computer) and how the program works (e.g. reads in text file, spits out text file). Then go into the development process/timeline (we started simple with address/list classes, tested functionality, and then expand it a bit)
+    Notes: Talk about how we're solving the problem (C++, TACC super computer, icpc compiler) and how the program works (e.g. reads in text file, spits out text file). Then go into the development process/timeline (we started simple with address/list classes, tested functionality, and then expand it a bit)
 
-    In Section \ref{subsection:Software_and_Hardware}, we discuss the means by which we conducted our simulations. In Section \ref{subsection:Object-Oriented_Structure}, we outline the structure of the classes used to represent and solve the probelm. In Section \ref{subsection:Traveling_Salesman_Problem}, we describe the algorithms we used to solve the simple Traveling Salesman Problem. In Section \ref{subsection:Multiple_Traveling_Salesman_Problem}, we describe the expansion of the problem to account for optimizing multiple delivery routes. [more intermediate developments could go here] Finally, in Section \ref{subsection:Developing_the_Final_Product}, we describe how we combined our algorithms into a final product for a hypothetical user.
-
-    \subsection{Software and Hardware}
-    \label{subsection:Software_and_Hardware}
-    Go into detail about how we're using C++, we're using TACC's isp machine, what that is, \&c.
+    In Section \ref{subsection:Object-Oriented_Structure}, we outline the structure of the classes used to represent and solve the probelm. In Section \ref{subsection:Traveling_Salesman_Problem}, we describe the algorithms we used to solve the simple Traveling Salesman Problem. In Section \ref{subsection:Multiple_Traveling_Salesman_Problem}, we describe the expansion of the problem to account for optimizing multiple delivery routes. [more intermediate developments could go here] Finally, in Section \ref{subsection:Developing_the_Final_Product}, we describe how we combined our algorithms into a final product for a hypothetical user.
 
     \subsection{Object-Oriented Structure}
     \label{subsection:Object-Oriented_Structure}
+    Describe TravelingSalesman library and Address, AddressList, and Route classes bla bla bla
 
     \subsection{Traveling Salesman Problem}
     \label{subsection:Traveling_Salesman_Problem}
@@ -105,7 +121,7 @@
 
     \subsection{Multiple Traveling Salesman Problem}
     \label{subsection:Multiple_Traveling_Salesman_Problem}
-    Talk about how swap algorithm works. Figure \ref{figure:swapdemo} provides a simple example of how this algorithm improves the total distance. (Now prove it with data! What are the distances before and after?)
+    Talk about how swap algorithm works. Figure \ref{figure:swapdemo} provides a simple example of how this algorithm improves the total distance. (Now prove it with data! What are the distances before and after?) ALSO: Talk about how the gray and black Addresses are symmetrical, but the trucks take different Routes. Is this okay, or does one or both of them need to go through greedy/opt2???
 
     \begin{figure}[h]
         \caption{Two Routes exchange Addresses to optimize their distances.}
@@ -180,6 +196,8 @@
 
     \subsection{Developing the Final Product}
     \label{subsection:Developing_the_Final_Product}
+    Our team 
+
     How is our final thing going to work? Basically we want it to work for businesses.
 
     \section{Results}
@@ -198,4 +216,21 @@
     \section{Conclusion}
     \label{section:Conclusion}
     Talk about what we learned, how this all applies to industry, ideas to scale the problem up, ethics, \&c.
+
+    \appendix
+    \section{Sample of Using Listings Package}
+    Please remove this appendix before publishing! Here's some pretty C++ code from Listing \ref{lst:example}.
+    \begin{lstlisting}[
+        caption=Example Code,
+        label={lst:example},
+        language=C++
+    ]
+#include <iostream>
+using sdt::cout;
+
+int main() {
+    // Print out hello
+    cout << "Hello world!" << '\n';
+    return 0;
+}\end{lstlisting}
 \end{document}
