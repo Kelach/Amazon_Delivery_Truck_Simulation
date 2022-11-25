@@ -70,12 +70,12 @@ int main(){
 
     std::cout << std::endl << std::endl;
 
-    address_route.to_dat("..\\dataout\\graph" + get_now() + "old.dat");
-    address_route.to_tikz("..\\dataout\\graph" + get_now() + "old.tikz");
-    greedy.to_dat("..\\dataout\\graph" + get_now() + "greedy.dat");
-    greedy.to_tikz("..\\dataout\\graph" + get_now() + "greedy.tikz", "red", "blue", "blue");
-    opt2.to_dat("..\\dataout\\graph" + get_now() + "opt2.dat");
-    opt2.to_tikz("..\\dataout\\graph" + get_now() + "opt2.tikz", "red", "green", "green");
+    address_route.to_dat("..\\dataout\\demo_1_old.dat");
+    address_route.to_tikz("..\\dataout\\demo_1_old.tikz", "red", "black", "black", "-latex");
+    greedy.to_dat("..\\dataout\\demo_1_greedy.dat");
+    greedy.to_tikz("..\\dataout\\demo_1_greedy.tikz", "red", "blue", "blue", "-latex");
+    opt2.to_dat("..\\dataout\\demo_1_opt2.dat");
+    opt2.to_tikz("..\\dataout\\demo_1_opt2.tikz", "red", "green", "green", "-latex");
     
     Route route1(std::vector<Address>{}, Address(0, 0, 0));
     route1.add_address(Address(2, 0, 10));
@@ -96,10 +96,10 @@ int main(){
     route2.display();
     std::cout << std::endl << std::endl;
 
-    route1.to_dat("..\\dataout\\graph" + get_now() + "unswapped.dat");
-    route1.to_tikz("..\\dataout\\graph" + get_now() + "unswapped.tikz");
-    route2.to_dat("..\\dataout\\graph" + get_now() + "unswapped.dat");
-    route2.to_tikz("..\\dataout\\graph" + get_now() + "unswapped.tikz", "red", "gray", "gray");
+    route1.to_dat("..\\dataout\\demo_2_route1_unswapped.dat");
+    route1.to_tikz("..\\dataout\\demo_2_route1_unswapped.tikz", "red", "black", "black", "-latex");
+    route2.to_dat("..\\dataout\\demo_2_route2_unswapped.dat");
+    route2.to_tikz("..\\dataout\\demo_2_route2_unswapped.tikz", "red", "gray", "gray", "-latex");
 
     route1.multi_opt2(route2);
 
@@ -110,16 +110,10 @@ int main(){
     route2.display();
     std::cout << std::endl;
 
-    route1.to_dat("..\\dataout\\graph" + get_now() + "swapped.dat");
-    route1.to_tikz("..\\dataout\\graph" + get_now() + "swapped.tikz");
-    route2.to_dat("..\\dataout\\graph" + get_now() + "swapped.dat");
-    route2.to_tikz("..\\dataout\\graph" + get_now() + "swapped.tikz", "red", "gray", "gray");
+    route1.to_dat("..\\dataout\\demo_2_route1_swapped.dat");
+    route1.to_tikz("..\\dataout\\demo_2_route1_swapped.tikz", "red", "black", "black", "-latex");
+    route2.to_dat("..\\dataout\\demo_2_route2_swapped.dat");
+    route2.to_tikz("..\\dataout\\demo_2_route2_swapped.tikz", "red", "gray", "gray", "-latex");
 
-    // Route route2;
-    // route1.multi_opt2(route2)
-    // Route route1(address_list, hub);
-    // route1.to_dat("..\\dataout\\graph" + get_now() + "unsorted.dat");
-    // route1.to_tikz("..\\dataout\\graph" + get_now() + "unsorted.tikz");
-    // return 0;
-
+    return 0;
 }
