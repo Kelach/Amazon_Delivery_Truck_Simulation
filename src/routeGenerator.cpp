@@ -184,7 +184,7 @@ int main(int argc, char **argv){
     
     std::vector<int> vec{};
     for (int i = 0; i < num_adds; i++) {
-      generateAddress(keyword, space, vec).display();
+      generateRoute(keyword, space, vec).display();
     }
     // do for loop 
         // try generateRoute, catch errors
