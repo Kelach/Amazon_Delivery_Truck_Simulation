@@ -400,8 +400,7 @@ void Route::swap(Route& route2, int i, int j, int n, int m){
 }
 void Route::display(){
     hub.display();
-    AddressList decoy(address_vec);
-    decoy.display(); // needed to convert vector into AddressList Object
+    this->display(); // needed to convert vector into AddressList Object
     hub.display();
 }
 void Route::to_dat() {

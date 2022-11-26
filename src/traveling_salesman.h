@@ -236,7 +236,7 @@ namespace TravelingSalesman {
         void multi_opt2(Route& path2);
         
         /**
-         * @brief Displays a row of all cartesian coordinate points within a given Route 
+         * @brief Displays a row of Address Objects within a given Route 
         */
         void display();
 
