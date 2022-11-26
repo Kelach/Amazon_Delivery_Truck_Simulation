@@ -195,6 +195,15 @@ int main(int argc, char **argv){
     // // read the positional keyword
     // std::cout << "Found keyword: " << keyword << '\n';
 
+
+
+    // std::ofstram file;
+    // file.open("insert filename here");
+    // for loop
+    //     generate address
+    //     file.write(addy.to_string() " '\n'");
+    // file.close();
+
     
     return 0;
 }
