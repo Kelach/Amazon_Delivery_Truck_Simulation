@@ -71,6 +71,12 @@ namespace TravelingSalesman {
          * @brief displays the cartesian coordinates of an Address point
         */
         void display();
+
+        /**
+         * @brief Represents the attributes of Address as a single string.
+         * @returns i, j, and deliver_by attributes on a single line, separated by spaces
+        */
+       string to_string();
     };
     /**
      * @class AddressList

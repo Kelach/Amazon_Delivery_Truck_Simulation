@@ -55,6 +55,10 @@ void Address::display(){
         << j << ") ";
 }
 
+string Address::to_string() {
+    return std::to_string(i) + " " + std::to_string(j) + " " + std::to_string(deliver_by);
+}
+
 // End of Address Class Methods
 
 // AddressList Class Methods
@@ -218,7 +222,7 @@ void Route::multi_opt2(Route& route2){
                     // 2. one reverse then swap
                     // 3. other one reverse then swap 
                     // 4. both reverse then swap
-           
+                    // if (!address_vec[i].swappable() || ... || ......) coninue;
 
                     // std::cout << i <<"--"<< j << "\n"
                     //     << n <<"--"<< m 
