@@ -39,15 +39,34 @@
     
     In Section \ref{section:Methodology} we discuss the algorithm used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations.
 
+    Somewhere in the introduction there should be a paragraph or subsection precisely defining the Traveling Salesman and Multiple Traveling Salesmen Problems. Explain the general idea, assumptions, and limitations. For example, we use integer 2D coordinates on a flat plane, distances don't account for windy roads, bla bla bla, \&c.
+
     \section{Methodology}
     \label{section:Methodology}
-    Notes: Talk about how we're solving the problem (C++, TACC super computer, icpc compiler) and how the program works (e.g. reads in text file, spits out text file). Then go into the development process/timeline (we started simple with address/list classes, tested functionality, and then expand it a bit)
+    % Notes: Talk about how we're solving the problem (C++, TACC super computer, icpc compiler) and how the program works (e.g. reads in text file, spits out text file). Then go into the development process/timeline (we started simple with address/list classes, tested functionality, and then expand it a bit)
 
-    In Section \ref{subsection:Object-Oriented_Structure}, we outline the structure of the classes used to represent and solve the probelm. In Section \ref{subsection:Traveling_Salesman_Problem}, we describe the algorithms we used to solve the simple Traveling Salesman Problem. In Section \ref{subsection:Multiple_Traveling_Salesman_Problem}, we describe the expansion of the problem to account for optimizing multiple delivery routes. [more intermediate developments could go here] Finally, in Section \ref{subsection:Developing_the_Final_Product}, we describe how we combined our algorithms into a final product for a hypothetical user.
+    To approach this problem, we wrote a library and scripts in C++. These were compiled with \verb|g++| on our local machines and \verb|icpc| on the Texas Advanced Computing Center's ISP supercomputer. These scripts are outlined below.
+    \begin{itemize}
+        \item \verb|traveling_salesman.h|: a header file for our TravelingSalesman library, defining all of the objects and algorithms used in the project
+        \item \verb|traveling_salesman.cpp|: an implementation file
+        \item \verb|tester.cpp|: a script which tests the functionality of our TravelingSalesman library and generates TikZ code for figures displayed in this report; this script is compiled as \verb|tester.exe|
+        \item \verb|routeGenerator.cpp|: a script which generates \verb|.dat| files containing lists of orders to be processed by \verb|delivery_truck_simulation.exe|; this script is compiled as \verb|routeGenerator.exe|
+        \item \verb|delivery_truck_simulation.cpp|: a script which represents a hypothetical final product for use in industry, as described in Section \ref{subsection:Developing_the_Final_Product}; this script is compiled as \verb|delivery_truck_simulation.exe|
+    \end{itemize}
+
+    We began our project by writing the header and implementation files, coupled with tests in our tester file. After we confirmed that all of our objects and algorithms functioned as expected, we designed a main program to best parallel a real world application of solving the Traveling Salesman Problem. The structures and algorithms that we developed are further detailed in this section.
+
+    In Section \ref{subsection:Object-Oriented_Structure}, we outline the structure of the classes that we used to represent and solve the problem. In Section \ref{subsection:Traveling_Salesman_Problem}, we describe the algorithms we used to solve the simple Traveling Salesman Problem. In Section \ref{subsection:Multiple_Traveling_Salesmen_Problem}, we describe the expansion of the problem to account for optimizing multiple delivery routes. Finally, in Section \ref{subsection:Developing_the_Final_Product}, we describe how we combined our algorithms into a final product for a hypothetical user.
 
     \subsection{Object-Oriented Structure}
     \label{subsection:Object-Oriented_Structure}
-    Describe TravelingSalesman library and Address, AddressList, and Route classes bla bla bla
+    Our scripts took advantage of C++'s object-oriented capabilities to organize the problem. This section provides a brief overview; the contents of these classes are not described exhaustively.
+    
+    Each delivery stop is represented by an \verb|Address| object, which has two-dimensional integer Cartesian coordinates \verb|i| and \verb|j| representing the location of the address, an an integer \verb|deliver_by| which describes the day by which the order is supposed to be delivered. The class can also calculate the distance to other \verb|Address|es, using either the Cartesian distance $\sqrt{i^{2} + j^{2}}$ or Manhattan distance $|i| + |j|$. In our implementation, we use the Cartesian distance, but it could easily be replaced with another formula.
+
+    A list of \verb|Address|es is represented by an \verb|AddressList| object, which holds the objects in a \verb|std::vector<Address>| instance variable called \verb|address_list|. This class can add, remove, and rearrange \verb|Address|es.
+
+    The \verb|Route| class extends the \verb|AddressList| class by including a \verb|hub| instance of type \verb|Address|. This represents the starting and ending point of the \verb|Route|. This class contains several functions to solve variants of the Traveling Salesman problem.
 
     \subsection{Traveling Salesman Problem}
     \label{subsection:Traveling_Salesman_Problem}
@@ -119,8 +138,8 @@
         \end{minipage}
     \end{figure}
 
-    \subsection{Multiple Traveling Salesman Problem}
-    \label{subsection:Multiple_Traveling_Salesman_Problem}
+    \subsection{Multiple Traveling Salesmen Problem}
+    \label{subsection:Multiple_Traveling_Salesmen_Problem}
     Talk about how swap algorithm works. Figure \ref{figure:swapdemo} provides a simple example of how this algorithm improves the total distance. (Now prove it with data! What are the distances before and after?) ALSO: Talk about how the gray and black Addresses are symmetrical, but the trucks take different Routes. Is this okay, or does one or both of them need to go through greedy/opt2???
 
     \begin{figure}[h]
