@@ -4,6 +4,7 @@
 #include <string>
 #include <random>
 #include <vector>
+#include <fstream>
 
 bool is_prime(int num){
   // returns true/false if number is/not prime
@@ -16,22 +17,18 @@ bool is_prime(int num){
   }
   return true;
 }
-int nextprime(int cur_prime){
-  int prime_num = cur_prime;
+void nextprime(int& cur_prime){
     // if current prime is 2, set to 3
     if (cur_prime == 2){
       cur_prime = 3;
     } else{
       // else, loop through odd numbers 
       // and return next prime number
-      int next_prime = cur_prime + 2;
-      while(is_prime(next_prime) == false){
-        next_prime += 2;
+      cur_prime += 2;
+      while(is_prime(cur_prime) == false){
+        cur_prime += 2;
       }
-      cur_prime = next_prime;
     } 
-    
-    return prime_num;
   }
 std::vector<int> generate_primes(int max_num){
   // initalize an empty vector, 
@@ -42,7 +39,7 @@ std::vector<int> generate_primes(int max_num){
   int prime_num = 2;
   while (max_num >= prime_num){
       primes.push_back(prime_num);
-      prime_num = nextprime(prime_num);
+      nextprime(prime_num);
   }
   // return vector of primes
   return primes;
@@ -84,8 +81,8 @@ TravelingSalesman::Address generateAddress(std::string& keyword, int& space, std
 
     } else if (keyword == "primes"){
         // generate random i and j indicies
-        int index_i = random(0, primes.size());
-        int index_j = random(0, primes.size());
+        int index_i = random(0, primes.size()-1);
+        int index_j = random(0, primes.size()-1);
         // get 2 prime ints within range of space
         int i = primes.at(index_i);
         int j = primes.at(index_j);
@@ -106,54 +103,18 @@ TravelingSalesman::Address generateAddress(std::string& keyword, int& space, std
  * @param address_count # of addresses to generate per route
  * */ 
 
-// TravelingSalesman::Route generateRoute(std::string& keyword, int& space, int& address_count){
-//   if (keyword == "random"){
-//     std::vector<TravelingSalesman::Address> address_vec{};
-//     for (int i=0;i<=address_count;i++){
-//       std::vector<int> primes{};
-//       // create address and add to vector address vec
-//       TravelingSalesman::Address new_address = generateAddress(keyword, space, primes);
-//       address_vec.push_back(new_address);
-//     }
-//     return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
-//   } else if (keyword == "primes"){
-//     std::vector<TravelingSalesman::Address> address_vec{};
-//     // generate primes vector
-//     for (int i=0;i<=address_count;i++){
-//       // generate vector of primes
-//       std::vector<int> primes = generate_primes(space);
-
-//       // create random addresse co-ords based off of prime vector
-//       TravelingSalesman::Address new_address = generateAddress(keyword, space, primes);
-//       address_vec.push_back(new_address);
-//     }
-//     return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
-
-//   } else{
-//       std::vector<TravelingSalesman::Address> address_vec{};
-//       throw(5);
-//     return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
-//   }
-// }
-
-
 int main(int argc, char **argv){
     //*******declare options*******
     
     // -help option
     cxxopts::Options options
-        ("cxxopts", "Commandline options");
+        ("Deliveries Generator", "Commandline options");
     options.add_options()
         ("h,help","usage information");
     
-    // # of routes option
-    options.add_options()
-        ("r,routes","# of routes to generate",
-        cxxopts::value<int>()->default_value("5"));
-
     // # addresses per route
     options.add_options()
-        ("a,addresses","# of addresses to generate per route",
+        ("a,addresses","# of addresses to generate",
         cxxopts::value<int>()->default_value("5"));
 
     // coordinate space option
@@ -171,41 +132,45 @@ int main(int argc, char **argv){
     auto result = options.parse(argc, argv);
     
     // ****perform operation based on options***
-
-    // perform help operation
+    
+    // performs help operation
     if (result.count("help")>0) {
         std::cout << options.help() << '\n';
         return 0;
     }
 
-    // perform n option operation
+    // perform options operation
     auto num_adds = result["addresses"].as<int>();
-    auto num_routes = result["routes"].as<int>();
     auto space = result["space"].as<int>();
     auto keyword = result["primes"].as<std::string>();
     
-    std::vector<int> vec{};
-    for (int i = 0; i < num_adds; i++) {
-      generateAddress(keyword, space, vec).display();
+    // catch invalid keywords
+    if ((keyword != "primes") && (keyword != "random")){
+      std::cerr << "Invalid positional argument:\n\b"
+        << keyword << "\n\tuse 'random' or 'primes' positional arguments only!";
+      return 0;
     }
-    // do for loop 
-        // try generateRoute, catch errors
-        // each time, make route generation output
-        // Route route = generateRoute(keyword, space);
-    
-    // std::cout << "Generating " << num_routes << " routes" << '\n';
-    // // read the positional keyword
-    // std::cout << "Found keyword: " << keyword << '\n';
 
+// perform address generation
+    std::ofstream file;
+    std::string filename("new_deliveries");
+    std::string path("../dataout/");
+    file.open(path + filename + ".txt");
 
+    std::vector<int> primes = generate_primes(space);// generate_primes(space);
+    // for (auto num : primes){
+    //   std::cout << num << " ";
+    // }
+    // std::cout << "\n";
+    std::cout << "Generating new deliveries...\n";
+    for (int i = 0; i < num_adds; i++) {
+      TravelingSalesman::Address addy = generateAddress(keyword, space, primes);
+      
+      file << addy.to_string() << "\n";
+    }
+    file.close();
 
-    // std::ofstram file;
-    // file.open("insert filename here");
-    // for loop
-    //     generate address
-    //     file.write(addy.to_string() " '\n'");
-    // file.close();
+    std::cout << num_adds << " new deliveries generated!\n\n";
 
-    
     return 0;
 }
