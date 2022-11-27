@@ -105,35 +105,36 @@ TravelingSalesman::Address generateAddress(std::string& keyword, int& space, std
  * @param space defines space of x-y coordinate system.
  * @param address_count # of addresses to generate per route
  * */ 
-TravelingSalesman::Route generateRoute(std::string& keyword, int& space, int& address_count){
-  if (keyword == "random"){
-    std::vector<TravelingSalesman::Address> address_vec{};
-    for (int i=0;i<=address_count;i++){
-      std::vector<int> primes{};
-      // create address and add to vector address vec
-      TravelingSalesman::Address new_address = generateAddress(keyword, space, primes);
-      address_vec.push_back(new_address);
-    }
-    return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
-  } else if (keyword == "primes"){
-    std::vector<TravelingSalesman::Address> address_vec{};
-    // generate primes vector
-    for (int i=0;i<=address_count;i++){
-      // generate vector of primes
-      std::vector<int> primes = generate_primes(space);
 
-      // create random addresse co-ords based off of prime vector
-      TravelingSalesman::Address new_address = generateAddress(keyword, space, primes);
-      address_vec.push_back(new_address);
-    }
-    return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
+// TravelingSalesman::Route generateRoute(std::string& keyword, int& space, int& address_count){
+//   if (keyword == "random"){
+//     std::vector<TravelingSalesman::Address> address_vec{};
+//     for (int i=0;i<=address_count;i++){
+//       std::vector<int> primes{};
+//       // create address and add to vector address vec
+//       TravelingSalesman::Address new_address = generateAddress(keyword, space, primes);
+//       address_vec.push_back(new_address);
+//     }
+//     return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
+//   } else if (keyword == "primes"){
+//     std::vector<TravelingSalesman::Address> address_vec{};
+//     // generate primes vector
+//     for (int i=0;i<=address_count;i++){
+//       // generate vector of primes
+//       std::vector<int> primes = generate_primes(space);
 
-  } else{
-      std::vector<TravelingSalesman::Address> address_vec{};
-      throw(5);
-    return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
-  }
-}
+//       // create random addresse co-ords based off of prime vector
+//       TravelingSalesman::Address new_address = generateAddress(keyword, space, primes);
+//       address_vec.push_back(new_address);
+//     }
+//     return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
+
+//   } else{
+//       std::vector<TravelingSalesman::Address> address_vec{};
+//       throw(5);
+//     return TravelingSalesman::Route(address_vec, TravelingSalesman::Address(0, 0, 0));
+//   }
+// }
 
 
 int main(int argc, char **argv){
@@ -174,6 +175,7 @@ int main(int argc, char **argv){
     // perform help operation
     if (result.count("help")>0) {
         std::cout << options.help() << '\n';
+        return 0;
     }
 
     // perform n option operation
@@ -184,7 +186,7 @@ int main(int argc, char **argv){
     
     std::vector<int> vec{};
     for (int i = 0; i < num_adds; i++) {
-      generateRoute(keyword, space, vec).display();
+      generateAddress(keyword, space, vec).display();
     }
     // do for loop 
         // try generateRoute, catch errors
