@@ -35,15 +35,20 @@
 
     \section{Introduction}
     \label{section:Introduction}
-    Introduce the context and the problem here. Also talk about project context (we're in COE 322 fall 2022, this is a final group project, bla bla bla).
-
-    Somewhere in the introduction there should be a paragraph or subsection precisely defining the Traveling Salesman and Multiple Traveling Salesmen Problems. Explain the general idea, assumptions, and limitations. For example, we use integer 2D coordinates on a flat plane, distances don't account for windy roads, bla bla bla, \&c.
-
-    Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. One could simply test all $n!$ combinations of a list of $n$ addresses for the best path, calculating distances and adding them up, but with 4 stops this becomes quite tedious, and after that nearly untenable. The prferable alternative is to use algorithms to find good and better paths, significantly cutting down on calculations.
+    Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. Our team chose to solve for our final project in COE 322: Scientific Computation at the University of Texas at Austin for the fall of 2022.
     
-    This is the problem that our team chose to solve for our final project. We are undergraduate students in COE 322: Scientific Computation in the fall of 2022. KEEP TYPING HERE PLEASE
-    
-    In Section \ref{section:Methodology} we discuss the algorithm used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations.
+    In Section \ref{section:Methodology} we discuss the algorithm that we used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations. However, we will first further define the problem for our purposes and apply some limitations and assumptions in the following subsections.
+
+    \subsection{Perfect is the Enemy of Good}
+    \label{subsection:Perfect_is_the_Enemy_of_Good}
+    One could simply test each of the $n!$ combinations of a list of $n$ addresses to fund the one with the shortest total distance, but with 4 stops this becomes quite tedious, and after that nearly untenable. A computer could solve this faster, but the problem still becomes very computationally expensive at a factorial rate. The preferable alternative is to use algorithms to find good and better paths, significantly cutting down on calculations. Perhaps it will neglect the perfect solution, but in a world with finite resources, we have to make the trade-off to settle for less. The algorithms which we employ, detailed in Section \ref{section:Methodology} reflect this.
+
+    \subsection{Eath is Flat}
+    \label{subection:Earth_is_Flat}
+    We also have to restrict the definitions of an address and the distance between addresses. Since this project is intended to focus on the algorithms one would use to solve the Traveling Salesman problem, as opposed to practical considerations for constructing a turn-key solution for use in the real world, addresses are represented with Cartesian coordinates on a two-dimensional Euclidian plane. Distances are assumed to be Euclidian, i.e. ``as the bird flies,'' and travel times are assumed to be proportional thereto. The distance could alternatively be defined as the ``Manhattan Distance,'' i.e. the distance in a perfect rectilinear street grid. Using real-world geographic data considering road layouts, speed limits, real-time traffic data, and Earth's curvature would be more realistic, but it would also add significant complexity to our implementation while contributing little to the core principles of the solution.
+
+    \subsection{TODO}
+    MORE DEFINITIONS HERE: deliver by date, multiple days, multiple trucks
 
     \section{Methodology}
     \label{section:Methodology}
@@ -66,7 +71,7 @@
     \label{subsection:Object-Oriented_Structure}
     Our scripts took advantage of C++'s object-oriented capabilities to organize the problem. This section provides a brief overview; the contents of these classes are not described exhaustively.
     
-    Each delivery stop is represented by an \verb|Address| object, which has two-dimensional integer Cartesian coordinates \verb|i| and \verb|j| representing the location of the address, an an integer \verb|deliver_by| which describes the day by which the order is supposed to be delivered. The class can also calculate the distance to other \verb|Address|es, using either the Cartesian distance $\sqrt{i^{2} + j^{2}}$ or Manhattan distance $|i| + |j|$. In our implementation, we use the Cartesian distance, but it could easily be replaced with another formula.
+    Each delivery stop is represented by an \verb|Address| object, which has two-dimensional integer Cartesian coordinates \verb|i| and \verb|j| representing the location of the address, an an integer \verb|deliver_by| which describes the day by which the order is supposed to be delivered. The class can also calculate the distance to other \verb|Address|es, using either the Euclidian distance $\sqrt{i^{2} + j^{2}}$ or Manhattan distance $|i| + |j|$. In our implementation, we use the Euclidian distance, but it could easily be replaced with another formula.
 
     A list of \verb|Address|es is represented by an \verb|AddressList| object, which holds the objects in a \verb|std::vector<Address>| instance variable called \verb|address_list|. This class can add, remove, and rearrange \verb|Address|es.
 
