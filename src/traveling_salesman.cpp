@@ -72,6 +72,11 @@ void AddressList::add_address(Address new_address){
     for (Address addy: address_vec){
         if (addy == new_address){
             std::cout << "Ignoring duplicate address" << std::endl;
+            /**
+             * If the order is duplicate, it may still have an earlier deliver_by date. In that case, both orders should be delivered on the earlier date.
+             * 
+             * @todo Check if new_address has a lesser deliver_by than addy. If so, update addy to the earlier date, so that the combined order isn't tardy.
+            */
             return;
         }
     }
