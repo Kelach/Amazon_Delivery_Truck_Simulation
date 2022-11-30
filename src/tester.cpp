@@ -7,7 +7,7 @@
 #include <iostream>             // imports standard library thingies
 using namespace TravelingSalesman; // we may not want to keep this
 
-int main(){
+int main() {
 
     
     // Address Distance Tester
@@ -98,8 +98,10 @@ int main(){
 
     route1.to_dat("..\\dataout\\demo_2_route1_unswapped.dat");
     route1.to_tikz("..\\dataout\\demo_2_route1_unswapped.tikz", "red", "black", "black", "-latex");
+    route1.to_job("..\\dataout\\demo_2_route1_unswapped.txt");
     route2.to_dat("..\\dataout\\demo_2_route2_unswapped.dat");
     route2.to_tikz("..\\dataout\\demo_2_route2_unswapped.tikz", "red", "gray", "gray", "-latex");
+    route1.to_job("..\\dataout\\demo_2_route2_unswapped.txt");
 
     route1.multi_opt2(route2);
 
@@ -112,8 +114,10 @@ int main(){
 
     route1.to_dat("..\\dataout\\demo_2_route1_swapped.dat");
     route1.to_tikz("..\\dataout\\demo_2_route1_swapped.tikz", "red", "black", "black", "-latex");
+    route1.to_job("..\\dataout\\demo_2_route1_swapped.txt");
     route2.to_dat("..\\dataout\\demo_2_route2_swapped.dat");
     route2.to_tikz("..\\dataout\\demo_2_route2_swapped.tikz", "red", "gray", "gray", "-latex");
+    route1.to_job("..\\dataout\\demo_2_route2_swapped.txt");
 
     address_list.to_dat("..\\dataout\\demorw.dat");
     std::cout << "\nWritten to file: ";

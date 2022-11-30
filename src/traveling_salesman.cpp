@@ -495,4 +495,22 @@ void Route::to_tikz(string fname, string hub_color, string address_color, string
     file.close();
 }
 
+void Route::to_job(string fname) {
+    std::ofstream file;
+    file.open(fname);
+    std::vector<int> coords = hub.get_coords();
+    // First, write hub
+    file << fname << "\n\nToday's Route\n\nStart at hub: " << coords[0] << " " << coords[1] << '\n';
+    // Then, write AddressList
+    for (Address address : address_vec) {
+        coords = address.get_coords();
+        file << coords[0] << " " << coords[1] << '\n';
+    }
+    // Finally, write hub
+    coords = hub.get_coords();
+    file << "Finish at hub: " << coords[0] << " " << coords[1] << '\n';
+    file << "\nStats\n\nLength: " + std::to_string(this->length()) + "\nStops: " + std::to_string(this->size()) + "\n\nHave a nice day! You are ~not~ a corporate wage slave :-)";
+    file.close();
+}
+
 // End of Route Class Methods

@@ -305,6 +305,11 @@ namespace TravelingSalesman {
          * By default, file name is in the format yyyymmddhhmmss.tikz
         */
        void to_tikz();
+
+        /**
+         * @brief Writes the route to a .txt file readable by a delivery druver.
+        */
+        void to_job(string fname);
     };
 
     /**

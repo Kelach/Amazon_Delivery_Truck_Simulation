@@ -37,9 +37,9 @@ void optimize_routes(std::vector<Route>& routes) {
 */
 void write_data(std::vector<Route> routes, int day_no, string dat_path_to, string tikz_path_to, string jobs_path_to, string version) {
     for (int i = 0; i < routes.size(); i++) {
-        if (dat_path_to != "") routes.at(i).to_dat(dat_path_to + "day" + std::to_string(day_no) + "_truck" + std::to_string(i) + version + ".dat");
-        if (tikz_path_to != "") routes.at(i).to_tikz(tikz_path_to + "day" + std::to_string(day_no) + "_truck" + std::to_string(i) + version + ".tikz");
-        // JOB NOT IMPLEMENTED YET
+        if (dat_path_to != "") routes.at(i).to_dat(dat_path_to + "day" + std::to_string(day_no) + "_truck" + std::to_string(i + 1) + version + ".dat");
+        if (tikz_path_to != "") routes.at(i).to_tikz(tikz_path_to + "day" + std::to_string(day_no) + "_truck" + std::to_string(i + 1) + version + ".tikz");
+        if (jobs_path_to != "") routes.at(i).to_job(jobs_path_to + "day" + std::to_string(day_no) + "_truck" + std::to_string(i + 1) + version + ".txt");
     }
 }
 
