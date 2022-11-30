@@ -5,26 +5,6 @@ using std::string;
 
 using namespace TravelingSalesman;
 
-void day(string unfulfilled_orders_from, string new_orders_from, string dat_path_to, string tikz_path_to, string jobs_path_to, string status_to, int num_trucks, double max_dist, Address hub);
-
-int main() {
-    // Probably a loop of sorts
-    // Call day() for each day
-    Address hub(0, 0, 0);
-
-    day("..\\Delivery Truck Simulation\\Orders\\dayn.dat",
-        "..\\Delivery Truck Simulation\\Orders\\unfulfilled.dat",
-        "..\\Delivery Truck Simulation\\dat\\dayn",
-        "..\\Delivery Truck Simulation\\tikz\\dayn",
-        "..\\Delivery Truck Simulation\\Jobs\\dayn",
-        "..\\Delivery Truck Simulation\\Statuses\\dayn",
-        0,
-        0,
-        hub);
-
-    return 0;
-}
-
 /**
  * @brief Conducts all tasks needed to divy up a list of Addresses to different truck drivers for a day.
  * 
@@ -41,6 +21,7 @@ int main() {
  * @param hub delivery hub Address
 */
 void day(string unfulfilled_orders_from, string new_orders_from, string dat_path_to, string tikz_path_to, string jobs_path_to, string status_to, int num_trucks, double max_dist, Address hub) {
+
     // Read in unfulfilled and new orders, combine into megalist
     std::vector<Address> unfulfilled_orders = AddressList::from_dat(unfulfilled_orders_from).get_vec();
     std::vector<Address> new_orders = AddressList::from_dat(new_orders_from).get_vec();
@@ -50,25 +31,26 @@ void day(string unfulfilled_orders_from, string new_orders_from, string dat_path
     // Divy up amongst trucks
     std::vector<Route> routes = {};
     for(int j = 0; j < num_trucks; j++) {
-        std::vector<Address> nil = {};
-        routes.push_back(Route(nil, hub));
+        routes.push_back(Route(AddressList(), hub));
     }
     for (int i = 0; i < orders.size(); i++) {
         routes.at(i % num_trucks).add_address(orders.at(i));
     }
 
     // Optimize each individual route
-    for (Route route : routes) {
-        route = route.greedy_route();
-        route = route.opt2();
+    for (int j = 0; j < routes.size(); j++) {
+        routes.at(j) = routes.at(j).greedy_route();
+        routes.at(j) = routes.at(j).opt2();
     }
 
     // Optimize between each other
-    for(int a = 0; a < num_trucks; a++) {
-        for (int b = 0; b < num_trucks; b++) {
+    for(int a = 0; a < routes.size(); a++) {
+        for (int b = a + 1; b < routes.size(); b++) {
             routes.at(a).multi_opt2(routes.at(b));
         }
     }
+
+    std::cout << "and\n";
 
     // Cut things by delivery date priority
     // NOT IMPLEMENTED YET
@@ -88,4 +70,22 @@ void day(string unfulfilled_orders_from, string new_orders_from, string dat_path
 
     // UNFULFILLED ORDERS NOT IMPLEMENTED YET
     // STATUS REPORT NOT IMPLEMENTED YET
+}
+
+int main() {
+    // Probably a loop of sorts
+    // Call day() for each day
+    Address hub(0, 0, 0);
+
+    day("..\\Delivery Truck Simulation Data\\Orders\\dayn.dat",
+        "..\\Delivery Truck Simulation Data\\Orders\\unfulfilled.dat",
+        "..\\Delivery Truck Simulation Data\\dat\\dayn",
+        "..\\Delivery Truck Simulation Data\\tikz\\dayn",
+        "..\\Delivery Truck Simulation Data\\Jobs\\dayn",
+        "..\\Delivery Truck Simulation Data\\Statuses\\dayn",
+        2,
+        0,
+        hub);
+
+    return 0;
 }
