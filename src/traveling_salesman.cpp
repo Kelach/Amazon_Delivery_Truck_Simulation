@@ -50,6 +50,10 @@ std::vector<int> Address::get_coords(){
     return std::vector<int> {i, j};
 }
 
+int Address::get_deliver_by() {
+    return deliver_by;
+}
+
 void Address::display(){
     std::cout << "(" << i << ", " 
         << j << ") ";
@@ -149,6 +153,36 @@ std::vector<Address> AddressList::reverse(int i, int j, bool byref){
         return copy_vec;
     }
 
+}
+
+AddressList AddressList::from_dat(string fname) {
+    AddressList address_list;
+    std::ifstream file;
+    int i = 0;
+    int j = 0;
+    int deliver_by = 0;
+    file.open(fname);
+    // Conveniently, file >> x evaluates to false at the end of the file
+    while (file >> i) {
+        if (file >> j) {
+            if (file >> deliver_by) {
+                address_list.add_address(Address(i, j, deliver_by));
+            }
+        }
+    }
+    return address_list;
+}
+
+void AddressList::to_dat(string fname) {
+    std::ofstream file;
+    file.open(fname);
+    std::vector<int> coords;
+    // Then, write AddressList
+    for (Address address : address_vec) {
+        coords = address.get_coords();
+        file << coords[0] << " " << coords[1] << " " << address.get_deliver_by() << '\n';
+    }
+    file.close();
 }
 
 // End of AddressList Class Methods
@@ -409,7 +443,7 @@ void Route::swap(Route& route2, int i, int j, int n, int m){
 }
 void Route::display(){
     hub.display();
-    this->display(); // needed to convert vector into AddressList Object
+    AddressList::display(); // needed to convert vector into AddressList Object
     hub.display();
 }
 void Route::to_dat() {
@@ -421,15 +455,15 @@ void Route::to_dat(string fname) {
     file.open(fname);
     std::vector<int> coords = hub.get_coords();
     // First, write hub
-    file << coords[0] << " " << coords[1] << '\n';
+    file << coords[0] << " " << coords[1] << " " << hub.get_deliver_by() << '\n';
     // Then, write AddressList
     for (Address address : address_vec) {
         coords = address.get_coords();
-        file << coords[0] << " " << coords[1] << '\n';
+        file << coords[0] << " " << coords[1] << " " << address.get_deliver_by() << '\n';
     }
     // Finally, write hub
     coords = hub.get_coords();
-    file << coords[0] << " " << coords[1];
+    file << coords[0] << " " << coords[1] << " " << hub.get_deliver_by();
     file.close();
 }
 

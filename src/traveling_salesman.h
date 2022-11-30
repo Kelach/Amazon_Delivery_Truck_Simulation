@@ -67,6 +67,13 @@ namespace TravelingSalesman {
          * @returns vector with i,j coordinates (in respective order)
         */
         std::vector<int> get_coords();
+
+        /**
+         * @brief Accessor method to retrieve deliver_by of an Address
+         * @returns deliver_by
+        */
+       int get_deliver_by();
+
         /**
          * @brief displays the cartesian coordinates of an Address point
         */
@@ -163,7 +170,21 @@ namespace TravelingSalesman {
         */
         std::vector<Address> reverse(int i, int j, bool byref=false);
 
+        /**
+         * @brief Reads in an AddressList from a .dat file.
+         * @param fname name of the file
+         * @returns new AddressList
+        */
+        static AddressList from_dat(string fname);
 
+        /**
+         * @brief Writes the AddressList to a .dat file.
+         * 
+         * Creates a matrix with rows corresponding to each Address and columns representing the i and j coordinates and deliver_by, separated by spaces.
+         * 
+         * @param fname name of the file
+        */
+       void to_dat(string fname);
     };
 
 

@@ -1,5 +1,8 @@
 #include <string>
 using std::string;
+#include "traveling_salesman.h"
+
+using namespace TravelingSalesman;
 
 int main() {
     // Probably a loop of sorts
@@ -24,6 +27,8 @@ int main() {
 */
 void day(string unfulfilled_orders, string new_orders, string dat_to, string tikz_to, string jobs_to, int num_trucks, double max_dist) {
     // Read in unfulfilled and new orders, combine into megalist
+    
+
     // Divy up amongst trucks
     // Round 1 optimization
     // Cut things by delivery date priority

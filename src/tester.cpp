@@ -27,7 +27,7 @@ int main(){
     // AddressList size() tester
     std::cout << "address length: " 
         << address_list.size() << std::endl;
-   
+    
     // AddressList pop() tester
     address_list.pop(0);
     std::cout << "address length: " 
@@ -50,7 +50,7 @@ int main(){
     address_list.add_address(Address(1, 3, 10));
     address_list.add_address(Address(1, 2, 10));
     address_list.add_address(Address(3, 1, 10));
-
+    
     // Route class test 1
     Route address_route(address_list, Address(0, 0, 0));
     std::cout << "old route: " << std::endl;
@@ -69,7 +69,7 @@ int main(){
         << opt2.length() << std::endl;
 
     std::cout << std::endl << std::endl;
-
+    
     address_route.to_dat("..\\dataout\\demo_1_old.dat");
     address_route.to_tikz("..\\dataout\\demo_1_old.tikz", "red", "black", "black", "-latex");
     greedy.to_dat("..\\dataout\\demo_1_greedy.dat");
@@ -88,7 +88,7 @@ int main(){
     route2.add_address(Address(2, 1, 10));
     route2.add_address(Address(1, 2, 10));
     route2.add_address(Address(1, 3, 10));
-
+    
     std::cout << "before swap: " << std::endl
         << "route 1: ";
     route1.display();
@@ -114,6 +114,14 @@ int main(){
     route1.to_tikz("..\\dataout\\demo_2_route1_swapped.tikz", "red", "black", "black", "-latex");
     route2.to_dat("..\\dataout\\demo_2_route2_swapped.dat");
     route2.to_tikz("..\\dataout\\demo_2_route2_swapped.tikz", "red", "gray", "gray", "-latex");
+
+    address_list.to_dat("..\\dataout\\demorw.dat");
+    std::cout << "\nWritten to file: ";
+    address_list.display();
+    AddressList from_file = AddressList::from_dat("..\\dataout\\demorw.dat");
+    std::cout << "\nRead from file: ";
+    from_file.display();
+    from_file.to_dat("..\\dataout\\demorw2.dat");
 
     return 0;
 }
