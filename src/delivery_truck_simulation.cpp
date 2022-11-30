@@ -6,6 +6,23 @@ using std::string;
 using namespace TravelingSalesman;
 
 /**
+ * @brief Modularizes writing .dat, .tikz, and job files for a list of routes
+ * 
+ * @param routes list of Routes to be written
+ * @param dat_path_to folder path to output each generated route's dat file
+ * @param tikz_path_to folder path to output each generated route's tikz file
+ * @param jobs_path_to folder path to output each generated route's instructions for drivers
+ * @param version version designator to be appended to the end of the filename, if desired
+*/
+void write_data(std::vector<Route> routes, string dat_path_to, string tikz_path_to, string jobs_path_to, string version) {
+    for (int i = 0; i < routes.size(); i++) {
+        if (dat_path_to != "") routes.at(i).to_dat(dat_path_to + "_truck" + std::to_string(i) + version + ".dat");
+        if (tikz_path_to != "") routes.at(i).to_tikz(tikz_path_to + "_truck" + std::to_string(i) + version + ".tikz");
+        // JOB NOT IMPLEMENTED YET
+    }
+}
+
+/**
  * @brief Conducts all tasks needed to divy up a list of Addresses to different truck drivers for a day.
  * 
  * @note files must follow specifications to be read in correctly.
@@ -19,8 +36,9 @@ using namespace TravelingSalesman;
  * @param num_trucks number of trucks available on that day to divy up
  * @param max_dist maximum distance that a truck may drive in a day
  * @param hub delivery hub Address
+ * @param analysis whether or not the user wants data from intermediate steps of optimization
 */
-void day(string unfulfilled_orders_from, string new_orders_from, string dat_path_to, string tikz_path_to, string jobs_path_to, string status_to, int num_trucks, double max_dist, Address hub) {
+void day(string unfulfilled_orders_from, string new_orders_from, string dat_path_to, string tikz_path_to, string jobs_path_to, string status_to, int num_trucks, double max_dist, Address hub, bool analysis) {
 
     // Read in unfulfilled and new orders, combine into megalist
     std::vector<Address> unfulfilled_orders = AddressList::from_dat(unfulfilled_orders_from).get_vec();
@@ -37,6 +55,9 @@ void day(string unfulfilled_orders_from, string new_orders_from, string dat_path
         routes.at(i % num_trucks).add_address(orders.at(i));
     }
 
+    // Write data from before (for stats and analysis)
+    write_data(routes, dat_path_to, tikz_path_to, "", "_v0");
+
     // Optimize each individual route
     for (int j = 0; j < routes.size(); j++) {
         routes.at(j) = routes.at(j).greedy_route();
@@ -50,8 +71,6 @@ void day(string unfulfilled_orders_from, string new_orders_from, string dat_path
         }
     }
 
-    std::cout << "and\n";
-
     // Cut things by delivery date priority
     // NOT IMPLEMENTED YET
 
@@ -59,16 +78,12 @@ void day(string unfulfilled_orders_from, string new_orders_from, string dat_path
     // NOT IMPLEMENTED YET
 
     // Each new route is written to dat, tikz, and job files (use existing Route functions to_dat() and to_tikz())
+    write_data(routes, dat_path_to, tikz_path_to, jobs_path_to, "");
+    
     // All leftover orders are the new unfulfilled orders, overwriting existing file
-    // Manager gets status report with previous orders, new orders, fulfilled orders, unfulfilled orders, overdue orders
-    for (int i = 0; i < routes.size(); i++) {
-        std::cout << "Printing route " << i << '\n';
-        routes.at(i).to_dat(dat_path_to + "_truck" + std::to_string(i) + ".dat");
-        routes.at(i).to_tikz(tikz_path_to + "_truck" + std::to_string(i) + ".tikz");
-        // JOB NOT IMPLEMENTED YET
-    }
-
     // UNFULFILLED ORDERS NOT IMPLEMENTED YET
+
+    // Manager gets status report with previous orders, new orders, fulfilled orders, unfulfilled orders, overdue orders
     // STATUS REPORT NOT IMPLEMENTED YET
 }
 
@@ -85,7 +100,8 @@ int main() {
         "..\\Delivery Truck Simulation Data\\Statuses\\dayn",
         2,
         0,
-        hub);
+        hub,
+        true);
 
     return 0;
 }
