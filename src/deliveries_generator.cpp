@@ -30,20 +30,6 @@ void nextprime(int& cur_prime){
       }
     } 
   }
-std::vector<int> generate_primes(int max_num){
-  // initalize an empty vector, 
-  // find every nextprime that is less
-  // than or equal to our max and add to our
-  // vector of primes
-  std::vector<int> primes = {};
-  int prime_num = 2;
-  while (max_num >= prime_num){
-      primes.push_back(prime_num);
-      nextprime(prime_num);
-  }
-  // return vector of primes
-  return primes;
-}
 
 
   std::random_device rd; //obtain a random number hardware
@@ -63,11 +49,10 @@ int random(int low, int high){
  * @param keyword generates "random" or "primes" coordinate points Address Object. 
  * @param space defines space of x-y coordinate system.
  * */ 
-TravelingSalesman::Address generateAddress(std::string& keyword, int& space, std::vector<int>& primes){
-    if (keyword == "random"){
+TravelingSalesman::Address generateAddress(std::string& keyword, int& space, int& offset){
         int i = random(0, space);
         int j = random(0, space);
-        int delivery_by = random(1, 7);
+        int delivery_by = random(1+offset, 7+offset);
         // only hub can have coordinates (0, 0)
         while ((i+j) == 0){
             int j = random(0, space);
@@ -77,24 +62,6 @@ TravelingSalesman::Address generateAddress(std::string& keyword, int& space, std
         // and one random int between 1 and 7 for delivery date
         // return Address object
         return TravelingSalesman::Address(i, j, delivery_by);
-
-
-    } else if (keyword == "primes"){
-        // generate random i and j indicies
-        int index_i = random(0, primes.size()-1);
-        int index_j = random(0, primes.size()-1);
-        // get 2 prime ints within range of space
-        int i = primes.at(index_i);
-        int j = primes.at(index_j);
-        int delivery_by = random(1, 7);
-        // and one random int between 1 and 7 for delivery date
-        // return Address object
-        return TravelingSalesman::Address(i, j, delivery_by);
-
-    } else{
-        // throw error for invalid keyword
-        throw(5);
-    }
 }
 /**
  * @brief generates route with a starting hub at (0, 0)
@@ -121,12 +88,16 @@ int main(int argc, char **argv){
     options.add_options()
         ("s,space","defines x-y coordinate space",
         cxxopts::value<int>()->default_value("10"));
+    
+    options.add_options()
+        ("d,days","defines # of days orders should be generated for. (all delivery days are relative to 0)",
+        cxxopts::value<int>()->default_value("14"));
 
     // primes only keyword option
-    options.add_options()
-        ("primes","primes keyword",
-        cxxopts::value<std::string>()->default_value("random"));
-    options.parse_positional({"primes"});
+    // options.add_options()
+    //     ("primes","primes keyword",
+    //     cxxopts::value<std::string>()->default_value("random"));
+    // options.parse_positional({"primes"});
 
     //*****parse options****
     auto result = options.parse(argc, argv);
@@ -139,38 +110,38 @@ int main(int argc, char **argv){
         return 0;
     }
 
-    // perform options operation
+    // parse options
     auto num_adds = result["addresses"].as<int>();
     auto space = result["space"].as<int>();
-    auto keyword = result["primes"].as<std::string>();
+    auto days = result["days"].as<int>();
+    std::string keyword("woddle");  // delete this if sure we won't incoperate prime stuff in report
     
-    // catch invalid keywords
-    if ((keyword != "primes") && (keyword != "random")){
-      std::cerr << "Invalid positional argument:\n\b"
-        << keyword << "\n\tuse 'random' or 'primes' positional arguments only!";
-      return 0;
-    }
+    // // catch invalid keywords
+    // if ((keyword != "primes") && (keyword != "random")){
+    //   std::cerr << "Invalid positional argument:\n\b"
+    //     << keyword << "\n\tuse 'random' or 'primes' positional arguments only!";
+    //   return 0;
+    // }
 
-// perform address generation
+// perform address generation:
+// First iterate through # of days
+  for (int i=1; i < days+1; i++){
+
+    // for each day, we generate a list of orders
     std::ofstream file;
-    std::string filename("new_deliveries");
-    std::string path("../dataout/");
+    std::string filename("new_deliveries_day-" + std::to_string(i));
+    std::string path("../dataout/test/");
     file.open(path + filename + ".txt");
 
-    std::vector<int> primes = generate_primes(space);// generate_primes(space);
-    // for (auto num : primes){
-    //   std::cout << num << " ";
-    // }
-    // std::cout << "\n";
-    std::cout << "Generating new deliveries...\n";
-    for (int i = 0; i < num_adds; i++) {
-      TravelingSalesman::Address addy = generateAddress(keyword, space, primes);
-      
+    for (int j = 0; j < num_adds; j++) {
+      TravelingSalesman::Address addy = generateAddress(keyword, space, i); // passing current day as offset
       file << addy.to_string() << "\n";
     }
+
     file.close();
+    std::cout << "Generated Deliveries for Day: " + std::to_string(i) + "!\n";
+  }
 
-    std::cout << num_adds << " new deliveries generated!\n\n";
-
+    std::cout << "Delivery Generations Successful!\n\n";
     return 0;
 }
