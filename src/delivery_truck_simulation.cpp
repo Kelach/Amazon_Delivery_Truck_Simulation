@@ -90,9 +90,6 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
     // Cut things by delivery date priority
     // NOT IMPLEMENTED YET
 
-    // Round 2 optimization
-    // NOT IMPLEMENTED YET
-
     // Each new route is written to dat, tikz, and job files (use existing Route functions to_dat() and to_tikz())
     write_data(routes, day_no, dat_path_to, tikz_path_to, jobs_path_to, "");
     

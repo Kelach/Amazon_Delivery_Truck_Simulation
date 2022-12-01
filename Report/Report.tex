@@ -35,7 +35,7 @@
 
     \section{Introduction}
     \label{section:Introduction}
-    Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. Our team chose to solve for our final project in COE 322: Scientific Computation at the University of Texas at Austin for the fall of 2022.
+    Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. Our team chose to solve this for our final project in COE 322: Scientific Computation at the University of Texas at Austin for the fall of 2022.
     
     In Section \ref{section:Methodology} we discuss the algorithm that we used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations. However, we will first further define the problem for our purposes and apply some limitations and assumptions in the following subsections.
 
@@ -54,12 +54,12 @@
     \label{section:Methodology}
     % Notes: Talk about how we're solving the problem (C++, TACC super computer, icpc compiler) and how the program works (e.g. reads in text file, spits out text file). Then go into the development process/timeline (we started simple with address/list classes, tested functionality, and then expand it a bit)
 
-    To approach this problem, we wrote a library and scripts in C++. These were compiled with \verb|g++| on our local machines and \verb|icpc| on the Texas Advanced Computing Center's ISP supercomputer. These scripts are outlined below.
+    To approach this problem, we wrote a library and scripts in C++. These were compiled with GNU's \verb|g++| on our local machines and Intel's \verb|icpc| on the Texas Advanced Computing Center's ISP supercomputer. These scripts are outlined below.
     \begin{itemize}
         \item \verb|traveling_salesman.h|: a header file for our TravelingSalesman library, defining all of the objects and algorithms used in the project
         \item \verb|traveling_salesman.cpp|: an implementation file
         \item \verb|tester.cpp|: a script which tests the functionality of our TravelingSalesman library and generates TikZ code for figures displayed in this report; this script is compiled as \verb|tester.exe|
-        \item \verb|routeGenerator.cpp|: a script which generates \verb|.dat| files containing lists of orders to be processed by \verb|delivery_truck_simulation.exe|; this script is compiled as \verb|routeGenerator.exe|
+        \item \verb|deliveries_generator.cpp|: a script which generates \verb|.dat| files containing lists of orders to be processed by \verb|delivery_truck_simulation.exe|; this script is compiled as \verb|deliveries_gen.exe|
         \item \verb|delivery_truck_simulation.cpp|: a script which represents a hypothetical final product for use in industry, as described in Section \ref{subsection:Developing_the_Final_Product}; this script is compiled as \verb|delivery_truck_simulation.exe|
     \end{itemize}
 
@@ -71,16 +71,16 @@
     \label{subsection:Object-Oriented_Structure}
     Our scripts took advantage of C++'s object-oriented capabilities to organize the problem. This section provides a brief overview; the contents of these classes are not described exhaustively.
     
-    Each delivery stop is represented by an \verb|Address| object, which has two-dimensional integer Cartesian coordinates \verb|i| and \verb|j| representing the location of the address, an an integer \verb|deliver_by| which describes the day by which the order is supposed to be delivered. The class can also calculate the distance to other \verb|Address|es, using either the Euclidian distance $\sqrt{i^{2} + j^{2}}$ or Manhattan distance $|i| + |j|$. In our implementation, we use the Euclidian distance, but it could easily be replaced with another formula.
+    Each delivery stop is represented by an \verb|Address| object, which has two-dimensional integer Cartesian coordinates \verb|i| and \verb|j| representing the location of the address, an an integer \verb|deliver_by| which describes the day by which the order is supposed to be delivered, or the stop passed-by. The class can also calculate the distance to other \verb|Address|es, using either the Euclidian distance $\sqrt{i^{2} + j^{2}}$ or Manhattan distance $|i| + |j|$. In our implementation, we use the Euclidian distance, but it could easily be replaced with another formula.
 
-    A list of \verb|Address|es is represented by an \verb|AddressList| object, which holds the objects in a \verb|std::vector<Address>| instance variable called \verb|address_list|. This class can add, remove, and rearrange \verb|Address|es.
+    A list of \verb|Address|es is represented by an \verb|AddressList| object, which holds the objects in a \verb|std::vector<Address>| instance variable called \verb|address_list|. This class can add, remove, and rearrange \verb|Address|es. It does not accept duplicate \verb|Address|es, i.e. those with the same coordinates. If the user attempts to add an order to the same \verb|Address| with different \verb|deliver_by| due dates, then the lesser value is accepted. This parallels orders being combined in real life. Note that the preference for the earlier date is based on the assumption that at the time that the \verb|Address|es are added to the \verb|AddressList|, they are available to be delivered.
 
     The \verb|Route| class extends the \verb|AddressList| class by including a \verb|hub| instance of type \verb|Address|. This represents the starting and ending point of the \verb|Route|. This class contains several functions to solve variants of the Traveling Salesman problem.
 
     \subsection{Traveling Salesman Problem}
     \label{subsection:Traveling_Salesman_Problem}
 
-    Talk about greedy and opt2 algorithms.
+    Talk about greedy and opt2 algorithms. Reference Figure \ref{figure:sortdemo}.
 
     \begin{figure}[h]
         \caption{An unsorted Route is optimized through both the greedy algorithm (blue) and the opt2 algorithm (green). This demonstrates how the opt2 algorithm alone is not necessarily sufficient to find the shortest Route.}
@@ -214,23 +214,17 @@
         \end{minipage}
     \end{figure}
 
-    %%%%%
-    %%%%%
-    %%%%%
-    %%%%% MORE DEVELOPMENT STEPS COULD GO HERE
-    %%%%%
-    %%%%%
-    %%%%%
-
     \subsection{Developing the Final Product}
     \label{subsection:Developing_the_Final_Product}
-    Our team 
+    After our team implemented our solutions to the Single and Multiple Traveling Salesman Problems, we decided to explore dynamicism by constructing a simplified route allocator for a delivery company. Every morning, a regional fulfilment center recives a list of orders to fulfill, corresponding to packages available onsite. It invokes our program, which combines these with unfulfilled orders from the previous day, and delegates them amongst a predetermined number of trucks. The \verb|Route|s are then optimized individually and between one another. At this point, their distances are measured. If a \verb|Route| exceeds a predetermined distance limit, \verb|Address|es are removed from the \verb|Route| based on their \verb|deliver_by| due date, until it falls within an acceptable length. The delivery routes are then exported to documents for the drivers, the unfulfilled orders are saved to a file which overwrites the old one, and performance statistics are compiled into a report for management.
 
-    How is our final thing going to work? Basically we want it to work for businesses.
+    All of the tasks to be completed before the start of a business day are modularized in a single function. It requires parameters specifying input and output file locations, the number of trucks available, the maximum permissible route distance, the hub address, and a boolean which allows the user to specify if data should be output from intermediate optimization steps. Most of the harder tasks of the simulation have already been solved in our library. This even includes the repetitive tasks of reading or exporting a \verb|Route| or \verb|AddressList| from or to a file, based on a given file path string. To demonstrate this program, we constructed a simulation with pre-generated daily orders spanning two weeks. The results of this simulation are discussed in Section \ref{section:Results}.
 
     \section{Results}
     \label{section:Results}
     Pretty pictures and tables go here. Describe each situation being displayed and talk about what they mean, e.g. is it the optimal solution? Good enough? Is there a tradeoff between time to execute and quality of results?
+
+    Talk about how our program is flawed, e.g. address removal isn't intelligent (purely by due date); also after stops are removed, the routes arent re optimized, etc
 
     Hmm, maybe insert a table comparing number of nodes/trucks to program execution time. What rate does it increase at $(O(n), O(n^2), \&c.)$
 
