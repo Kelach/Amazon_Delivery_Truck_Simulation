@@ -110,6 +110,20 @@ int main(){
     route2.display();
     std::cout << std::endl;
 
+    // Route r(std::vector<Address> {}, Address(0, 0, 0));
+    // r.add_address(Address(2, 0, 10));
+    // r.add_address(Address(2, 1, 10));
+    // r.add_address(Address(1, 2, 10));
+    // r.add_address(Address(0, 2, 10));
+
+    // Route s(std::vector<Address> {}, Address(0, 0, 0));
+    // s.add_address(Address(3, 1, 10));
+    // s.add_address(Address(3, 2, 10));
+    // s.add_address(Address(2, 3, 10));
+    // s.add_address(Address(1, 3, 10));
+    // std::cout << r.length() << " and "
+    //     << s.length() << "\n"; 
+
     route1.to_dat("..\\dataout\\demo_2_route1_swapped.dat");
     route1.to_tikz("..\\dataout\\demo_2_route1_swapped.tikz", "red", "black", "black", "-latex");
     route2.to_dat("..\\dataout\\demo_2_route2_swapped.dat");
