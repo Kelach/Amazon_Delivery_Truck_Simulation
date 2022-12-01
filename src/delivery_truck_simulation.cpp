@@ -65,8 +65,12 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
     // Read in unfulfilled and new orders, combine into megalist
     std::vector<Address> unfulfilled_orders = AddressList::from_dat(unfulfilled_orders_from).get_vec();
     std::vector<Address> new_orders = AddressList::from_dat(new_orders_from).get_vec();
-    AddressList orders(unfulfilled_orders);
-    for(Address new_order : new_orders) orders.add_address(new_order); // Loop add_address to prevent duplicates
+    AddressList orders;
+    for (Address unfulfilled_order : unfulfilled_orders) orders.add_address(unfulfilled_order); // Loop add_address to prevent duplicates
+    for (Address new_order : new_orders) orders.add_address(new_order); // Loop add_address to prevent duplicates
+
+    // Reuse unfilfilled orders
+    unfulfilled_orders.clear();
 
     // Divy up amongst trucks
     std::vector<Route> routes = {};
