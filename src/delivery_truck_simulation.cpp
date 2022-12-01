@@ -87,14 +87,21 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
     // Optimize routes
     optimize_routes(routes);
 
-    // Cut things by delivery date priority
-    // NOT IMPLEMENTED YET
+    // Cut out stops by delivery date priority
+    for (int j = 0; j <= routes.size(); j++) {
+        // While a Route is longer than max_dist, remove low priority Addresses until it returns to compliance
+        // Add these removed Addresses to unfulfilled_orders
+        while (routes.at(j).size() > max_dist) {
+            unfulfilled_orders.push_back(routes.at(j).remove_least_priority());
+        }
+    }
 
     // Each new route is written to dat, tikz, and job files (use existing Route functions to_dat() and to_tikz())
     write_data(routes, day_no, dat_path_to, tikz_path_to, jobs_path_to, "");
     
     // All leftover orders are the new unfulfilled orders, overwriting existing file
-    // UNFULFILLED ORDERS NOT IMPLEMENTED YET
+    AddressList unfulfilled_orders_list(unfulfilled_orders);
+    unfulfilled_orders_list.to_dat(unfulfilled_orders_from);
 
     // Manager gets status report with previous orders, new orders, fulfilled orders, unfulfilled orders, overdue orders
     // STATUS REPORT NOT IMPLEMENTED YET
