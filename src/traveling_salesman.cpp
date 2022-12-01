@@ -43,7 +43,7 @@ double Address::distance(const Address& other){
 
 // not very robust for detecting duplicate addresses
 bool Address::operator==(const Address& rhs){
-    return (rhs.i==i && rhs.j==j && rhs.deliver_by==deliver_by);
+    return (rhs.i==i && rhs.j==j);
 }
 
 std::vector<int> Address::get_coords(){
@@ -52,6 +52,10 @@ std::vector<int> Address::get_coords(){
 
 int Address::get_deliver_by() {
     return deliver_by;
+}
+
+void Address::set_deliver_by(int deliver_by) {
+    this->deliver_by = deliver_by;
 }
 
 void Address::display(){
@@ -73,14 +77,13 @@ AddressList::~AddressList(){};
 
 void AddressList::add_address(Address new_address){
     // Checks if address already current exists
-    for (Address addy: address_vec){
+    for (Address addy : address_vec){
         if (addy == new_address){
             std::cout << "Ignoring duplicate address" << std::endl;
-            /**
-             * If the order is duplicate, it may still have an earlier deliver_by date. In that case, both orders should be delivered on the earlier date.
-             * 
-             * @todo Check if new_address has a lesser deliver_by than addy. If so, update addy to the earlier date, so that the combined order isn't tardy.
-            */
+            // If the order is duplicate, it may still have an earlier deliver_by date. In that case, both orders should be delivered on the earlier date.
+            if (new_address.get_deliver_by() < addy.get_deliver_by()) {
+                addy.set_deliver_by(new_address.get_deliver_by());
+            }
             return;
         }
     }

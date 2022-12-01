@@ -58,7 +58,7 @@ namespace TravelingSalesman {
         /**
          * @brief equality operator of Address Objects
          * @param rhs "right-hand side" address Object to be compared
-         * @returns True if Objects are equal (same cordinates and delivery date)
+         * @returns True the Addresses have the same coordinates. It does not consider the deliver_by date.
         */
         bool operator==(const Address& rhs);
         
@@ -73,6 +73,12 @@ namespace TravelingSalesman {
          * @returns deliver_by
         */
        int get_deliver_by();
+
+       /**
+        * @brief Setter method to change deliver_by of an Address
+        * @param deliver_by new deliver_by date
+       */
+        void set_deliver_by(int deliver_by);
 
         /**
          * @brief displays the cartesian coordinates of an Address point
@@ -110,7 +116,7 @@ namespace TravelingSalesman {
         ~AddressList();
         
         /**
-         * @brief Appends a new Address object
+         * @brief Appends a new Address object. If the Address is already in the AddressList, it takes the earlier deliver_by date of the two.
          * @param new_address New Address object to be appended
          * @returns None
         */
