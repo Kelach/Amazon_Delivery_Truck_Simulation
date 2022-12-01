@@ -23,7 +23,7 @@
 \lstset{style=Code_Style}
 
 \title{Amazon Delivery Truck Simulation}
-\author{Hanna Butt \thanks{HFB352} \and Ashton Cole \thanks{AVC687, \href{mailto:ashtonc24@utexas.edu}{ashtonc24@utexas.edu}} \and Kelechi Emeruwa \thanks{KEE688, \href{mailto:kelechi@utexas.edu}{kelechi@utexas.edu}}}
+\author{Hanna Butt \thanks{HFB352, \href{mailto:hannaf2020@gmail.com}{hannaf2020@gmail.com}} \and Ashton Cole \thanks{AVC687, \href{mailto:ashtonc24@utexas.edu}{ashtonc24@utexas.edu}} \and Kelechi Emeruwa \thanks{KEE688, \href{mailto:kelechi@utexas.edu}{kelechi@utexas.edu}}}
 \date{\today}
 
 \begin{document}
@@ -43,7 +43,7 @@
     \label{subsection:Perfect_is_the_Enemy_of_Good}
     One could simply test each of the $n!$ combinations of a list of $n$ addresses to fund the one with the shortest total distance, but with 4 stops this becomes quite tedious, and after that nearly untenable. A computer could solve this faster, but the problem still becomes very computationally expensive at a factorial rate. The preferable alternative is to use algorithms to find good and better paths, significantly cutting down on calculations. Perhaps it will neglect the perfect solution, but in a world with finite resources, we have to make the trade-off to settle for less. The algorithms which we employ, detailed in Section \ref{section:Methodology} reflect this.
 
-    \subsection{Eath is Flat}
+    \subsection{Earth is Flat}
     \label{subection:Earth_is_Flat}
     We also have to restrict the definitions of an address and the distance between addresses. Since this project is intended to focus on the algorithms one would use to solve the Traveling Salesman problem, as opposed to practical considerations for constructing a turn-key solution for use in the real world, addresses are represented with Cartesian coordinates on a two-dimensional Euclidian plane. Distances are assumed to be Euclidian, i.e. ``as the bird flies,'' and travel times are assumed to be proportional thereto. The distance could alternatively be defined as the ``Manhattan Distance,'' i.e. the distance in a perfect rectilinear street grid. Using real-world geographic data considering road layouts, speed limits, real-time traffic data, and Earth's curvature would be more realistic, but it would also add significant complexity to our implementation while contributing little to the core principles of the solution.
 
