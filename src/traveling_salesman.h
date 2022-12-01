@@ -123,6 +123,17 @@ namespace TravelingSalesman {
         void add_address(Address new_address);
 
         /**
+         * @brief Removes the first occurring last due Address.
+         * 
+         * Of whatever set of Addresses in the list have the greatest deliver_by date, the one which occurs first in the AddressList is removed.
+         * 
+         * @note SHOULD THIS BE RETURN BY REFERENCE????
+         * 
+         * @returns a pointer to the removed Address
+        */
+        Address remove_least_priority();
+
+        /**
          * @brief Calculates distance one has to visit all addresses in order
          * @returns Total distance
         */

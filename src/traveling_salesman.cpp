@@ -90,6 +90,21 @@ void AddressList::add_address(Address new_address){
     address_vec.push_back(new_address);
 }
 
+Address AddressList::remove_least_priority() {
+    Address to_remove = address_vec.at(0);
+    int r = 0;
+
+    for (int i = 1; i < address_vec.size(); i++) {
+        if (to_remove.get_deliver_by() < address_vec.at(i).get_deliver_by()) {
+            to_remove = address_vec.at(i);
+            r = i;
+        }
+    }
+
+    address_vec.erase(address_vec.begin() + r);
+    return to_remove;
+}
+
 void AddressList::display(){
     for (Address& addy : address_vec){
         addy.display();
