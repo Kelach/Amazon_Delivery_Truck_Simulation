@@ -2,6 +2,7 @@
 using std::string;
 #include "traveling_salesman.h"
 #include <iostream>
+#include <fstream>
 
 using namespace TravelingSalesman;
 
@@ -24,6 +25,55 @@ void optimize_routes(std::vector<Route>& routes) {
     }
 
     // COULD OPTIMIZE EACH INDIVIDUALLY AGAIN JUST IN CASE???
+}
+
+/**
+ * @brief Modularizes manager's status report generation.
+*/
+void write_status_report(string status_to, std::vector<Route> routes, std::vector<Address> unfulfilled_orders, int day_no, int max_dist) {
+    std::ofstream file;
+    file.open(status_to + "day" + std::to_string(day_no) + "_status.txt");
+
+    file << "Status Report for Day" << day_no
+        << "\n\nNumber of trucks: " << routes.size()
+        << "\nTruck distance limit: " << max_dist
+        << "\n\nTRUCK DATA\n";
+
+    int del_e = 0; // Delivered early
+    int del_o = 0; // Delivered on time
+    int del_l = 0; // Delivered late
+    int und_e = 0; // Undelivered, not due
+    int und_o = 0; // Undelivered, due tomorrow
+    int und_l = 0; // Undelivered, overdue
+
+    for (int j = 0; j < routes.size(); j++) {
+        file << "Truck 1: " << routes.at(j).size() << " deliveries, distance " << routes.at(j).length() << '\n';
+        for (int k = 0; k < routes.at(j).size(); k++) {
+            int due = routes.at(j).at(k).get_deliver_by(); // Due date of particular order
+            if (due - day_no < 0) del_l++;
+            else if (due - day_no == 0) del_o++;
+            else if (due - day_no > 0) del_e++;
+        }
+    }
+
+    for (int i = 0; i < unfulfilled_orders.size(); i++) {
+        int due = unfulfilled_orders.at(i).get_deliver_by(); // Due date of particular order
+        if (due - day_no < 1) und_l++;
+        else if (due - day_no == 1) und_o++; // Since it won't be delivered today, on time is tomorrow
+        else if (due - day_no > 1) und_e++;
+    }
+
+    file << "\nORDER DATA\n"
+        << "Delivered: "
+        << del_e << " early, "
+        << del_o << " on time, "
+        << del_l << " late\n"
+        << "Unfulfilled: "
+        << und_e << " not due, "
+        << und_o << " due tomorrow, "
+        << und_l << " overdue\n";
+
+    file.close();
 }
 
 /**
@@ -88,7 +138,7 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
     optimize_routes(routes);
 
     // Cut out stops by delivery date priority
-    for (int j = 0; j <= routes.size(); j++) {
+    for (int j = 0; j < routes.size(); j++) {
         // While a Route is longer than max_dist, remove low priority Addresses until it returns to compliance
         // Add these removed Addresses to unfulfilled_orders
         while (routes.at(j).size() > max_dist) {
@@ -104,7 +154,7 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
     unfulfilled_orders_list.to_dat(unfulfilled_orders_from);
 
     // Manager gets status report with previous orders, new orders, fulfilled orders, unfulfilled orders, overdue orders
-    // STATUS REPORT NOT IMPLEMENTED YET
+    write_status_report(status_to, routes, unfulfilled_orders, day_no, max_dist);
 }
 
 int main() {
@@ -120,7 +170,7 @@ int main() {
         "..\\Delivery Truck Simulation Data\\Jobs\\",
         "..\\Delivery Truck Simulation Data\\Statuses\\",
         2,
-        0,
+        25.0,
         hub,
         true);
 
