@@ -188,6 +188,7 @@ AddressList AddressList::from_dat(string fname) {
             }
         }
     }
+    file.close();
     return address_list;
 }
 
