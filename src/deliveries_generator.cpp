@@ -6,32 +6,6 @@
 #include <vector>
 #include <fstream>
 
-bool is_prime(int num){
-  // returns true/false if number is/not prime
-  // loop from 2 to half of the input and checks
-  // if num is divisible by i. 
-  for (int i=2; i<= num/2; i++){
-    if ((num % i) == 0){
-    return false;
-    }
-  }
-  return true;
-}
-void nextprime(int& cur_prime){
-    // if current prime is 2, set to 3
-    if (cur_prime == 2){
-      cur_prime = 3;
-    } else{
-      // else, loop through odd numbers 
-      // and return next prime number
-      cur_prime += 2;
-      while(is_prime(cur_prime) == false){
-        cur_prime += 2;
-      }
-    } 
-  }
-
-
   std::random_device rd; //obtain a random number hardware
   std::mt19937 gen(rd()); // seed the generator
 
@@ -93,11 +67,6 @@ int main(int argc, char **argv){
         ("d,days","defines # of days orders should be generated for. (all delivery days are relative to 0)",
         cxxopts::value<int>()->default_value("14"));
 
-    // primes only keyword option
-    // options.add_options()
-    //     ("primes","primes keyword",
-    //     cxxopts::value<std::string>()->default_value("random"));
-    // options.parse_positional({"primes"});
 
     //*****parse options****
     auto result = options.parse(argc, argv);
@@ -114,14 +83,6 @@ int main(int argc, char **argv){
     auto num_adds = result["addresses"].as<int>();
     auto space = result["space"].as<int>();
     auto days = result["days"].as<int>();
-    std::string keyword("woddle");  // delete this if sure we won't incoperate prime stuff in report
-    
-    // // catch invalid keywords
-    // if ((keyword != "primes") && (keyword != "random")){
-    //   std::cerr << "Invalid positional argument:\n\b"
-    //     << keyword << "\n\tuse 'random' or 'primes' positional arguments only!";
-    //   return 0;
-    // }
 
 // perform address generation:
 // First iterate through # of days
