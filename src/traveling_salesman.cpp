@@ -315,40 +315,40 @@ void Route::multi_opt2(Route& route2){
                     std::vector<double> distances4 = {routes_4[0].length(), routes_4[1].length()};
                     
                     if ((distances1[0] < current_distances[0]) && (distances1[1] < current_distances[1])){
-                        std::cout << "updating routes because lengths " <<
-                        current_distances[0] << ", " << current_distances[1] 
-                            << " are worse than lengths " << distances1[0] << ", " 
-                            << distances1[1] << "\n";
+                        // std::cout << "updating routes because lengths " <<
+                        // current_distances[0] << ", " << current_distances[1] 
+                        //     << " are worse than lengths " << distances1[0] << ", " 
+                        //     << distances1[1] << "\n";
                         // address_vec = routes_1[0].get_vec();
                         // route2 = routes_1[1];
                         current_distances = {routes_1[0].length(), routes_1[1].length()};
                     }
 
                     if ((distances2[0] < current_distances[0]) && (distances2[1] < current_distances[1])){
-                        std::cout << "updating routes because lengths " <<
-                        current_distances[0] << ", " << current_distances[1] 
-                            << " are worse than lengths " << distances2[0] << ", " 
-                            << distances2[1] << "\n";
+                        // std::cout << "updating routes because lengths " <<
+                        // current_distances[0] << ", " << current_distances[1] 
+                        //     << " are worse than lengths " << distances2[0] << ", " 
+                        //     << distances2[1] << "\n";
                         // address_vec = routes_2[0].get_vec();
                         // route2 = routes_2[1];
                         current_distances = {routes_2[0].length(), routes_2[1].length()};
                     }
 
                     if ((distances3[0] < current_distances[0]) && (distances3[1] < current_distances[1])){
-                        std::cout << "updating routes because lengths " <<
-                        current_distances[0] << ", " << current_distances[1] 
-                            << " are worse than lengths " << distances3[0] << ", " 
-                            << distances3[1] << "\n";
+                        // std::cout << "updating routes because lengths " <<
+                        // current_distances[0] << ", " << current_distances[1] 
+                        //     << " are worse than lengths " << distances3[0] << ", " 
+                        //     << distances3[1] << "\n";
                         // address_vec = routes_3[0].get_vec();
                         // route2 = routes_3[1];
                         current_distances = {routes_3[0].length(), routes_3[1].length()};
                     }
 
                     if ((distances4[0] < current_distances[0]) && (distances4[1] < current_distances[1])){
-                        std::cout << "updating routes because lengths " <<
-                        current_distances[0] << ", " << current_distances[1] 
-                            << " are worse than lengths " << distances4[0] << ", " 
-                            << distances4[1] << "\n";
+                        // std::cout << "updating routes because lengths " <<
+                        // current_distances[0] << ", " << current_distances[1] 
+                        //     << " are worse than lengths " << distances4[0] << ", " 
+                        //     << distances4[1] << "\n";
                         // address_vec = routes_4[0].get_vec();
                         // route2 = routes_4[1];
                         current_distances = {routes_4[0].length(), routes_4[1].length()};
@@ -466,7 +466,7 @@ void Route::swap(Route& route2, int i, int j, int n, int m){
 }
 void Route::display(){
     hub.display();
-    AddressList::display(); // needed to convert vector into AddressList Object
+    AddressList::display();
     hub.display();
 }
 void Route::to_dat() {

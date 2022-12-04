@@ -80,7 +80,51 @@
     \subsection{Traveling Salesman Problem}
     \label{subsection:Traveling_Salesman_Problem}
 
-    Talk about greedy and opt2 algorithms. Reference Figure \ref{figure:sortdemo}.
+    Having developed a strong Object-Oriented skeleton we can 
+    explore algorithms to address the Traveling Salesman Problem. 
+    An intuitive approach we could adopt is called the 
+    \emph{greedy algorithm} also known as the \emph{nearest neighbor algorithm}.  
+    The greedy algorithm works to develop an optimal route by traversing (from a starting point)  
+    to the next closest point in a list of points until all points in the list have been visited.
+    To achieve this optimal route, the greedy algorithm must 
+    determine which point is closest to the current point at each iteration.
+    This can be accomplished with the help of our \emph{index\textunderscore closest\textunderscore to()}
+    method. Now we can iterate through the list of addresses 
+    and at each iteration calculate the next closest address 
+    until we have visited all the addresses in our list. To 
+    prevent visiting the same address more than once, we can 
+    make another list, and pop elements from our current list 
+    into our new (optimized) list. Since we call our 
+    \emph{index\textunderscore closest\textunderscore to()} 
+    method n times (where n is the length of our address list) 
+    and the method itself has a time complexity of O(n) we 
+    arrive at a Big-O time complexity of O(n\textsuperscript{2}) for this 
+    greedy algorithm . The figure below illustrates the 
+    effect our greedy algorithm has on developing a more 
+    optimized route.     \ref{figure:sortdemo}.
+    \begin{figure}
+        \caption{insert improvement from greedy alog }
+    \end{figure}
+    The improvements from the greedy algorithm seem to suggest that it 
+    will play an important role in developing our Amazon route scheduling 
+    algorithm. On the other hand, additional testing demonstrates how 
+    the greedy algorithm alone can fail to provide the most accurate solutions:
+    \begin{figure}
+        \caption{ insert deficiency of greedy algorithm }
+    \end{figure}
+    Although this deficiency may seem minimal with a few routes, at scale , 
+    the costs incurred due to longer distances traveled and longer delivery 
+    times may prove to be a great burden for Amazon, therefore we'd like to 
+    explore better methods. One approach we can adopt is based on the opt-2 
+    heuristic. The opt-2 heuristic suggests that optimal routes are generally 
+    not “entangled” (i.e no intersections). Therefore, if we can work to “detangle” 
+    a given list of points we can find its optimal path. Both scenarios can be seen 
+    in the figure below.  figure below shows both an entangled suboptimal path and 
+    a detangled optimal path. 
+
+    \begin{figure}
+        \caption{ ** insert entangled vs detangled route and its total distance. }
+    \end{figure}
 
     \begin{figure}[h]
         \caption{An unsorted Route is optimized through both the greedy algorithm (blue) and the opt2 algorithm (green). This demonstrates how the opt2 algorithm alone is not necessarily sufficient to find the shortest Route.}
