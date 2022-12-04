@@ -34,7 +34,7 @@ void write_status_report(string status_to, std::vector<Route> routes, std::vecto
     std::ofstream file;
     file.open(status_to + "day" + std::to_string(day_no) + "_status.txt");
 
-    file << "Status Report for Day" << day_no
+    file << "Status Report for Day " << day_no
         << "\n\nNumber of trucks: " << routes.size()
         << "\nTruck distance limit: " << max_dist
         << "\n\nTRUCK DATA\n";
@@ -71,7 +71,7 @@ void write_status_report(string status_to, std::vector<Route> routes, std::vecto
         << "Unfulfilled: "
         << und_e << " not due, "
         << und_o << " due tomorrow, "
-        << und_l << " overdue\n";
+        << und_l << " overdue";
 
     file.close();
 }
@@ -141,7 +141,7 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
     for (int j = 0; j < routes.size(); j++) {
         // While a Route is longer than max_dist, remove low priority Addresses until it returns to compliance
         // Add these removed Addresses to unfulfilled_orders
-        while (routes.at(j).size() > max_dist) {
+        while (routes.at(j).length() > max_dist) {
             unfulfilled_orders.push_back(routes.at(j).remove_least_priority());
         }
     }
@@ -163,14 +163,14 @@ int main() {
     Address hub(0, 0, 0);
 
     day(0,
-        "..\\Delivery Truck Simulation Data\\Orders\\dayn.dat",
         "..\\Delivery Truck Simulation Data\\Orders\\unfulfilled.dat",
+        "..\\Delivery Truck Simulation Data\\Orders\\dayn.dat",
         "..\\Delivery Truck Simulation Data\\dat\\",
         "..\\Delivery Truck Simulation Data\\tikz\\",
         "..\\Delivery Truck Simulation Data\\Jobs\\",
         "..\\Delivery Truck Simulation Data\\Statuses\\",
         2,
-        25.0,
+        27.0,
         hub,
         true);
 
