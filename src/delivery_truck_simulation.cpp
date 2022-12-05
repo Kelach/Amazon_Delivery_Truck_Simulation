@@ -8,7 +8,7 @@ using namespace TravelingSalesman;
 
 /**
  * @brief Modularizes optimizing the distances of a list of Routes
- * @param routes lits of Routes to be sorted and optimized between each other
+ * @param routes list of Routes to be sorted and optimized between each other
 */
 void optimize_routes(std::vector<Route>& routes) {
     // Optimize each individual route
