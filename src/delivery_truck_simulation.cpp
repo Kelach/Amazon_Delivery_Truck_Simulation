@@ -141,6 +141,7 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
     for (int j = 0; j < routes.size(); j++) {
         // While a Route is longer than max_dist, remove low priority Addresses until it returns to compliance
         // Add these removed Addresses to unfulfilled_orders
+
         while (routes.at(j).length() > max_dist) {
             unfulfilled_orders.push_back(routes.at(j).remove_least_priority());
         }
@@ -158,8 +159,8 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
 }
 
 int main() {
-    int num_trucks = 5;
-    double max_dist = 25.0;
+    int num_trucks = 2;
+    double max_dist = 29.0;
     Address hub(0, 0, 0);
     bool analysis = true;
 

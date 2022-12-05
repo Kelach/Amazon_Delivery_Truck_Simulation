@@ -217,6 +217,7 @@ Address Route::get_hub(){
     return hub;
 }
 double Route::length(){
+    if (address_vec.size() == 0) return 0;
     AddressList copy(address_vec);
     return copy.length() + hub.distance(address_vec.at(0)) + hub.distance(address_vec.at(address_vec.size()-1));
     // return this->length();

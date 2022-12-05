@@ -1,0 +1,9 @@
+\draw [black] (0, 0) -- (2, 1);
+\filldraw [black] (0, 0) circle (2pt);
+\draw [black] (2, 1) --(7, 3);
+\filldraw [black] (2, 1) circle (2pt);
+\draw [black] (7, 3) --(6, 5);
+\filldraw [black] (7, 3) circle (2pt);
+\draw [black] (6, 5) --(0, 0);
+\filldraw (6, 5) [black] circle (2pt);
+\filldraw [red] (0, 0) circle (4pt);
