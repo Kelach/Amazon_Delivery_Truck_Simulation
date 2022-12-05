@@ -83,7 +83,7 @@
     Having developed a strong Object-Oriented skeleton we can 
     explore algorithms to address the Traveling Salesman Problem. 
     An intuitive approach we could adopt is called the 
-    \emph{greedy algorithm} also known as the \emph{nearest neighbor algorithm}.  
+    \emph{greedy algorithm} also known as the \emph{nearest neighbor algorithm}. \cite[p.~458]{cite:eijkhout2022}  
     The greedy algorithm works to develop an optimal route by traversing (from a starting point)  
     to the next closest point in a list of points until all points in the list have been visited.
     To achieve this optimal route, the greedy algorithm must 
@@ -428,23 +428,6 @@ For all possible segments for both routes
     Talk about what we learned, how this all applies to industry, ideas to scale the problem up, ethics, \&c.
 
     Talk about how our simulation is flawed, e.g. address removal isn't intelligent (purely by due date); orders aren't held back to be grouped with later-arriving orders; after stops are removed, the routes arent re optimized; main simulation program isn't super flexible (e.g. to change document names, formattig, you have to go into the code; dat files have to be in a specific format, can't be a database); no UI for ease of use
-
-    \appendix
-    \section{Sample of Using Listings Package}
-    Please remove this appendix before publishing! Here's some pretty C++ code from Listing \ref{lst:example}. Here's a sample citation \cite{web:lang:stats}.
-    \begin{lstlisting}[
-        caption=Example Code,
-        label={lst:example},
-        language=C++
-    ]
-#include <iostream>
-using sdt::cout;
-
-int main() {
-    // Print out hello
-    cout << "Hello world!" << '\n';
-    return 0;
-}\end{lstlisting}
-\bibliographystyle{plain}
-\bibliography{ref}
+    \bibliographystyle{plain}
+    \bibliography{ref}
 \end{document}
