@@ -89,9 +89,9 @@ int main(int argc, char **argv){
 
     // for each day, we generate a list of orders
     std::ofstream file;
-    std::string filename("day" + std::to_string(i) + ".dat");
+    std::string filename("day" + std::to_string(i));
     std::string path("..\\Delivery Truck Simulation Data\\Orders\\");
-    file.open(path + filename + ".txt");
+    file.open(path + filename + ".dat");
 
     for (int j = 0; j < num_adds; j++) {
       TravelingSalesman::Address addy = generateAddress(space, i); // passing current day as offset
