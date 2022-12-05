@@ -579,7 +579,7 @@ For all possible segments for both routes
 
     Reports and data files can also be examined for their accuracy; refer to Listings \ref{lst:Sample_Data_File} and \ref{lst:Sample_TikZ_File} to see that they correspond to the black unsorted route. On the other hand, the job assignment in Listing \ref{lst:Sample_Job_Assignment} corresponds to the black sorted route, and the order numbers in the status report in Listing \ref{lst:Sample_Satus_Report} match the number of stops and distances of the sorted routes.
 
-    From there, we can study the numbers provided in the status reports. The numbers are condensed into Table \ref{table:deliverystats}.
+    From there, we can study the numbers provided in the status reports. Delivery fulfillment statistics are condensed into Table \ref{table:deliverystats}. We can utilize this to analyze the hub's performance. In general, the hob is keeping up with the order inflow rate. Some days it isn't able to deliver everything, but it eventually catches up. This could be an important experimental metric for a delivery organization. Parameters like the number of trucks and the maximum delivery distance could be adjusted to find critical points where orders get added to the backlog faster than they are removed.
 
     \begin{table}[h]
         \centering
@@ -591,22 +591,24 @@ For all possible segments for both routes
             \cline{2-4} \cline{6-8}
             Day 1 & 18 & 0 & 0 && 0 & 0 & 0 \\
             Day 2 & 16 & 0 & 0 && 0 & 0 & 0 \\
-            Day 3 &  &  &  &&  &  &  \\
-            Day 4 &  &  &  &&  &  &  \\
-            Day 5 &  &  &  &&  &  &  \\
-            Day 6 &  &  &  &&  &  &  \\
-            Day 7 &  &  &  &&  &  &  \\
-            Day 8 &  &  &  &&  &  &  \\
-            Day 9 &  &  &  &&  &  &  \\
+            Day 3 & 10 & 0 & 0 && 8 & 0 & 0 \\
+            Day 4 & 16 & 0 & 0 && 7 & 0 & 0 \\
+            Day 5 & 16 & 0 & 0 && 6 & 0 & 0 \\
+            Day 6 & 23 & 0 & 0 && 0 & 0 & 0 \\
+            Day 7 & 12 & 0 & 0 && 4 & 0 & 0 \\
+            Day 8 & 19 & 0 & 0 && 1 & 0 & 0 \\
+            Day 9 & 17 & 0 & 0 && 1 & 0 & 0 \\
         \end{tabular}
     \end{table}
 
+    At this point, the main problem is solved. For a given list of orders, our program can find an optimal solution within a certain distance range and eliminate low-priority orders to keep delivery routes within a certain distance constraint. Now we will extend our investigation into modifying parameters of the simulation. As mentioned before, at a certain point, the simulation will likely start backlogging orders. If we find this point, managers could leverage it to maximize efficiency while maintaining customer satisfaction. In Section \ref{subsection:Varying_the_Distance_Limit}, we investigate how varying the maximum permissible route distance impacts backlogs. In section \ref{subsection:Varying_the_Number_of_Trucks_Deployed}, we investigate how varying the number of trucks deployed impacts backlogs.
+
     \subsection{Varying the Distance Limit}
-    \label{}
-    Note that if the distance limit dropped below $2 * 10 \sqrt{2} \approx 28.284$, then some orders would be forever out of range.
+    \label{subsection:Varying_the_Distance_Limit}
+    Note that for a delivery zone ranging from coordinates 0 to $d$ with a hub at $(0, 0)$, if the distance limit were dropped below $2 * d \sqrt{2}$, then some orders would be forever out of range. This sets a lower limit for our maximum permissible distance.
 
     \subsection{Varying the Number of Trucks Deployed}
-    \label{subsection:Investigating_the_Number_of_Trucks_Deployed}
+    \label{subsection:Varying_the_Number_of_Trucks_Deployed}
     One important question that a delivery company might want to consider is how many trucks to deploy on a given day. More trucks can cover a greater cumulative distance and deliver more orders, but 
 
     \subsection{Performance Data}
