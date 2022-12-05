@@ -332,13 +332,60 @@ Route Route::opt2(){
     ]
 For all possible segments for both routes
     swap both routes with the following variations:
-    Reverse route 1 then swap
-    Reverse route 2 then swap
-    Just swap
-    Reverse both routes then swap
-    If the distance from any of the variations is improved, keep the modification.\end{lstlisting}
+        1. Reverse route 1 then swap
+        2. Reverse route 2 then swap
+        3. Just swap
+        4. Reverse both routes then swap
+    If the distance from any of the variations is improved
+        keep the modification.\end{lstlisting}
     
     
+    As mentioned previously in this section, 
+    we can expect the time complexity of this algorithm 
+    to be larger than that of the single route opt-2 algorithm. 
+    The multi-path opt-2 algorithm uses four for-loops 
+    (two for each route). Further, at each iteration 
+    of the innermost loop, we call our reverse and swap 
+    methods several times. Both methods have a time
+     complexity of O(n) (where n is the number of 
+     addresses in each route). Since those methods 
+     are called in total nine times, the time complexity 
+     of the innermost loops is O(9n) which simplifies to O(n).
+     Consequently, when we consider our four for-loops 
+     the overall time complexity becomes O(n\textsuperscript5)
+     \footnote{Futhermore, the time complexity would be 
+     O(m\textsuperscript5+n\textsuperscript5) If we consider 
+     routes of differing lengths m and n}. It’s important to 
+     note that the time complexity of this algorithm 
+     can also be improved, but at a cost. For example, 
+     two for-loops are created to account for total 
+     possible starting and ending of each segment per 
+     route. To improve runtime, we could simply give 
+     each segment a fixed length, thereby reducing 
+     the time complexity to O(n\textsuperscript3). However, 
+     this comes at the cost of accuracy, as our algorithm 
+     may ignore more optimal solutions due to this constraint. 
+     Therefore, therein lies a tradeoff between accuracy and 
+     efficiency that we must consider when choosing which 
+     approach/algorithm to use. The figures below demonstrate 
+     this tradeoff visually:
+     \begin{figure}[h]
+        \caption{**include graph. Caption 1: Multi-path opt-2 algorithm with permitting swaps of fixed segment length 3 ( O(n\textsuperscript3) )
+        Caption 2: Multi-path opt-2 algorithm with permitting swaps of varied segment lengths ( O(n\textsuperscript5) ). ****
+        }
+    \end{figure}
+
+    In prioritizing accuracy, we will choose to pay the computational costs and use a multi-path-op2 algorithm that swaps segments of varied lengths efficient mulit-path opt-2 algorithm may require. Additionally, we can also choose to use this algorithm to optimize two routes belonging to a single driver (that is, spread over two different days). In this case, we may also want to consider optimizing for the total distance traveled by both routes, rather than the \emph{individual} distance traveled by both routes. The figures below demonstrate how this subtle change in constraints produces dramatically different results:
+    \begin{figure}[h]
+        \caption{*** include graphs use example test case from book: 
+        Caption 1: Multi-path opt-2 algorithm optimizing for the individual distance traveled by both routes. 
+        Caption 2: Multi-path opt-2 algorithm optimizing for the total distance traveled by both routes. 
+        ****INCLUDE INDIVIDUAL LENGTHS  AND TOTAL DISTANCES FOR EACH CAPTION
+        }
+    \end{figure}
+    
+    Notice how in Figure XXX (caption 2) we achieve a smaller total distance at the expense of increasing the individual distance of route XXX. Whereas in Figure XXX (caption 1) we optimize for the individual distances of each route at the expense of having a larger total distance (from taking the sum of both routes). As a result, it seems we may want to optimize for total distance and individual distance on a case-by-case basis. For example, in the scenario of scheduling routes for multiple (in this case two) Amazon truck drivers it may seem more logical to optimize for individual distances. This is because having lopsided routes similar to that shown in Figure XXX (caption 1) can lead to undelivered packages (in the event that one route is so long all points cannot be visited in a single shift of work). Conversely, in the scenario that we were trying to optimize two routes belonging to the same truck driver, it seems more logical to optimize for total distance traveled across both routes (although this is assuming delivery timing is not a factor)\footnote{this is because swapping segments containing different delivery times would lead to some packages being delivered early while others being delivered too late. We don't mind early deliveries, but late deliveries are unacceptable}. For our final product, we will explore ways to utilize the multi-path opt2 algorithm (including the others previously discussed) in optimzing truck routes for drivers.  
+    \newline{}\newline{}
     Talk about how swap algorithm works. Figure \ref{figure:swapdemo} provides a simple example of how this algorithm improves the total distance. (Now prove it with data! What are the distances before and after?) ALSO: Talk about how the gray and black Addresses are symmetrical, but the trucks take different Routes. Is this okay, or does one or both of them need to go through greedy/opt2???
 
     \begin{figure}[h]
