@@ -47,7 +47,7 @@ void write_status_report(string status_to, std::vector<Route> routes, std::vecto
     int und_l = 0; // Undelivered, overdue
 
     for (int j = 0; j < routes.size(); j++) {
-        file << "Truck 1: " << routes.at(j).size() << " deliveries, distance " << routes.at(j).length() << '\n';
+        file << "Truck " << (j+1) << ": " << routes.at(j).size() << " deliveries, distance " << routes.at(j).length() << '\n';
         for (int k = 0; k < routes.at(j).size(); k++) {
             int due = routes.at(j).at(k).get_deliver_by(); // Due date of particular order
             if (due - day_no < 0) del_l++;
@@ -64,11 +64,11 @@ void write_status_report(string status_to, std::vector<Route> routes, std::vecto
     }
 
     file << "\nORDER DATA\n"
-        << "Delivered: "
+        << "Delivered: " << (del_e + del_o + del_l) << "\n"
         << del_e << " early, "
         << del_o << " on time, "
         << del_l << " late\n"
-        << "Unfulfilled: "
+        << "Unfulfilled: " << (und_e + und_o + und_l) << "\n"
         << und_e << " not due, "
         << und_o << " due tomorrow, "
         << und_l << " overdue";
@@ -158,7 +158,7 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
 }
 
 int main() {
-    int num_trucks = 3;
+    int num_trucks = 5;
     double max_dist = 25.0;
     Address hub(0, 0, 0);
     bool analysis = true;
