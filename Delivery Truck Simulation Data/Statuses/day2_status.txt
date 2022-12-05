@@ -1,14 +1,15 @@
 Status Report for Day 2
 
-Number of trucks: 2
-Truck distance limit: 29
+Number of trucks: 3
+Truck distance limit: 35
 
 TRUCK DATA
-Truck 1: 1 deliveries, distance 25.4558
-Truck 2: 2 deliveries, distance 21.6722
+Truck 1: 6 deliveries, distance 21.8954
+Truck 2: 5 deliveries, distance 26.0449
+Truck 3: 5 deliveries, distance 33.876
 
 ORDER DATA
-Delivered: 3
-3 early, 0 on time, 0 late
-Unfulfilled: 2
-2 not due, 0 due tomorrow, 0 overdue
+Delivered: 16
+16 early, 0 on time, 0 late
+Unfulfilled: 0
+0 not due, 0 due tomorrow, 0 overdue
