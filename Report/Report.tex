@@ -35,7 +35,7 @@
 
     \section{Introduction}
     \label{section:Introduction}
-    Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. Our team chose to solve this for our final project in COE 322: Scientific Computation at the University of Texas at Austin for the fall of 2022.
+    Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. Our team chose to solve it for our final project in COE 322: Scientific Computation at the University of Texas at Austin for the fall of 2022.
     
     In Section \ref{section:Methodology} we discuss the algorithm that we used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations. However, we will first further define the problem for our purposes and apply some limitations and assumptions in the following subsections.
 
@@ -45,7 +45,7 @@
 
     \subsection{Earth is Flat}
     \label{subection:Earth_is_Flat}
-    We also have to restrict the definitions of an address and the distance between addresses. Since this project is intended to focus on the algorithms one would use to solve the Traveling Salesman problem, as opposed to practical considerations for constructing a turn-key solution for use in the real world, addresses are represented with Cartesian coordinates on a two-dimensional Euclidian plane. Distances are assumed to be Euclidian, i.e. ``as the bird flies,'' and travel times are assumed to be proportional thereto. The distance could alternatively be defined as the ``Manhattan Distance,'' i.e. the distance in a perfect rectilinear street grid. Using real-world geographic data considering road layouts, speed limits, real-time traffic data, and Earth's curvature would be more realistic, but it would also add significant complexity to our implementation while contributing little to the core principles of the solution.
+    We also have to restrict the definitions of an address and the distance between addresses. Since this project is intended to focus on algorithms, not a turn-key solution for use in the real world, addresses are represented with Cartesian coordinates on a two-dimensional Euclidian plane. Distances are assumed to be Euclidian, i.e. ``as the bird flies,'' with travel times proportional thereto. The distance could alternatively be defined as the ``Manhattan Distance,'' i.e. the distance along a perfect rectilinear street grid. Although using real-world geographic data considering road layouts, speed limits, real-time traffic data, and Earth's curvature would be more realistic, it would add significant complexity to our implementation without contributing much to the core principles of the solution.
 
     \subsection{TODO}
     MORE DEFINITIONS HERE: deliver by date, multiple days, multiple trucks
@@ -59,7 +59,7 @@
         \item \verb|traveling_salesman.h|: a header file for our TravelingSalesman library, defining all of the objects and algorithms used in the project
         \item \verb|traveling_salesman.cpp|: an implementation file
         \item \verb|tester.cpp|: a script which tests the functionality of our TravelingSalesman library and generates TikZ code for figures displayed in this report; this script is compiled as \verb|tester.exe|
-        \item \verb|deliveries_generator.cpp|: a script which generates \verb|.dat| files containing lists of orders to be processed by \verb|delivery_truck_simulation.exe|; this script is compiled as \verb|deliveries_gen.exe|
+        \item \verb|deliveries_generator.cpp|: a script which generates \verb|.dat| files containing lists of orders to be processed by \verb|delivery_truck_simulation.exe|; this script is compiled as \verb|deliveries_generator.exe|
         \item \verb|delivery_truck_simulation.cpp|: a script which represents a hypothetical final product for use in industry, as described in Section \ref{subsection:Developing_the_Final_Product}; this script is compiled as \verb|delivery_truck_simulation.exe|
     \end{itemize}
 
@@ -83,7 +83,7 @@
     Having developed a strong Object-Oriented skeleton we can 
     explore algorithms to address the Traveling Salesman Problem. 
     An intuitive approach we could adopt is called the 
-    \emph{greedy algorithm} also known as the \emph{nearest neighbor algorithm}.  
+    \emph{greedy algorithm} also known as the \emph{nearest neighbor algorithm}. \cite[p.~458]{cite:eijkhout2022}  
     The greedy algorithm works to develop an optimal route by traversing (from a starting point)  
     to the next closest point in a list of points until all points in the list have been visited.
     To achieve this optimal route, the greedy algorithm must 
@@ -475,21 +475,6 @@ For all possible segments for both routes
     Talk about what we learned, how this all applies to industry, ideas to scale the problem up, ethics, \&c.
 
     Talk about how our simulation is flawed, e.g. address removal isn't intelligent (purely by due date); orders aren't held back to be grouped with later-arriving orders; after stops are removed, the routes arent re optimized; main simulation program isn't super flexible (e.g. to change document names, formattig, you have to go into the code; dat files have to be in a specific format, can't be a database); no UI for ease of use
-
-    \appendix
-    \section{Sample of Using Listings Package}
-    Please remove this appendix before publishing! Here's some pretty C++ code from Listing \ref{lst:example}.
-    \begin{lstlisting}[
-        caption=Example Code,
-        label={lst:example},
-        language=C++
-    ]
-#include <iostream>
-using sdt::cout;
-
-int main() {
-    // Print out hello
-    cout << "Hello world!" << '\n';
-    return 0;
-}\end{lstlisting}
+    \bibliographystyle{plain}
+    \bibliography{ref}
 \end{document}
