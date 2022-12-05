@@ -35,7 +35,7 @@
 
     \section{Introduction}
     \label{section:Introduction}
-    Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. Our team chose to solve this for our final project in COE 322: Scientific Computation at the University of Texas at Austin for the fall of 2022.
+    Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. Our team chose to solve it for our final project in COE 322: Scientific Computation at the University of Texas at Austin for the fall of 2022.
     
     In Section \ref{section:Methodology} we discuss the algorithm that we used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations. However, we will first further define the problem for our purposes and apply some limitations and assumptions in the following subsections.
 
@@ -45,7 +45,7 @@
 
     \subsection{Earth is Flat}
     \label{subection:Earth_is_Flat}
-    We also have to restrict the definitions of an address and the distance between addresses. Since this project is intended to focus on the algorithms one would use to solve the Traveling Salesman problem, as opposed to practical considerations for constructing a turn-key solution for use in the real world, addresses are represented with Cartesian coordinates on a two-dimensional Euclidian plane. Distances are assumed to be Euclidian, i.e. ``as the bird flies,'' and travel times are assumed to be proportional thereto. The distance could alternatively be defined as the ``Manhattan Distance,'' i.e. the distance in a perfect rectilinear street grid. Using real-world geographic data considering road layouts, speed limits, real-time traffic data, and Earth's curvature would be more realistic, but it would also add significant complexity to our implementation while contributing little to the core principles of the solution.
+    We also have to restrict the definitions of an address and the distance between addresses. Since this project is intended to focus on algorithms, not a turn-key solution for use in the real world, addresses are represented with Cartesian coordinates on a two-dimensional Euclidian plane. Distances are assumed to be Euclidian, i.e. ``as the bird flies,'' with travel times proportional thereto. The distance could alternatively be defined as the ``Manhattan Distance,'' i.e. the distance along a perfect rectilinear street grid. Although using real-world geographic data considering road layouts, speed limits, real-time traffic data, and Earth's curvature would be more realistic, it would add significant complexity to our implementation without contributing much to the core principles of the solution.
 
     \subsection{TODO}
     MORE DEFINITIONS HERE: deliver by date, multiple days, multiple trucks
@@ -431,7 +431,7 @@ For all possible segments for both routes
 
     \appendix
     \section{Sample of Using Listings Package}
-    Please remove this appendix before publishing! Here's some pretty C++ code from Listing \ref{lst:example}.
+    Please remove this appendix before publishing! Here's some pretty C++ code from Listing \ref{lst:example}. Here's a sample citation \cite{web:lang:stats}.
     \begin{lstlisting}[
         caption=Example Code,
         label={lst:example},
@@ -445,4 +445,6 @@ int main() {
     cout << "Hello world!" << '\n';
     return 0;
 }\end{lstlisting}
+\bibliographystyle{plain}
+\bibliography{ref}
 \end{document}
