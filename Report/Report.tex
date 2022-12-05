@@ -136,14 +136,18 @@
         \caption{ ** insert single pass of reversage of a path }
     \end{figure}
 
-    To implement this in code we employ the following strategy:
+    To implement this in code, we employ the strategy in Listing \ref{lst:opt2_algorithm}.
 
     % need to fix, there's a better package than fbox that 
     % needs looking into
-    \fbox{\lstinline{For all possible segments in our path:
-                Make the new path:
-                        Original start + reversed segment + original end 
-                        If new path is shorter keep it}}
+    \begin{lstlisting} [
+        caption=opt2 Algorithm,
+        label={lst:opt2_algorithm}
+    ]
+For all possible segments in our path:
+    Make the new path:
+        Original start + reversed segment + original end 
+        If new path is shorter keep it\end{lstlisting}
 
     In code this equates to:
     \begin{lstlisting}[
@@ -319,19 +323,20 @@ Route Route::opt2(){
     multiple routes simeltaneously. For this reason, and 
     others we will, aim to optimize only two routes at 
     once. As mentioned in section \ref{subsection:Traveling_Salesman_Problem} we can achieve this 
-    by extending the opt-2 heuristic to multiple routes 
-    in the following manner:
+    by extending the opt-2 heuristic to multiple routes, as seen in Listing \ref{lst:opt2_multi_algorithm}
     
     % fix this work like a numbered list
-    \fbox{\lstinline{
-        For all possible segments for both routes
-        swap both routes with the following variations:
-        Reverse route 1 then swap
-        Reverse route 2 then swap
-        Just swap
-        Reverse both routes then swap
-	    If the distance from any of the variations is improved, 
-        keep the modification.}}
+    \begin{lstlisting} [
+        caption=opt2 Multi Algorithm,
+        label={lst:opt2_multi_algorithm}
+    ]
+For all possible segments for both routes
+    swap both routes with the following variations:
+    Reverse route 1 then swap
+    Reverse route 2 then swap
+    Just swap
+    Reverse both routes then swap
+    If the distance from any of the variations is improved, keep the modification.\end{lstlisting}
     
     
     Talk about how swap algorithm works. Figure \ref{figure:swapdemo} provides a simple example of how this algorithm improves the total distance. (Now prove it with data! What are the distances before and after?) ALSO: Talk about how the gray and black Addresses are symmetrical, but the trucks take different Routes. Is this okay, or does one or both of them need to go through greedy/opt2???
