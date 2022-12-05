@@ -1,0 +1,18 @@
+..\Delivery Truck Simulation Data\Jobs\day7_truck3.txt
+
+Today's Route
+
+Start at hub: 0 0
+9 1
+7 4
+9 7
+3 8
+1 9
+Finish at hub: 0 0
+
+Stats
+
+Length: 33.640703
+Stops: 5
+
+Have a nice day! You are ~not~ a corporate wage slave :-)

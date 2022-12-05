@@ -1,14 +1,15 @@
 Status Report for Day 8
 
-Number of trucks: 2
-Truck distance limit: 29
+Number of trucks: 3
+Truck distance limit: 35
 
 TRUCK DATA
-Truck 1: 1 deliveries, distance 25.4558
-Truck 2: 2 deliveries, distance 11.4842
+Truck 1: 6 deliveries, distance 34.8134
+Truck 2: 7 deliveries, distance 34.8634
+Truck 3: 6 deliveries, distance 30.8378
 
 ORDER DATA
-Delivered: 3
-3 early, 0 on time, 0 late
-Unfulfilled: 2
-2 not due, 0 due tomorrow, 0 overdue
+Delivered: 19
+19 early, 0 on time, 0 late
+Unfulfilled: 1
+1 not due, 0 due tomorrow, 0 overdue

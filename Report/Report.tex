@@ -3,6 +3,7 @@
 \usepackage{hyperref}
 \usepackage{tikz}
 \usepackage{listings}
+\usepackage{amsfonts}
 
 \definecolor{code_green}{rgb}{0, 0.6, 0}
 
@@ -455,17 +456,160 @@ For all possible segments for both routes
     \label{subsection:Developing_the_Final_Product}
     After our team implemented our solutions to the Single and Multiple Traveling Salesman Problems, we decided to explore dynamicism by constructing a simplified route allocator for a delivery company. Every morning, a regional fulfilment center recives a list of orders to fulfill, corresponding to packages available onsite. It invokes our program, which combines these with unfulfilled orders from the previous day, and delegates them amongst a predetermined number of trucks. The \verb|Route|s are then optimized individually and between one another. At this point, their distances are measured. If a \verb|Route| exceeds a predetermined distance limit, \verb|Address|es are removed from the \verb|Route| based on their \verb|deliver_by| due date, until it falls within an acceptable length. The delivery routes are then exported to documents for the drivers, the unfulfilled orders are saved to a file which overwrites the old one, and performance statistics are compiled into a report for management.
 
-    All of the tasks to be completed before the start of a business day are modularized in a single function. It requires parameters specifying input and output file locations, the number of trucks available, the maximum permissible route distance, the hub address, and a boolean which allows the user to specify if data should be output from intermediate optimization steps. Most of the harder tasks of the simulation have already been solved in our library. This even includes the repetitive tasks of reading or exporting a \verb|Route| or \verb|AddressList| from or to a file, based on a given file path string. To demonstrate this program, we constructed a simulation with pre-generated daily orders spanning two weeks. The results of this simulation are discussed in Section \ref{section:Results}.
+    All of the tasks to be completed before the start of a business day are modularized in a single function. It requires parameters specifying input and output file locations, the number of trucks available, the maximum permissible route distance, the hub address, and a boolean which allows the user to specify if data should be output from intermediate optimization steps. Most of the harder tasks of the simulation have already been solved in our library. This even includes the repetitive tasks of reading or exporting a \verb|Route| or \verb|AddressList| from or to a file, based on a given file path string. To demonstrate this program, we constructed a simulation with pre-generated daily orders spanning several days. The results of this simulation are discussed in Section \ref{section:Results}.
 
     \section{Results}
     \label{section:Results}
-    Pretty pictures and tables go here. Describe each situation being displayed and talk about what they mean, e.g. is it the optimal solution? Good enough? Is there a tradeoff between time to execute and quality of results?
+    % Pretty pictures and tables go here. Describe each situation being displayed and talk about what they mean, e.g. is it the optimal solution? Good enough? Is there a tradeoff between time to execute and quality of results?
 
-    Hmm, maybe insert a table comparing number of nodes/trucks to program execution time. What rate does it increase at $(O(n), O(n^2), \&c.)$
+    % Hmm, maybe insert a table comparing number of nodes/trucks to program execution time. What rate does it increase at $(O(n), O(n^2), \&c.)$
 
-    \subsection{Scenario 1}
+    For our main simulation, we generated randomized order data spanning 9 days. Each day has 18 orders with coordinates spanning from 0 to 10 excluding the hub, i.e. $\{ (i, j) \in \mathbb{Z}^2 | 0 \leq i \leq 10 \cap 0 \leq j \leq 10\} - \{ (0, 0)\}$. Delivery due dates range from 1 to 7 days after the order was generated. For this test, 3 trucks were used, and the distance limit was set to 35.0 for each truck. Our program took 795 milliseconds to execute locally, and XXXXXX milliseconds on the ISP machine. The resulting outputs, spread across over 100 data files, would be quite tedious to present in full in this report, so the results will be condensed into tables and figures. To view samples of each form of output, please refer to Appendix \ref{appendix:Sample_Output_Files}.
 
-    \subsection{Scenario 2}
+    The first thing to consider from the results is whether the optimization performed as expected. As seen in Figure \ref{figure:day1opt}, stops are exchanged within and between truck routes until they all take efficient paths. Since no orders were left undelivered on Day 1, all of the Addresses are still present afterwards. This can be verified for the other days as well.
+
+    \begin{figure}[h]
+        \caption{Day 1 Optimization, Before and After}
+        \label{figure:day1opt}
+        \begin{minipage}{0.45\linewidth}
+            \begin{tikzpicture}[scale=0.6]
+                % Truck 1
+                \draw [black] (0, 0) -- (8, 7);
+                \filldraw [black] (0, 0) circle (2pt);
+                \draw [black] (8, 7) --(4, 4);
+                \filldraw [black] (8, 7) circle (2pt);
+                \draw [black] (4, 4) --(7, 7);
+                \filldraw [black] (4, 4) circle (2pt);
+                \draw [black] (7, 7) --(5, 6);
+                \filldraw [black] (7, 7) circle (2pt);
+                \draw [black] (5, 6) --(5, 5);
+                \filldraw [black] (5, 6) circle (2pt);
+                \draw [black] (5, 5) --(3, 10);
+                \filldraw [black] (5, 5) circle (2pt);
+                \draw [black] (3, 10) --(0, 0);
+                \filldraw (3, 10) [black] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+                % Truck 2
+                \draw [blue] (0, 0) -- (4, 0);
+                \filldraw [blue] (0, 0) circle (2pt);
+                \draw [blue] (4, 0) --(7, 5);
+                \filldraw [blue] (4, 0) circle (2pt);
+                \draw [blue] (7, 5) --(10, 6);
+                \filldraw [blue] (7, 5) circle (2pt);
+                \draw [blue] (10, 6) --(10, 8);
+                \filldraw [blue] (10, 6) circle (2pt);
+                \draw [blue] (10, 8) --(8, 0);
+                \filldraw [blue] (10, 8) circle (2pt);
+                \draw [blue] (8, 0) --(2, 2);
+                \filldraw [blue] (8, 0) circle (2pt);
+                \draw [blue] (2, 2) --(0, 0);
+                \filldraw (2, 2) [blue] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+                % Truck 3
+                \draw [green] (0, 0) -- (5, 8);
+                \filldraw [green] (0, 0) circle (2pt);
+                \draw [green] (5, 8) --(8, 2);
+                \filldraw [green] (5, 8) circle (2pt);
+                \draw [green] (8, 2) --(8, 8);
+                \filldraw [green] (8, 2) circle (2pt);
+                \draw [green] (8, 8) --(8, 1);
+                \filldraw [green] (8, 8) circle (2pt);
+                \draw [green] (8, 1) --(2, 0);
+                \filldraw [green] (8, 1) circle (2pt);
+                \draw [green] (2, 0) --(7, 9);
+                \filldraw [green] (2, 0) circle (2pt);
+                \draw [green] (7, 9) --(0, 0);
+                \filldraw (7, 9) [green] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}{0.45\linewidth}
+            \begin{tikzpicture}[scale=0.6]
+                % Truck 1
+                \draw [black] (0, 0) -- (4, 4);
+                \filldraw [black] (0, 0) circle (2pt);
+                \draw [black] (4, 4) --(5, 5);
+                \filldraw [black] (4, 4) circle (2pt);
+                \draw [black] (5, 5) --(5, 6);
+                \filldraw [black] (5, 5) circle (2pt);
+                \draw [black] (5, 6) --(7, 7);
+                \filldraw [black] (5, 6) circle (2pt);
+                \draw [black] (7, 7) --(8, 7);
+                \filldraw [black] (7, 7) circle (2pt);
+                \draw [black] (8, 7) --(3, 10);
+                \filldraw [black] (8, 7) circle (2pt);
+                \draw [black] (3, 10) --(0, 0);
+                \filldraw (3, 10) [black] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+                % Truck 2
+                \draw [blue] (0, 0) -- (2, 2);
+                \filldraw [blue] (0, 0) circle (2pt);
+                \draw [blue] (2, 2) --(4, 0);
+                \filldraw [blue] (2, 2) circle (2pt);
+                \draw [blue] (4, 0) --(8, 0);
+                \filldraw [blue] (4, 0) circle (2pt);
+                \draw [blue] (8, 0) --(7, 5);
+                \filldraw [blue] (8, 0) circle (2pt);
+                \draw [blue] (7, 5) --(10, 6);
+                \filldraw [blue] (7, 5) circle (2pt);
+                \draw [blue] (10, 6) --(10, 8);
+                \filldraw [blue] (10, 6) circle (2pt);
+                \draw [blue] (10, 8) --(0, 0);
+                \filldraw (10, 8) [blue] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+                % Truck 3
+                \draw [green] (0, 0) -- (2, 0);
+                \filldraw [green] (0, 0) circle (2pt);
+                \draw [green] (2, 0) --(8, 1);
+                \filldraw [green] (2, 0) circle (2pt);
+                \draw [green] (8, 1) --(8, 2);
+                \filldraw [green] (8, 1) circle (2pt);
+                \draw [green] (8, 2) --(8, 8);
+                \filldraw [green] (8, 2) circle (2pt);
+                \draw [green] (8, 8) --(7, 9);
+                \filldraw [green] (8, 8) circle (2pt);
+                \draw [green] (7, 9) --(5, 8);
+                \filldraw [green] (7, 9) circle (2pt);
+                \draw [green] (5, 8) --(0, 0);
+                \filldraw (5, 8) [green] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
+    \end{figure}
+
+    Reports and data files can also be examined for their accuracy; refer to Listings \ref{lst:Sample_Data_File} and \ref{lst:Sample_TikZ_File} to see that they correspond to the black unsorted route. On the other hand, the job assignment in Listing \ref{lst:Sample_Job_Assignment} corresponds to the black sorted route, and the order numbers in the status report in Listing \ref{lst:Sample_Satus_Report} match the number of stops and distances of the sorted routes.
+
+    From there, we can study the numbers provided in the status reports. Delivery fulfillment statistics are condensed into Table \ref{table:deliverystats}. We can utilize this to analyze the hub's performance. In general, the hob is keeping up with the order inflow rate. Some days it isn't able to deliver everything, but it eventually catches up. This could be an important experimental metric for a delivery organization. Parameters like the number of trucks and the maximum delivery distance could be adjusted to find critical points where orders get added to the backlog faster than they are removed.
+
+    \begin{table}[h]
+        \centering
+        \caption{Status Report Output Data}
+        \label{table:deliverystats}
+        \begin{tabular}{cccccccc}
+            & \multicolumn{3}{c}{Delivered} && \multicolumn{3}{c}{Undelivered} \\
+            & Early & On Time & Late && Not Due & Due Tomorrow & Overdue \\
+            \cline{2-4} \cline{6-8}
+            Day 1 & 18 & 0 & 0 && 0 & 0 & 0 \\
+            Day 2 & 16 & 0 & 0 && 0 & 0 & 0 \\
+            Day 3 & 10 & 0 & 0 && 8 & 0 & 0 \\
+            Day 4 & 16 & 0 & 0 && 7 & 0 & 0 \\
+            Day 5 & 16 & 0 & 0 && 6 & 0 & 0 \\
+            Day 6 & 23 & 0 & 0 && 0 & 0 & 0 \\
+            Day 7 & 12 & 0 & 0 && 4 & 0 & 0 \\
+            Day 8 & 19 & 0 & 0 && 1 & 0 & 0 \\
+            Day 9 & 17 & 0 & 0 && 1 & 0 & 0 \\
+        \end{tabular}
+    \end{table}
+
+    At this point, the main problem is solved. For a given list of orders, our program can find an optimal solution within a certain distance range and eliminate low-priority orders to keep delivery routes within a certain distance constraint. Now we will extend our investigation into modifying parameters of the simulation. As mentioned before, at a certain point, the simulation will likely start backlogging orders. If we find this point, managers could leverage it to maximize efficiency while maintaining customer satisfaction. In Section \ref{subsection:Varying_the_Distance_Limit}, we investigate how varying the maximum permissible route distance impacts backlogs. In section \ref{subsection:Varying_the_Number_of_Trucks_Deployed}, we investigate how varying the number of trucks deployed impacts backlogs.
+
+    \subsection{Varying the Distance Limit}
+    \label{subsection:Varying_the_Distance_Limit}
+    Note that for a delivery zone ranging from coordinates 0 to $d$ with a hub at $(0, 0)$, if the distance limit were dropped below $2 * d \sqrt{2}$, then some orders would be forever out of range. This sets a lower limit for our maximum permissible distance.
+
+    \subsection{Varying the Number of Trucks Deployed}
+    \label{subsection:Varying_the_Number_of_Trucks_Deployed}
+    One important question that a delivery company might want to consider is how many trucks to deploy on a given day. More trucks can cover a greater cumulative distance and deliver more orders, but 
 
     \subsection{Performance Data}
     go over execution time and stuff
@@ -475,6 +619,21 @@ For all possible segments for both routes
     Talk about what we learned, how this all applies to industry, ideas to scale the problem up, ethics, \&c.
 
     Talk about how our simulation is flawed, e.g. address removal isn't intelligent (purely by due date); orders aren't held back to be grouped with later-arriving orders; after stops are removed, the routes arent re optimized; main simulation program isn't super flexible (e.g. to change document names, formattig, you have to go into the code; dat files have to be in a specific format, can't be a database); no UI for ease of use
+
+    \appendix
+    \section{Sample Output Files}
+    \label{appendix:Sample_Output_Files}
+
+    A variety of data files are used as inputs, intermediates, and outputs of our main program and scripts. They fall into 4 main categories. Data files like Listing \ref{lst:Sample_Data_File} are used to input Addresses into the program and save output Routes from the program. The example is clearly a Route, since it starts and ends at the same location, in this case, the origin. TikZ files like Listing \ref{lst:Sample_TikZ_File} are used to automate plotting figures with the TikZ package in \LaTeX . Job assignments like Listing \ref{lst:Sample_Job_Assignment} format Routes such that human drivers can read them. They also offer some statistics and custom messages. In this case, an affirmation is distributed to drivers to increase morale. Finally, status reports like Listing \ref{lst:Sample_Satus_Report} condense essential information like delivery numbers for managers to evaluate the hub's performance.
+
+    \lstinputlisting[caption=Sample Data File, label={lst:Sample_Data_File}]{day1_truck1_v0.dat}
+
+    \lstinputlisting[caption=Sample TikZ File, label={lst:Sample_TikZ_File}]{day1_truck1_v0.tikz}
+
+    \lstinputlisting[caption=Sample Job Assignment, label={lst:Sample_Job_Assignment}]{day1_truck1.txt}
+
+    \lstinputlisting[caption=Sample Status Report, label={lst:Sample_Satus_Report}]{day1_status.txt}
+
     \bibliographystyle{plain}
     \bibliography{ref}
 \end{document}

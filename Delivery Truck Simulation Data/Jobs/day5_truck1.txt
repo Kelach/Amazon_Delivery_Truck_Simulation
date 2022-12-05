@@ -3,14 +3,16 @@
 Today's Route
 
 Start at hub: 0 0
-1 1
-4 2
-10 8
+6 4
+10 9
+10 10
+7 9
+2 10
 Finish at hub: 0 0
 
 Stats
 
-Length: 25.868021
-Stops: 3
+Length: 33.073563
+Stops: 5
 
 Have a nice day! You are ~not~ a corporate wage slave :-)

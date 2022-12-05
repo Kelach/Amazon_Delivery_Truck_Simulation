@@ -3,6 +3,7 @@ using std::string;
 #include "traveling_salesman.h"
 #include <iostream>
 #include <fstream>
+#include <chrono>
 
 using namespace TravelingSalesman;
 
@@ -159,13 +160,18 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
 }
 
 int main() {
-    int num_trucks = 2;
-    double max_dist = 29.0;
+    // Start timing simulation
+    auto start = std::chrono::high_resolution_clock::now();
+
+    int num_trucks = 3;
+    double max_dist = 35.0;
     Address hub(0, 0, 0);
     bool analysis = true;
 
+    int day_max = 9;
+
     // Call day() for each day
-    for (int day_no = 1; day_no <= 14; day_no++) {
+    for (int day_no = 1; day_no <= day_max; day_no++) {
         day(day_no,
             "..\\Delivery Truck Simulation Data\\Orders\\unfulfilled.dat",
             "..\\Delivery Truck Simulation Data\\Orders\\day" + std::to_string(day_no) + ".dat",
@@ -178,6 +184,14 @@ int main() {
             hub,
             analysis);
     }
+
+    // Stop timing simulation
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+    
+    // To get the value of duration use the count()
+    // member function on the duration object
+    std::cout << "Execution time: " << duration.count() << " milliseconds\n";
 
     return 0;
 }
