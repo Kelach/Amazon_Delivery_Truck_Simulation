@@ -20,10 +20,9 @@ int random(int low, int high){
 
 /**
  * @brief generates Address Object w/random coordinates and delivery date.
- * @param keyword generates "random" or "primes" coordinate points Address Object. 
  * @param space defines space of x-y coordinate system.
  * */ 
-TravelingSalesman::Address generateAddress(std::string& keyword, int& space, int& offset){
+TravelingSalesman::Address generateAddress(int& space, int& offset){
         int i = random(0, space);
         int j = random(0, space);
         int delivery_by = random(1+offset, 7+offset);
@@ -95,7 +94,7 @@ int main(int argc, char **argv){
     file.open(path + filename + ".txt");
 
     for (int j = 0; j < num_adds; j++) {
-      TravelingSalesman::Address addy = generateAddress(keyword, space, i); // passing current day as offset
+      TravelingSalesman::Address addy = generateAddress(space, i); // passing current day as offset
       file << addy.to_string() << "\n";
     }
 
