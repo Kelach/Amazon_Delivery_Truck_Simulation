@@ -129,8 +129,8 @@ int main(int argc, char **argv){
 
     // for each day, we generate a list of orders
     std::ofstream file;
-    std::string filename("new_deliveries_day-" + std::to_string(i));
-    std::string path("../dataout/test/");
+    std::string filename("day" + std::to_string(i) + ".dat");
+    std::string path("..\\Delivery Truck Simulation Data\\Orders\\");
     file.open(path + filename + ".txt");
 
     for (int j = 0; j < num_adds; j++) {

@@ -158,21 +158,25 @@ void day(int day_no, string unfulfilled_orders_from, string new_orders_from, str
 }
 
 int main() {
-    // Probably a loop of sorts
-    // Call day() for each day
+    int num_trucks = 3;
+    double max_dist = 25.0;
     Address hub(0, 0, 0);
+    bool analysis = true;
 
-    day(0,
-        "..\\Delivery Truck Simulation Data\\Orders\\unfulfilled.dat",
-        "..\\Delivery Truck Simulation Data\\Orders\\dayn.dat",
-        "..\\Delivery Truck Simulation Data\\dat\\",
-        "..\\Delivery Truck Simulation Data\\tikz\\",
-        "..\\Delivery Truck Simulation Data\\Jobs\\",
-        "..\\Delivery Truck Simulation Data\\Statuses\\",
-        2,
-        27.0,
-        hub,
-        true);
+    // Call day() for each day
+    for (int day_no = 1; day_no <= 14; day_no++) {
+        day(day_no,
+            "..\\Delivery Truck Simulation Data\\Orders\\unfulfilled.dat",
+            "..\\Delivery Truck Simulation Data\\Orders\\day" + std::to_string(day_no) + ".dat",
+            "..\\Delivery Truck Simulation Data\\dat\\",
+            "..\\Delivery Truck Simulation Data\\tikz\\",
+            "..\\Delivery Truck Simulation Data\\Jobs\\",
+            "..\\Delivery Truck Simulation Data\\Statuses\\",
+            num_trucks,
+            max_dist,
+            hub,
+            analysis);
+    }
 
     return 0;
 }
