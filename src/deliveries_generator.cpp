@@ -67,7 +67,7 @@ int main(int argc, char **argv){
     // coordinate space option
     options.add_options()
         ("s,space","defines x-y coordinate space",
-        cxxopts::value<int>()->default_value("10"));
+        cxxopts::value<int>()->default_value("20"));
     
     options.add_options()
         ("d,days","defines # of days orders should be generated for. (all delivery days are relative to 0)",
