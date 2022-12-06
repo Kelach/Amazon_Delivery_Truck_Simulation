@@ -62,7 +62,7 @@ int main(int argc, char **argv){
     // # addresses per route
     options.add_options()
         ("a,addresses","# of addresses to generate",
-        cxxopts::value<int>()->default_value("5"));
+        cxxopts::value<int>()->default_value("50"));
 
     // coordinate space option
     options.add_options()
@@ -71,7 +71,7 @@ int main(int argc, char **argv){
     
     options.add_options()
         ("d,days","defines # of days orders should be generated for. (all delivery days are relative to 0)",
-        cxxopts::value<int>()->default_value("14"));
+        cxxopts::value<int>()->default_value("30"));
 
 
     //*****parse options****
@@ -98,7 +98,7 @@ int main(int argc, char **argv){
         // for each day, we generate a list of orders
         std::ofstream file;
         std::string filename("day" + std::to_string(i));
-        std::string path("..\\Delivery Truck Simulation Data\\Orders\\");
+        std::string path("..\\Experimental\\datain\\");
         file.open(path + filename + ".dat");
 
         for (int j = 0; j < num_adds; j++) {
