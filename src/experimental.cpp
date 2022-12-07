@@ -87,16 +87,16 @@ int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
     // First scenario, varying distance
-    int num_trucks1 = 5;
-    std::vector<double> max_dist1s = {50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0};
+    int num_trucks1 = 3;
+    std::vector<double> max_dist1s = {30.0, 32.0, 34.0, 36.0, 38.0};
 
     // Second scenario, varying num_trucks
-    std::vector<int> num_trucks2s = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    double max_dist2 = 75.0;
+    std::vector<int> num_trucks2s = {1, 2, 3, 4, 5};
+    double max_dist2 = 34.0;
 
     // For both
     Address hub(0, 0, 0);
-    int day_max = 90;
+    int day_max = 30;
 
     // File I/0
     string dat_from = "..\\Experimental\\datain\\"; // Folder path to read data from
@@ -142,8 +142,8 @@ int main() {
         data2 << num_trucks2 << " ";
         for (int day_no = 1; day_no <= day_max; day_no++) {
             data2 << day(
-                dat_from + "day" + std::to_string(day_no) + ".dat",
                 dat_from + "unfulfilled.dat",
+                dat_from + "day" + std::to_string(day_no) + ".dat",
                 num_trucks2,
                 max_dist2,
                 hub);
