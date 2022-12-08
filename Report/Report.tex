@@ -102,42 +102,54 @@
     arrive at a Big-O time complexity of O(n\textsuperscript{2}) for this 
     greedy algorithm . The figure below illustrates the 
     effect our greedy algorithm has on developing a more 
-    optimized route.     \ref{figure:sortdemo}.
+    optimized route. 
+
     \begin{figure}[h]
-        \caption{insert improvement from greedy alog }
+        \caption{Route Before vs. After using greedy algorithm}
+        \label{figure:greedy_method}
+        \begin{minipage}{0.45\linewidth}
+            % Old
+            \begin{tikzpicture}
+                \draw [black, -latex] (0, 0) -- (2, 2);
+                \filldraw [gray] (0, 0) circle (2pt);
+                \draw [black, -latex] (2, 2) --(3, 0);
+                \filldraw [gray] (2, 2) circle (2pt);
+                \draw [black, -latex] (3, 0) --(3, 2);
+                \filldraw [gray] (3, 0) circle (2pt);
+                \draw [black, -latex] (3, 2) --(1, 2);
+                \filldraw [gray] (3, 2) circle (2pt);
+                \draw [black, -latex] (1, 2) --(0, 0);
+                \filldraw (1, 2) [gray] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}{0.5\linewidth}
+            % Greedy
+            \begin{tikzpicture}
+                \draw [black, -latex] (0, 0) -- (1, 2);
+                \filldraw [green] (0, 0) circle (2pt);
+                \draw [black, -latex] (1, 2) --(2, 2);
+                \filldraw [green] (1, 2) circle (2pt);
+                \draw [black, -latex] (2, 2) --(3, 2);
+                \filldraw [green] (2, 2) circle (2pt);
+                \draw [black, -latex] (3, 2) --(3, 0);
+                \filldraw [green] (3, 2) circle (2pt);
+                \draw [black, -latex] (3, 0) --(0, 0);
+                \filldraw (3, 0) [green] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
+
     \end{figure}
+
     The improvements from the greedy algorithm seem to suggest that it 
     will play an important role in developing our Amazon route scheduling 
-    algorithm. On the other hand, additional testing demonstrates how 
-    the greedy algorithm alone can fail to provide the most accurate solutions:
-    
-    \begin{figure}[h]
-        \caption{ insert deficiency of greedy algorithm }
-    \end{figure}
-    
-    Although this deficiency may seem minimal with a few routes, at scale , 
-    the costs incurred due to longer distances traveled and longer delivery 
-    times may prove to be a great burden for Amazon, therefore we'd like to 
-    explore better methods. One approach we can adopt is based on the opt-2 
+    algorithm. With this in mind, we attempted explore other local search methods that may be more effective than the greedy approach. One approach we can adopt is based on the opt-2 
     heuristic. The opt-2 heuristic suggests that optimal routes are generally 
     not “entangled” (i.e no intersections). Therefore, if we can work to “detangle” 
-    a given list of points we can find its optimal path. Both pathes can be seen 
-    in the figure below. 
-
-    \begin{figure}[h]
-        \caption{ ** insert entangled vs detangled route and its total distance. }
-    \end{figure}
-
-    Rather than aim to algorithmically identify the intersections in a given path, 
+    a given list of points we can find its optimal path. Rather than aim to algorithmically identify the intersections in a given path, 
     we can try to “detangle” a path by reversing segments of it and checking to 
-    see if such a modification generates a more optimal path. The figure below 
-    shows how this is done visually.
-
-    \begin{figure}[h]
-        \caption{ ** insert single pass of reversage of a path }
-    \end{figure}
-
-    To implement this in code, we employ the strategy in Listing \ref{lst:opt2_algorithm}.
+    see if such a modification generates a more optimal path. To implement this in code, we employ the strategy in Listing \ref{lst:opt2_algorithm}.
 
     % need to fix, there's a better package than fbox that 
     % needs looking into
@@ -150,7 +162,8 @@ For all possible segments in our path:
         Original start + reversed segment + original end 
         If new path is shorter keep it\end{lstlisting}
 
-    In code this equates to:
+        In code this equates to:
+        \newpage 
     \begin{lstlisting}[
         language=C++
     ]
@@ -172,84 +185,93 @@ Route Route::opt2(){
 \end{lstlisting}
 
     In this implementation, we utilized the \emph{reverse()} method 
-    from the C++ standard library reverses a given segment of a vector 
+    from the C++ standard library which reverses a given range of a vector 
     in place. Below we compare the results from our greedy algorithm 
     with that of our opt-2 algorithm:
 
     \begin{figure}[h]
-        \caption{compare greedy w/opt 2 
-        (use previous greedy deficiency example too)}
+        \caption{Unoptimized Route (black) vs. greedy algorithm (blue) vs. opt-2 algorithm (green) Route is optimized through both the greedy algorithm and the opt2 algorithm. The total distances of each route were 11.76, 11.16, and 11.04 units, for the original, greedy, and opt-2 routes respectively }
+        \label{figure:opt2_vs_greedy}
+        \begin{minipage}{0.3\linewidth}
+            % Old
+            \begin{tikzpicture}
+                \draw [black, -latex] (0, 0) -- (3, 1);
+                \filldraw [gray] (0, 0) circle (2pt);
+                \draw [black, -latex] (3, 1) --(2, 1);
+                \filldraw [gray] (3, 1) circle (2pt);
+                \draw [black, -latex] (2, 1) --(2, 0);
+                \filldraw [gray] (2, 1) circle (2pt);
+                \draw [black, -latex] (2, 0) --(0, 3);
+                \filldraw [gray] (2, 0) circle (2pt);
+                \draw [black, -latex] (0, 3) --(0, 2);
+                \filldraw [gray] (0, 3) circle (2pt);
+                \draw [black, -latex] (0, 2) --(0, 0);
+                \filldraw (0, 2) [gray] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}{0.3\linewidth}
+            % Greedy
+            \begin{tikzpicture}
+                \draw [blue, -latex] (0, 0) -- (2, 0);
+                \filldraw [green] (0, 0) circle (2pt);
+                \draw [blue, -latex] (2, 0) --(2, 1);
+                \filldraw [green] (2, 0) circle (2pt);
+                \draw [blue, -latex] (2, 1) --(3, 1);
+                \filldraw [green] (2, 1) circle (2pt);
+                \draw [blue, -latex] (3, 1) --(0, 2);
+                \filldraw [green] (3, 1) circle (2pt);
+                \draw [blue, -latex] (0, 2) --(0, 3);
+                \filldraw [green] (0, 2) circle (2pt);
+                \draw [blue, -latex] (0, 3) --(0, 0);
+                \filldraw (0, 3) [green] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}{0.3\linewidth}
+            % opt2
+            \begin{tikzpicture}
+            \draw [green, -latex] (0, 0) -- (2, 0);
+            \filldraw [green] (0, 0) circle (2pt);
+            \draw [green, -latex] (2, 0) --(2, 1);
+            \filldraw [green] (2, 0) circle (2pt);
+            \draw [green, -latex] (2, 1) --(3, 1);
+            \filldraw [green] (2, 1) circle (2pt);
+            \draw [green, -latex] (3, 1) --(0, 3);
+            \filldraw [green] (3, 1) circle (2pt);
+            \draw [green, -latex] (0, 3) --(0, 2);
+            \filldraw [green] (0, 3) circle (2pt);
+            \draw [green, -latex] (0, 2) --(0, 0);
+            \filldraw (0, 3) [green] circle (2pt);
+            \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
     \end{figure}
+    
 
-    The opt-2 algorithm seems to be a reasonable replacement for the 
+    The opt-2 algorithm seems to produce slightly better solutions than our 
     greedy algorithm. However, we should also consider this algorithm's 
-    efficiency.  Calling the \emph{reverse()} and \emph{length()} methods of an 
+    efficiency. Calling the \emph{reverse()} and \emph{length()} methods of an 
     \verb|AddressList| of size n leads to an average time complexity of O(n)
     for each. Moreover, because this opt-2 algorithm evaluates a total of 
     \(\frac{n^2}{2}\) combinations.\footnote{The estimation comes from 
     the fact that the total number of combinations is equivalent to the 
-    sum of a triangular number sequence} the overall time complexity of 
+    sum of a triangular number sequence.} the overall time complexity of 
     this algorithm is O(2n\textsuperscript3)  which simplifies to 
     O(n\textsuperscript3). Fortunately the efficiency of this algorithm 
     can be slightly improved. Instead of reversing segments of our route 
-    we can choose to swap pairs of Addresses instead  Additionally, rather 
+    we can choose to swap pairs of \verb|Addresses| instead.  Additionally, rather 
     than call \emph{length()} to compare the \emph{total distances} between the 
     modified and original path, we can focus our comparisons on just the 
-    \emph{change in distance} caused by each swap.  In code, this results 
-    in the following modified opt2 algorithm:
-
-    \begin{lstlisting}[
-        caption=Opt-2 Algorithm (optimized),
-        label={lst:opt2-2}, % what does label do???
-        language=C++
-    ]
-Route Route::opt2(){
-    // this code needs to be modified
-    AddressList address_list(address_vec);
-    double current_length = address_list.length();
-    for (int m=1 ; m<address_list.size(); m++){
-        for (int n=0; n <= m; n++){
-            AddressList new_list(address_list.reverse(n, m+1));
-            if ( new_list.length() < address_list.length() ){        
-                address_list = new_list;
-                current_length = new_list.length();
-            } 
-        }
-    }
-    Route new_route(address_list, hub);
-    return new_route;
-}
-\end{lstlisting}
-    Consequently, the time complexity is now reduced to 
-    O(n\textsuperscript2) (same as our greedy algorithm!) 
-    and yields the same results as before:
-    
-    \begin{figure}[h]
-        \caption{** make sure it yields same results, then copy paste from previous figures **}
-    \end{figure}
-
-    Thus, our opt-2 algorithm seems to be a substantial 
+    \emph{change in distance} caused by each swap.
+    Consequently, the time complexity can be reduced to 
+    O(n\textsuperscript2) (same as our greedy algorithm!). Thus, our opt-2 algorithm seems to be a noticeable 
     improvement from the greedy algorithm. Yet, even this 
-    approach seems to not be heavily reliable. See below:
+    approach may not always produce accurate results. Figure \ref*{figure:opt2_vs_greedy_2} demonstrates this below:
     
     \begin{figure}[h]
-        \caption{** include optimized opt2 yielding poor solution results}
-    \end{figure}
-
-    Thus, to develop more optimal solutions we could choose to employ our 
-    greedy algorithm followed by opt-2. In addition, because both algorithms 
-    have a time complexity of O(n\textsuperscript2) the overall time complexity of running 
-    both algorithms would be O(2n\textsuperscript2) which simplifies back to O(n\textsuperscript2). 
-    Although this approach is well-suited for single delivery routes, 
-    we can extend the opt-heuristic to optimize two routes simultaneously 
-    as well. In other words, we can further shorten the paths of two routes 
-    by swapping segments of one out for segments of the other. This may be more 
-    desirable, as it introduces more flexibility, and thus could lead to identifying 
-    potentially shorter paths.
-
-    \begin{figure}[h]
-        \caption{An unsorted Route is optimized through both the greedy algorithm (blue) and the opt2 algorithm (green). This demonstrates how the opt2 algorithm alone is not necessarily sufficient to find the shortest Route.}
-        \label{figure:sortdemo}
+        \caption{An unsorted Route is optimized through both the greedy algorithm (blue) and the opt2 algorithm (green).}
+        \label{figure:opt2_vs_greedy_2}
         \begin{minipage}{0.3\linewidth}
             % Old
             \begin{tikzpicture}
@@ -312,6 +334,19 @@ Route Route::opt2(){
         \end{minipage}
     \end{figure}
 
+    Thus, to develop more optimal solutions we could choose to employ our 
+    greedy algorithm followed by opt-2. In addition, because both algorithms 
+    have a time complexity of O(n\textsuperscript2) the overall time complexity of running 
+    both algorithms would be O(2n\textsuperscript2) which simplifies back to O(n\textsuperscript2). 
+    Although this approach is well-suited for single delivery routes, 
+    we can extend the opt-heuristic to optimize two routes simultaneously 
+    as well. In other words, we can further shorten the paths of two routes 
+    by swapping segments of one out for segments of the other. This may be more 
+    desirable, as it introduces more flexibility, and thus could lead to identifying 
+    potentially shorter paths.
+
+
+
     \subsection{Multiple Traveling Salesmen Problem}
     \label{subsection:Multiple_Traveling_Salesmen_Problem}
     
@@ -353,10 +388,10 @@ For all possible segments for both routes
      are called in total nine times, the time complexity 
      of the innermost loops is O(9n) which simplifies to O(n).
      Consequently, when we consider our four for-loops 
-     the overall time complexity becomes O(n\textsuperscript5)
+     the overall time complexity becomes O(n\textsuperscript5).
      \footnote{Futhermore, the time complexity would be 
      O(m\textsuperscript5+n\textsuperscript5) If we consider 
-     routes of differing lengths m and n}. It’s important to 
+     routes of differing lengths m and n.} It’s important to 
      note that the time complexity of this algorithm 
      can also be improved, but at a cost. For example, 
      two for-loops are created to account for total 
@@ -368,30 +403,12 @@ For all possible segments for both routes
      may ignore more optimal solutions due to this constraint. 
      Therefore, therein lies a tradeoff between accuracy and 
      efficiency that we must consider when choosing which 
-     approach/algorithm to use. The figures below demonstrate 
-     this tradeoff visually:
-     \begin{figure}[h]
-        \caption{**include graph. Caption 1: Multi-path opt-2 algorithm with permitting swaps of fixed segment length 3 ( O(n\textsuperscript3) )
-        Caption 2: Multi-path opt-2 algorithm with permitting swaps of varied segment lengths ( O(n\textsuperscript5) ). ****
-        }
-    \end{figure}
+     approach/algorithm to use. 
 
     In prioritizing accuracy, we will choose to pay the computational costs and use a multi-path-op2 algorithm that swaps segments of varied lengths efficient mulit-path opt-2 algorithm may require. Additionally, we can also choose to use this algorithm to optimize two routes belonging to a single driver (that is, spread over two different days). In this case, we may also want to consider optimizing for the total distance traveled by both routes, rather than the \emph{individual} distance traveled by both routes. The figures below demonstrate how this subtle change in constraints produces dramatically different results:
     \begin{figure}[h]
-        \caption{*** include graphs use example test case from book: 
-        Caption 1: Multi-path opt-2 algorithm optimizing for the individual distance traveled by both routes. 
-        Caption 2: Multi-path opt-2 algorithm optimizing for the total distance traveled by both routes. 
-        ****INCLUDE INDIVIDUAL LENGTHS  AND TOTAL DISTANCES FOR EACH CAPTION
-        }
-    \end{figure}
-    
-    Notice how in Figure XXX (caption 2) we achieve a smaller total distance at the expense of increasing the individual distance of route XXX. Whereas in Figure XXX (caption 1) we optimize for the individual distances of each route at the expense of having a larger total distance (from taking the sum of both routes). As a result, it seems we may want to optimize for total distance and individual distance on a case-by-case basis. For example, in the scenario of scheduling routes for multiple (in this case two) Amazon truck drivers it may seem more logical to optimize for individual distances. This is because having lopsided routes similar to that shown in Figure XXX (caption 1) can lead to undelivered packages (in the event that one route is so long all points cannot be visited in a single shift of work). Conversely, in the scenario that we were trying to optimize two routes belonging to the same truck driver, it seems more logical to optimize for total distance traveled across both routes (although this is assuming delivery timing is not a factor)\footnote{this is because swapping segments containing different delivery times would lead to some packages being delivered early while others being delivered too late. We don't mind early deliveries, but late deliveries are unacceptable}. For our final product, we will explore ways to utilize the multi-path opt2 algorithm (including the others previously discussed) in optimzing truck routes for drivers.  
-    \newline{}\newline{}
-    Talk about how swap algorithm works. Figure \ref{figure:swapdemo} provides a simple example of how this algorithm improves the total distance. (Now prove it with data! What are the distances before and after?) ALSO: Talk about how the gray and black Addresses are symmetrical, but the trucks take different Routes. Is this okay, or does one or both of them need to go through greedy/opt2???
-
-    \begin{figure}[h]
-        \caption{Two Routes exchange Addresses to optimize their distances.}
-        \label{figure:swapdemo}
+        \caption{Two Routes exchange Addresses to optimize the total distance from 19.62 to 16.51}
+        \label{figure:swap_1}
         \begin{minipage}{0.45\linewidth}
             % Unswapped
             \begin{tikzpicture}
@@ -425,16 +442,16 @@ For all possible segments for both routes
             % Swapped
             \begin{tikzpicture}
                 % Route 1
-                \draw [black, -latex] (0, 0) -- (2, 0);
-                \filldraw [black] (0, 0) circle (2pt);
-                \draw [black, -latex] (2, 0) --(3, 1);
-                \filldraw [black] (2, 0) circle (2pt);
-                \draw [black, -latex] (3, 1) --(3, 2);
-                \filldraw [black] (3, 1) circle (2pt);
-                \draw [black, -latex] (3, 2) --(2, 1);
-                \filldraw [black] (3, 2) circle (2pt);
-                \draw [black, -latex] (2, 1) --(0, 0);
-                \filldraw (2, 1) [black] circle (2pt);
+                \draw [gray, -latex] (0, 0) -- (2, 0);
+                \filldraw [gray] (0, 0) circle (2pt);
+                \draw [gray, -latex] (2, 0) --(3, 1);
+                \filldraw [gray] (2, 0) circle (2pt);
+                \draw [gray, -latex] (3, 1) --(3, 2);
+                \filldraw [gray] (3, 1) circle (2pt);
+                \draw [gray, -latex] (3, 2) --(2, 1);
+                \filldraw [gray] (3, 2) circle (2pt);
+                \draw [gray, -latex] (2, 1) --(0, 0);
+                \filldraw (2, 1) [gray] circle (2pt);
                 \filldraw [red] (0, 0) circle (4pt);
                 % Route 2
                 \draw [gray, -latex] (0, 0) -- (0, 2);
@@ -451,6 +468,75 @@ For all possible segments for both routes
             \end{tikzpicture}
         \end{minipage}
     \end{figure}
+    \begin{figure}[h]
+        \caption{Two Routes exchange Addresses to optimize their individual distance from 9.88 and 9.73 units to 9.81 and 8.58 units respectively.}
+        \label{figure:swap_2}
+        \begin{minipage}{0.45\linewidth}
+            % Unswapped
+            \begin{tikzpicture}
+                % Route 1
+                \draw [black, -latex] (0, 0) -- (2, 0);
+                \filldraw [black] (0, 0) circle (2pt);
+                \draw [black, -latex] (2, 0) --(3, 2);
+                \filldraw [black] (2, 0) circle (2pt);
+                \draw [black, -latex] (3, 2) --(2, 3);
+                \filldraw [black] (3, 2) circle (2pt);
+                \draw [black, -latex] (2, 3) --(0, 2);
+                \filldraw [black] (2, 3) circle (2pt);
+                \draw [black, -latex] (0, 2) --(0, 0);
+                \filldraw (0, 2) [black] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+                % Route 2
+                \draw [gray, -latex] (0, 0) -- (3, 1);
+                \filldraw [gray] (0, 0) circle (2pt);
+                \draw [gray, -latex] (3, 1) --(2, 1);
+                \filldraw [gray] (3, 1) circle (2pt);
+                \draw [gray, -latex] (2, 1) --(1, 2);
+                \filldraw [gray] (2, 1) circle (2pt);
+                \draw [gray, -latex] (1, 2) --(1, 3);
+                \filldraw [gray] (1, 2) circle (2pt);
+                \draw [gray, -latex] (1, 3) --(0, 0);
+                \filldraw (1, 3) [gray] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}{0.45\linewidth}
+            % Unswapped
+            \begin{tikzpicture}
+                % Route 1
+                \draw [gray, -latex] (0, 0) -- (3, 1);
+                \filldraw [gray] (0, 0) circle (2pt);
+                \draw [gray, -latex] (3, 1) --(3, 2);
+                \filldraw [gray] (3, 1) circle (2pt);
+                \draw [gray, -latex] (3, 2) --(2, 3);
+                \filldraw [gray] (3, 2) circle (2pt);
+                \draw [gray, -latex] (2, 3) --(0, 2);
+                \filldraw [gray] (2, 3) circle (2pt);
+                \draw [gray, -latex] (0, 2) --(0, 0);
+                \filldraw (0, 2) [gray] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+                % Route 2
+                \draw [gray, -latex] (0, 0) -- (2, 0);
+                \filldraw [gray] (0, 0) circle (2pt);
+                \draw [gray, -latex] (2, 0) --(2, 1);
+                \filldraw [gray] (2, 0) circle (2pt);
+                \draw [gray, -latex] (2, 1) --(1, 2);
+                \filldraw [gray] (2, 1) circle (2pt);
+                \draw [gray, -latex] (1, 2) --(1, 3);
+                \filldraw [gray] (1, 2) circle (2pt);
+                \draw [gray, -latex] (1, 3) --(0, 0);
+                \filldraw (1, 3) [gray] circle (2pt);
+                \filldraw [red] (0, 0) circle (4pt);
+            \end{tikzpicture}
+        \end{minipage}
+    \end{figure}
+
+    \newpage
+    Notice how in Figure \ref*{figure:swap_1} we achieve a smaller total distance at the expense of increasing the individual distance of route 1 of the routes. Whereas in Figure \ref*{figure:swap_2} we optimize for the individual distances of each route at the expense of having a larger total distance (from taking the sum of both routes). As a result, it seems we may want to optimize for total distance and individual distance on a case-by-case basis. For example, in the scenario of scheduling routes for multiple (in this case two) Amazon truck drivers it may seem more logical to optimize for individual distances. This is because having lopsided routes similar to that shown in Figure \ref*{figure:swap_2} can lead to undelivered packages (in the event that one route is so long all points cannot be visited in a single shift of work). Conversely, in the scenario that we were trying to optimize two routes belonging to the same truck driver, it seems more logical to optimize for total distance traveled across both routes (although this is assuming delivery timing is not a factor)\footnote{this is because swapping segments containing different delivery times would lead to some packages being delivered early while others being delivered too late. We don't mind early deliveries, but late deliveries are unacceptable.}. For our final product, we will strategically use the algoritms discussed to most effectivly optimize routes for truck drivers.
+    
+    % Talk about how swap algorithm works. Figure \ref{figure:swapdemo} provides a simple example of how this algorithm improves the total distance. (Now prove it with data! What are the distances before and after?) ALSO: Talk about how the gray and black Addresses are symmetrical, but the trucks take different Routes. Is this okay, or does one or both of them need to go through greedy/opt2???
+
+
 
     \subsection{Developing the Final Product}
     \label{subsection:Developing_the_Final_Product}
