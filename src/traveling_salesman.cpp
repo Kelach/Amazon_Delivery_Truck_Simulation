@@ -79,7 +79,7 @@ void AddressList::add_address(Address new_address){
     // Checks if address already current exists
     for (Address addy : address_vec){
         if (addy == new_address){
-            std::cout << "Ignoring duplicate address" << std::endl;
+            // std::cout << "Ignoring duplicate address" << std::endl;
             // If the order is duplicate, it may still have an earlier deliver_by date. In that case, both orders should be delivered on the earlier date.
             if (new_address.get_deliver_by() < addy.get_deliver_by()) {
                 addy.set_deliver_by(new_address.get_deliver_by());

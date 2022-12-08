@@ -59,9 +59,11 @@
     \begin{itemize}
         \item \verb|traveling_salesman.h|: a header file for our TravelingSalesman library, defining all of the objects and algorithms used in the project
         \item \verb|traveling_salesman.cpp|: an implementation file
-        \item \verb|tester.cpp|: a script which tests the functionality of our TravelingSalesman library and generates TikZ code for figures displayed in this report; this script is compiled as \verb|tester.exe|
-        \item \verb|deliveries_generator.cpp|: a script which generates \verb|.dat| files containing lists of orders to be processed by \verb|delivery_truck_simulation.exe|; this script is compiled as \verb|deliveries_generator.exe|
-        \item \verb|delivery_truck_simulation.cpp|: a script which represents a hypothetical final product for use in industry, as described in Section \ref{subsection:Developing_the_Final_Product}; this script is compiled as \verb|delivery_truck_simulation.exe|
+        \item \verb|tester.cpp|: a script which tests the functionality of our TravelingSalesman library and generates TikZ code for some figures displayed in this report
+        \item \verb|deliveries_generator.cpp|: a script which generates \verb|.dat| files containing lists of orders to be processed by \verb|delivery_truck_simulation.exe|
+        \item \verb|delivery_truck_simulation.cpp|: a script which represents a hypothetical final product for use in industry, as described in Section \ref{subsection:Developing_the_Final_Product}
+        \item \verb|experimental.cpp|: a script which runs multiple simulations like the one in \verb|delivery_truck_simulation.cpp| to study the impact of simulation parameters on order backlogging
+        \item \verb|plotter.m|: an auxiliary MATLAB script to plot experimental data
     \end{itemize}
 
     We began our project by writing the header and implementation files, coupled with tests in our tester file. After we confirmed that all of our objects and algorithms functioned as expected, we designed a main program to best parallel a real world application of solving the Traveling Salesman Problem. The structures and algorithms that we developed are further detailed in this section.
@@ -542,7 +544,9 @@ For all possible segments for both routes
     \label{subsection:Developing_the_Final_Product}
     After our team implemented our solutions to the Single and Multiple Traveling Salesman Problems, we decided to explore dynamicism by constructing a simplified route allocator for a delivery company. Every morning, a regional fulfilment center recives a list of orders to fulfill, corresponding to packages available onsite. It invokes our program, which combines these with unfulfilled orders from the previous day, and delegates them amongst a predetermined number of trucks. The \verb|Route|s are then optimized individually and between one another. At this point, their distances are measured. If a \verb|Route| exceeds a predetermined distance limit, \verb|Address|es are removed from the \verb|Route| based on their \verb|deliver_by| due date, until it falls within an acceptable length. The delivery routes are then exported to documents for the drivers, the unfulfilled orders are saved to a file which overwrites the old one, and performance statistics are compiled into a report for management.
 
-    All of the tasks to be completed before the start of a business day are modularized in a single function. It requires parameters specifying input and output file locations, the number of trucks available, the maximum permissible route distance, the hub address, and a boolean which allows the user to specify if data should be output from intermediate optimization steps. Most of the harder tasks of the simulation have already been solved in our library. This even includes the repetitive tasks of reading or exporting a \verb|Route| or \verb|AddressList| from or to a file, based on a given file path string. To demonstrate this program, we constructed a simulation with pre-generated daily orders spanning several days. The results of this simulation are discussed in Section \ref{section:Results}.
+    All of the tasks to be completed before the start of a business day are modularized in a single function. It requires parameters specifying input and output file locations, the number of trucks available, the maximum permissible route distance, the hub address, and a boolean which allows the user to specify if data should be output from intermediate optimization steps. Most of the harder tasks of the simulation have already been solved in our library. This even includes the repetitive tasks of reading or exporting a \verb|Route| or \verb|AddressList| from or to a file, based on a given file path string. To demonstrate this program, we constructed a simulation with 18 pre-generated daily orders spanning 9 days.
+    
+    In addition, we used a pared-down version, with limited file output, to experiment with variations in simulation parameters. Each simulation is a sigle data point, drawing from 20 daily orders across 30 days. The same order data was used for each data point. The nature and results of these simulations are discussed in Section \ref{section:Results}.
 
     \section{Results}
     \label{section:Results}
@@ -550,7 +554,7 @@ For all possible segments for both routes
 
     % Hmm, maybe insert a table comparing number of nodes/trucks to program execution time. What rate does it increase at $(O(n), O(n^2), \&c.)$
 
-    For our main simulation, we generated randomized order data spanning 9 days. Each day has 18 orders with coordinates spanning from 0 to 10 excluding the hub, i.e. $\{ (i, j) \in \mathbb{Z}^2 | 0 \leq i \leq 10 \cap 0 \leq j \leq 10\} - \{ (0, 0)\}$. Delivery due dates range from 1 to 7 days after the order was generated. For this test, 3 trucks were used, and the distance limit was set to 35.0 for each truck. Our program took 795 milliseconds to execute locally, and XXXXXX milliseconds on the ISP machine. The resulting outputs, spread across over 100 data files, would be quite tedious to present in full in this report, so the results will be condensed into tables and figures. To view samples of each form of output, please refer to Appendix \ref{appendix:Sample_Output_Files}.
+    For our main simulation, we generated randomized order data spanning 9 days. Each day has 18 orders with coordinates spanning from 0 to 10 excluding the hub, i.e. $\{ (i, j) \in \mathbb{Z}^2 | 0 \leq i \leq 10 \cap 0 \leq j \leq 10\} - \{ (0, 0)\}$. Delivery due dates range from 1 to 7 days after the order was generated. For this test, 3 trucks were used, and the distance limit was set to 35.0 for each truck. The resulting outputs, spread across over 100 data files, would be quite tedious to present in full in this report, so the results will be condensed into tables and figures. To view samples of each form of output, please refer to Appendix \ref{appendix:Sample_Output_Files}.
 
     The first thing to consider from the results is whether the optimization performed as expected. As seen in Figure \ref{figure:day1opt}, stops are exchanged within and between truck routes until they all take efficient paths. Since no orders were left undelivered on Day 1, all of the Addresses are still present afterwards. This can be verified for the other days as well.
 
@@ -687,18 +691,33 @@ For all possible segments for both routes
         \end{tabular}
     \end{table}
 
-    At this point, the main problem is solved. For a given list of orders, our program can find an optimal solution within a certain distance range and eliminate low-priority orders to keep delivery routes within a certain distance constraint. Now we will extend our investigation into modifying parameters of the simulation. As mentioned before, at a certain point, the simulation will likely start backlogging orders. If we find this point, managers could leverage it to maximize efficiency while maintaining customer satisfaction. In Section \ref{subsection:Varying_the_Distance_Limit}, we investigate how varying the maximum permissible route distance impacts backlogs. In section \ref{subsection:Varying_the_Number_of_Trucks_Deployed}, we investigate how varying the number of trucks deployed impacts backlogs.
+    At this point, the main problem is solved. For a given list of orders, our program can find an optimal solution within a certain distance range and eliminate low-priority orders to keep delivery routes within a certain distance constraint. Now we will extend our investigation into modifying parameters of the simulation. As mentioned before, at a certain point, the simulation will likely start backlogging orders. If we find this point, managers could leverage it to maximize efficiency while maintaining customer satisfaction. In Section \ref{subsection:Varying_the_Distance_Limit}, we investigate how varying the maximum permissible route distance impacts backlogs. In section \ref{subsection:Varying_the_Number_of_Trucks_Deployed}, we investigate how varying the number of trucks deployed impacts backlogs. Finally, in Section \ref{subsection:Performance_Data}, we briefly reflect on the execution times of the programs.
 
     \subsection{Varying the Distance Limit}
     \label{subsection:Varying_the_Distance_Limit}
-    Note that for a delivery zone ranging from coordinates 0 to $d$ with a hub at $(0, 0)$, if the distance limit were dropped below $2 * d \sqrt{2}$, then some orders would be forever out of range. This sets a lower limit for our maximum permissible distance.
+    First, we consider varying the distance limit for each truck. Note that for a delivery zone ranging from coordinates 0 to $d$ with a hub at $(0, 0)$, if the distance limit were dropped below $2 * d \sqrt{2}$, then some orders would be forever out of range. This sets a lower limit for our maximum permissible distance at $2 \cdot 10 \sqrt{2} \approx 28.28$. However, because there are more orders for the hub to process than trucks, the limit will likely be higher. Figure \ref{img:experiment1} shows that for 3 trucks receiving 20 orders per day in a 10-by-10 grid, orders start to maintain a constant backlog below a minimum distance of 34. After that point, unfulfilled orders climb signigicantly. Interestingly, after an initial climb, backlogs tend to level off. The exact cause of this would require more investigation, but it's possible that once the backlog is high, it is counteracted by new orders occurring at the same locations as old ones, thus being merged.
+
+    \begin{figure}[h]
+        \centering
+        \caption{The order backlog builds up as the route distance limit drops below 34.}
+        \label{img:experiment1}
+        \includegraphics[width=\textwidth]{experiment1.png}
+    \end{figure}
 
     \subsection{Varying the Number of Trucks Deployed}
     \label{subsection:Varying_the_Number_of_Trucks_Deployed}
-    One important question that a delivery company might want to consider is how many trucks to deploy on a given day. More trucks can cover a greater cumulative distance and deliver more orders, but 
+    Now, we consider varying the number of trucks. Obviously, a delivery company would be interested in minimizing the number of trucks it has to deploy. A similar experiment was conducted on the same data as before. Here, we find a more striking threshold. Figure \ref{img:experiment2} shows that once the number of trucks drops below 3, the backlog explodes, albeit with a similar leveling-off as before. What this means is that the delivery company could not get away with short-staffing for very long before being overwhelmed.
+
+    \begin{figure}[h]
+        \centering
+        \caption{The order backlog builds up as the number of trucks deployed drops below 3.}
+        \label{img:experiment2}
+        \includegraphics[width=\textwidth]{experiment2.png}
+    \end{figure}
 
     \subsection{Performance Data}
-    go over execution time and stuff
+    \label{subsection:Performance_Data}
+    Finally, for each of the simulations, i.e. our main program and our experimental one, we recorded the total execution time both on a laptop computer and on the ISP machine. Our main program took 795 milliseconds on a laptop and 75 milliseconds on the supercomputer. The experimental series took 958,455 and 199,371 milliseconds, respectively. Clearly, the supercomputer offers a significant speed advantage in carrying out the programs.
 
     \section{Conclusion}
     \label{section:Conclusion}
