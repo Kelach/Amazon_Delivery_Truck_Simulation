@@ -238,24 +238,6 @@ return new_route;
 
 }
 
-void Route::opti_opt2(){
-    bool found_better = false;
-    for(int i=0; i <= address_vec.size() - 2; i++) {
-        for(int j=i+1; j <= address_vec.size() - 1; j++) {
-            int length_delta = - this->at(i).distance(this->at((i + 1) % n)) 
-            - this->at(j).distance(this->at(j + 1) % n)
-            + this->at(i).distance(this->at(j))
-            + this->at((i + 1) % n).distance(this->at(j + 1) % n);
-
-            if (length_delta < 0) {
-                reverse(begin(path) + i + 1, begin(path) + j + 1);
-                current_length += length_delta;
-                found_better = true;
-            }
-        }
-    }
-}
-
 Route Route::opt2(){
     AddressList address_list(address_vec);
 
@@ -263,25 +245,13 @@ Route Route::opt2(){
 
     for (int m=1 ; m<address_list.size(); m++){
         for (int n=0; n <= m; n++){
+            // reverse list, and update vector if modification
+            // yields improvements
             AddressList new_list(address_list.reverse(n, m+1));
             if ( new_list.length() < address_list.length() ){        
-                // std::cout << "new list: ";
-                // new_list.display();
-                // std::cout << std::endl;
-                // std::cout << "old list: ";
-                // address_list.display();
-                // std::cout << std::endl << "because: "
-                //     << new_list.length() << " < " 
-                //     << address_list.length() << std::endl;
                 address_list = new_list;
                 current_length = new_list.length();
             } 
-                // std::cout << "skipping list: ";
-                // new_list.display();
-                // std::cout << std::endl << "keeping list: ";
-                // address_list.display();
-                // std::cout << "length: " << address_list.length()
-                //     << std::endl;
         }
 
     }

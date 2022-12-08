@@ -11,7 +11,6 @@ using namespace TravelingSalesman;
 std::random_device rd; //obtain a random number hardware
 std::mt19937 gen(rd()); // seed the generator
 int random(int low, int high){
-    // std::cout <<"Low is: " << low << " High is: " << high << "\n";
     std::uniform_int_distribution<> dist(low, high); // define range
     return dist(gen); // generats random number
 }
@@ -85,13 +84,23 @@ int main() {
     Route greedy = address_route.greedy_route();
     greedy.display();
     std::cout << std::endl;
+
     std::cout << "opt2 route: " << std::endl;
     Route opt2 = address_route.opt2();
     opt2.display();
     std::cout << std::endl;
+
+    std::cout << "opti_opt2 route: " << std::endl;
+    address_route.opti_opt2();
+    address_route.display();
+    std::cout << std::endl;
+
     std::cout << "Greedy length: " << greedy.length()
         << std::endl << "Opt2 Length: " 
-        << opt2.length() << std::endl;
+        << opt2.length()
+        << std::endl << "Opti_opt2 Length: "
+        << address_route.length()
+        << std::endl;
 
     std::cout << std::endl << std::endl;
     
@@ -183,24 +192,24 @@ int main() {
     // r1.to_tikz("..\\Report\\route_figures\\r1_post.tikz", "red", "gray", "black", "-latex");
     // r2.to_tikz("..\\Report\\route_figures\\r2_post.tikz", "red", "gray", "black", "-latex");
 
-    Route r(std::vector<Address> {}, Address(0, 0, 0));
-    r.add_address(Address(2, 0, 10));
-    r.add_address(Address(3, 2, 10));
-    r.add_address(Address(2, 3, 10));
-    r.add_address(Address(0, 2, 10));
+    // Route r(std::vector<Address> {}, Address(0, 0, 0));
+    // r.add_address(Address(2, 0, 10));
+    // r.add_address(Address(3, 2, 10));
+    // r.add_address(Address(2, 3, 10));
+    // r.add_address(Address(0, 2, 10));
 
-    Route s(std::vector<Address> {}, Address(0, 0, 0));
-    s.add_address(Address(3, 1, 10));
-    s.add_address(Address(2, 1, 10));
-    s.add_address(Address(1, 2, 10));
-    s.add_address(Address(1, 3, 10));
-    std::cout << r.length() << " and "
-        << s.length() << "\n"; 
+    // Route s(std::vector<Address> {}, Address(0, 0, 0));
+    // s.add_address(Address(3, 1, 10));
+    // s.add_address(Address(2, 1, 10));
+    // s.add_address(Address(1, 2, 10));
+    // s.add_address(Address(1, 3, 10));
+    // std::cout << r.length() << " and "
+    //     << s.length() << "\n"; 
     
-    s.display();
-    std::cout << "\n";
-    s.swap(r, 3, 4, 3, 4);
-    s.display();
+    // s.display();
+    // std::cout << "\n";
+    // s.swap(r, 3, 4, 3, 4);
+    // s.display();
     // r.multi_opt2(s);
     // s.to_tikz("..\\Report\\route_figures\\fig_5_1.tikz", "red", "gray", "green", "-latex");
     // r.to_tikz("..\\Report\\route_figures\\fig_5_2.tikz", "red", "gray", "green", "-latex");
