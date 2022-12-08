@@ -237,6 +237,25 @@ Route Route::greedy_route(){
 return new_route;
 
 }
+
+void Route::opti_opt2(){
+    bool found_better = false;
+    for(int i=0; i <= address_vec.size() - 2; i++) {
+        for(int j=i+1; j <= address_vec.size() - 1; j++) {
+            int length_delta = - this->at(i).distance(this->at((i + 1) % n)) 
+            - this->at(j).distance(this->at(j + 1) % n)
+            + this->at(i).distance(this->at(j))
+            + this->at((i + 1) % n).distance(this->at(j + 1) % n);
+
+            if (length_delta < 0) {
+                reverse(begin(path) + i + 1, begin(path) + j + 1);
+                current_length += length_delta;
+                found_better = true;
+            }
+        }
+    }
+}
+
 Route Route::opt2(){
     AddressList address_list(address_vec);
 
@@ -283,7 +302,7 @@ void Route::multi_opt2(Route& route2){
                     // 4. both reverse then swap
                     // if (!address_vec[i].swappable() || ... || ......) coninue;
 
-                    // std::cout << i <<"--"<< j << "\n"
+                    // std::cout << i <<"--"<< j << " && "
                     //     << n <<"--"<< m 
                     //     << "\n";
                     std::vector<Route> routes_1{Route(address_vec, hub), Route(route2.get_vec(), route2.get_hub())};
@@ -314,7 +333,10 @@ void Route::multi_opt2(Route& route2){
                     std::vector<double> distances2 = {routes_2[0].length(), routes_2[1].length()};
                     std::vector<double> distances3 = {routes_3[0].length(), routes_3[1].length()};
                     std::vector<double> distances4 = {routes_4[0].length(), routes_4[1].length()};
-                    
+                    // if ((i==3) && (j==3) && (n==3) && (m==3)){
+                    //     std::cout <<"r1: " << routes_1[0].length() <<
+                    //         " r2: " << routes_1[1].length() << "\n"; 
+                    // }
                     if ((distances1[0] < current_distances[0]) && (distances1[1] < current_distances[1])){
                         // std::cout << "updating routes because lengths " <<
                         // current_distances[0] << ", " << current_distances[1] 
