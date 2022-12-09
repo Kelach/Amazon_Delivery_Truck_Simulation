@@ -40,17 +40,16 @@
     
     In Section \ref{section:Methodology} we discuss the algorithm that we used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations. However, we will first further define the problem for our purposes and apply some limitations and assumptions in the following subsections.
 
-    \subsection{Perfect is the Enemy of Good}
-    \label{subsection:Perfect_is_the_Enemy_of_Good}
-    One could simply test each of the $n!$ combinations of a list of $n$ addresses to fund the one with the shortest total distance, but with 4 stops this becomes quite tedious, and after that nearly untenable. A computer could solve this faster, but the problem still becomes very computationally expensive at a factorial rate. The preferable alternative is to use algorithms to find good and better paths, significantly cutting down on calculations. Perhaps it will neglect the perfect solution, but in a world with finite resources, we have to make the trade-off to settle for less. The algorithms which we employ, detailed in Section \ref{section:Methodology} reflect this.
+    \subsection{Limiting Assumptions}
+    \label{subsection:Limiting_Assumptions}
 
-    \subsection{Earth is Flat}
-    \label{subection:Earth_is_Flat}
-    We also have to restrict the definitions of an address and the distance between addresses. Since this project is intended to focus on algorithms, not a turn-key solution for use in the real world, addresses are represented with Cartesian coordinates on a two-dimensional Euclidian plane. Distances are assumed to be Euclidian, i.e. ``as the bird flies,'' with travel times proportional thereto. The distance could alternatively be defined as the ``Manhattan Distance,'' i.e. the distance along a perfect rectilinear street grid. Although using real-world geographic data considering road layouts, speed limits, real-time traffic data, and Earth's curvature would be more realistic, it would add significant complexity to our implementation without contributing much to the core principles of the solution.
+    There are a couple of assumptions which we make to simplify the problem for our purposes. For example, we don't necessarily need to find the singular best option. That would require testing all $n!$ different combinations. Instead of trying to find the perfect solution, we leverage a couple of algorithms, detailed in Section \ref{section:Methodology}, to find very good options.
 
-    \subsection{TODO}
-    MORE DEFINITIONS HERE: deliver by date, multiple days, multiple trucks
+    In addition, we assume that the stops exist at integer coordinates on a two-dimensional Euclidian plane. We are more interested in theory than a turn-key solution. Distances are also Euclidian, although the Manhattan distance, $|\Delta x + \Delta y|$, would be useful for modeling an urban street grid.
 
+    \subsection{Extensions to the Problem}
+    There are also a few ways in which we expand upon the problem. After the simple case, we expand to optimizing stops split between two and then multiple trucks. Then, in our simulations, we implement a maximum permissible route distance. This means that not every stop can be reached in a single day. Because of this, stops are given an ideal due date which sets their priority for removal. In these simulations we expand to dynamically adding more orders across multiple days.
+    
     \section{Methodology}
     \label{section:Methodology}
     % Notes: Talk about how we're solving the problem (C++, TACC super computer, icpc compiler) and how the program works (e.g. reads in text file, spits out text file). Then go into the development process/timeline (we started simple with address/list classes, tested functionality, and then expand it a bit)
@@ -723,7 +722,7 @@ For all possible segments for both routes
     \label{section:Conclusion}
     Talk about what we learned, how this all applies to industry, ideas to scale the problem up, ethics, \&c.
 
-    Talk about how our simulation is flawed, e.g. address removal isn't intelligent (purely by due date); orders aren't held back to be grouped with later-arriving orders; after stops are removed, the routes arent re optimized; main simulation program isn't super flexible (e.g. to change document names, formattig, you have to go into the code; dat files have to be in a specific format, can't be a database); no UI for ease of use
+    Talk about how our simulation is flawed, e.g. address removal isn't intelligent (purely by due date); orders aren't held back to be grouped with later-arriving orders; after stops are removed, the routes arent re optimized; main simulation program isn't super flexible (e.g. to change document names, formattig, you have to go into the code; dat files have to be in a specific format, can't be a database); no UI for ease of use; exmaple citation here \cite{cite:pasternack2019}.
 
     \appendix
     \section{Sample Output Files}
