@@ -77,32 +77,46 @@ int main() {
     
     // Route class test 1
     Route address_route(address_list, Address(0, 0, 0));
+    Route randoRoute = generateRoute(5, 10);
+
     std::cout << "old route: " << std::endl;
-    address_route.display();
+    std::cout << "length: " << randoRoute.length()
+    << "\n\n";
+    // randoRoute.display();
     std::cout << std::endl;
     std::cout << "greedy route: " << std::endl;
-    Route greedy = address_route.greedy_route();
-    greedy.display();
+    Route greedy = randoRoute.greedy_route();
+    std::cout << "length: " << greedy.length()
+    << "\n";
+    // greedy.display();
     std::cout << std::endl;
 
-    std::cout << "opt2 route: " << std::endl;
-    Route opt2 = address_route.opt2();
-    opt2.display();
+    std::cout << "\nopt2 route: " << std::endl;
+    Route opt2 = randoRoute.opt2();
+    std::cout << "length: " << opt2.length()
+    << "\n";
+    // opt2.display();
     std::cout << std::endl;
 
-    std::cout << "opti_opt2 route: " << std::endl;
-    address_route.opti_opt2();
-    address_route.display();
-    std::cout << std::endl;
+    std::cout << "\nbefore opti_opt2: " 
+    << randoRoute.length()<< std::endl;
+    randoRoute.opti_opt2();
 
-    std::cout << "Greedy length: " << greedy.length()
-        << std::endl << "Opt2 Length: " 
-        << opt2.length()
-        << std::endl << "Opti_opt2 Length: "
-        << address_route.length()
-        << std::endl;
+    std::cout << "after opti_opt2: "
+    << randoRoute.length() << "\n";
 
-    std::cout << std::endl << std::endl;
+    // address_route.display();
+    // address_route.display();
+    // std::cout << std::endl;
+
+    // std::cout << "Greedy length: " << greedy.length()
+    //     << std::endl << "Opt2 Length: " 
+    //     << opt2.length()
+    //     << std::endl << "Opti_opt2 Length: "
+    //     << address_route.length()
+    //     << std::endl;
+
+    // std::cout << std::endl << std::endl;
     
     address_route.to_dat("..\\dataout\\demo_1_old.dat");
     address_route.to_tikz("..\\dataout\\demo_1_old.tikz", "red", "black", "black", "-latex");
@@ -203,9 +217,7 @@ int main() {
     // s.add_address(Address(2, 1, 10));
     // s.add_address(Address(1, 2, 10));
     // s.add_address(Address(1, 3, 10));
-    // std::cout << r.length() << " and "
-    //     << s.length() << "\n"; 
-    
+
     // s.display();
     // std::cout << "\n";
     // s.swap(r, 3, 4, 3, 4);
@@ -215,6 +227,7 @@ int main() {
     // r.to_tikz("..\\Report\\route_figures\\fig_5_2.tikz", "red", "gray", "green", "-latex");
     // std::cout << r.length() << " and "
     //     << s.length() << "\n";
+
 
     
     return 0;
