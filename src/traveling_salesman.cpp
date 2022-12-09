@@ -79,7 +79,6 @@ void AddressList::add_address(Address new_address){
     // Checks if address already current exists
     for (Address addy : address_vec){
         if (addy == new_address){
-            // std::cout << "Ignoring duplicate address" << std::endl;
             // If the order is duplicate, it may still have an earlier deliver_by date. In that case, both orders should be delivered on the earlier date.
             if (new_address.get_deliver_by() < addy.get_deliver_by()) {
                 addy.set_deliver_by(new_address.get_deliver_by());
@@ -220,7 +219,6 @@ double Route::length(){
     if (address_vec.size() == 0) return 0;
     AddressList copy(address_vec);
     return copy.length() + hub.distance(address_vec.at(0)) + hub.distance(address_vec.at(address_vec.size()-1));
-    // return this->length();
 }
 Route Route::greedy_route(){
     AddressList current_list(address_vec);
@@ -289,26 +287,15 @@ void Route::multi_opt2(Route& route2){
                     // 2. one reverse then swap
                     // 3. other one reverse then swap 
                     // 4. both reverse then swap
-                    // if (!address_vec[i].swappable() || ... || ......) coninue;
-
-                    // std::cout << i <<"--"<< j << " && "
-                    //     << n <<"--"<< m 
-                    //     << "\n";
                     std::vector<Route> routes_1{Route(address_vec, hub), Route(route2.get_vec(), route2.get_hub())};
                     std::vector<Route> routes_2{Route(address_vec, hub), Route(route2.get_vec(), route2.get_hub())};
                     std::vector<Route> routes_3{Route(address_vec, hub), Route(route2.get_vec(), route2.get_hub())};
                     std::vector<Route> routes_4{Route(address_vec, hub), Route(route2.get_vec(), route2.get_hub())};
                     
-                    // std::cout << "Before";
-                    // std::cout << "\nRoute 1: "; new_route1.display();
-                    // std::cout << "\nRoute 2: "; new_route2.display();
                     routes_1[0].swap( routes_1[1], i, j, n, m );
-                    // std::cout << "\n";
-                    // routes_2[0].display();
-                    // std::cout << "\n";
+                    
                     routes_2[0].reverse( i, j+1, true );
-                    // routes_2[0].display();
-                    // std::cout << "\n";
+
                     routes_2[0].swap( routes_2[1], i, j, n, m );
                     
                     routes_3[1].reverse(n, m+1, true);
@@ -322,56 +309,29 @@ void Route::multi_opt2(Route& route2){
                     std::vector<double> distances2 = {routes_2[0].length(), routes_2[1].length()};
                     std::vector<double> distances3 = {routes_3[0].length(), routes_3[1].length()};
                     std::vector<double> distances4 = {routes_4[0].length(), routes_4[1].length()};
-                    // if ((i==3) && (j==3) && (n==3) && (m==3)){
-                    //     std::cout <<"r1: " << routes_1[0].length() <<
-                    //         " r2: " << routes_1[1].length() << "\n"; 
-                    // }
-                    if ((distances1[0] < current_distances[0]) && (distances1[1] < current_distances[1])){
-                        // std::cout << "updating routes because lengths " <<
-                        // current_distances[0] << ", " << current_distances[1] 
-                        //     << " are worse than lengths " << distances1[0] << ", " 
-                        //     << distances1[1] << "\n";
-                        // address_vec = routes_1[0].get_vec();
-                        // route2 = routes_1[1];
+                    if ((distances1[0] < current_distances[0]) 
+                    && (distances1[1] < current_distances[1])){
+
                         current_distances = {routes_1[0].length(), routes_1[1].length()};
                     }
 
-                    if ((distances2[0] < current_distances[0]) && (distances2[1] < current_distances[1])){
-                        // std::cout << "updating routes because lengths " <<
-                        // current_distances[0] << ", " << current_distances[1] 
-                        //     << " are worse than lengths " << distances2[0] << ", " 
-                        //     << distances2[1] << "\n";
-                        // address_vec = routes_2[0].get_vec();
-                        // route2 = routes_2[1];
+                    if ((distances2[0] < current_distances[0]) 
+                        && (distances2[1] < current_distances[1])){
+
                         current_distances = {routes_2[0].length(), routes_2[1].length()};
                     }
 
-                    if ((distances3[0] < current_distances[0]) && (distances3[1] < current_distances[1])){
-                        // std::cout << "updating routes because lengths " <<
-                        // current_distances[0] << ", " << current_distances[1] 
-                        //     << " are worse than lengths " << distances3[0] << ", " 
-                        //     << distances3[1] << "\n";
-                        // address_vec = routes_3[0].get_vec();
-                        // route2 = routes_3[1];
+                    if ((distances3[0] < current_distances[0]) 
+                        && (distances3[1] < current_distances[1])){
+
                         current_distances = {routes_3[0].length(), routes_3[1].length()};
                     }
 
-                    if ((distances4[0] < current_distances[0]) && (distances4[1] < current_distances[1])){
-                        // std::cout << "updating routes because lengths " <<
-                        // current_distances[0] << ", " << current_distances[1] 
-                        //     << " are worse than lengths " << distances4[0] << ", " 
-                        //     << distances4[1] << "\n";
-                        // address_vec = routes_4[0].get_vec();
-                        // route2 = routes_4[1];
+                    if ((distances4[0] < current_distances[0]) 
+                        && (distances4[1] < current_distances[1])){
+                            
                         current_distances = {routes_4[0].length(), routes_4[1].length()};
                     }
-
-
-                    // std::cout << "\n\nAfter";
-                    // std::cout << "\nRoute 1: "; this->display();
-                    // std::cout << "\nRoute 2: "; route2.display();
-                    // std::cout << "\nDistance: " << new_route1.length() + new_route2.length()
-                    //           << "\n";
                 }
             }
         }
@@ -380,100 +340,42 @@ void Route::multi_opt2(Route& route2){
 void Route::swap(Route& route2, int i, int j, int n, int m){
     Route new_route1(std::vector<Address>{}, hub);
     Route new_route2(std::vector<Address>{}, route2.get_hub());
-    
-    // std::cout << "route1 length: " 
-    //     << this->size() << "\nrange: " 
-    //     << i << ", " << j << " \n" 
-    //     << "route2 length: " 
-    //     << route2.size() << "\nrange: " 
-    //     << i << ", " << j << " \n"; 
-    // if ((route2.size()< m) ||
-    //     (this->size() < j )){
-    //         // std::cout << "\nskipping\n";
-    //         // std::cout << "skipping because:\n"
-    //         //     << "route1 length: " 
-    //         //     << this->size() << "\nrange: " 
-    //         //     << i << ", " << j << " \n"
-    //         //     << "route2 length: " 
-    //         //     << route2.size() << "\nrange: " 
-    //         //     << i << ", " << j << " \n\n";
-    //         return;
-    //     } else{
-    //         // std::cout << "not skipping because:\n"
-    //         //     << "route1 length: " 
-    //         //     << this->size() << "\nrange: " 
-    //         //     << i << ", " << j << " \n"
-    //         //     << "route2 length: " 
-    //         //     << route2.size() << "\nrange: " 
-    //         //     << i << ", " << j << " \n\n";
-    //     }
-
     // Route1:
     // retain start
-    // std::cout << "route 1:\n";
     for (int k=0;k<i;k++){
-        // std::cout << "loop from: " 
-        //     << 0 << "--" << i-1
-        //     << "\nlength: " << address_vec.size() 
-        //     << "\n";
         if (k < this->size()){
             new_route1.add_address(this->at(k));
         }
     }
     // append range of route2
     for (int k=n;k<m;k++){
-        // std::cout << "loop from: " 
-        //     << n << "--" << m-1
-        //     << "\nlength: " << route2.size() 
-        //     << "\n";
         if (k<route2.size()){
             new_route1.add_address(route2.at(k));
         }
     }
     // retain end
     for (int k=j;k<this->size();k++){
-        // std::cout << "length:\t" << this->size() <<
-        //     " index: " << k << "\n";
-        // std::cout << "loop from: " 
-        //     << j << "--" << address_vec.size()-1
-        //     << "\nlength: " << address_vec.size() 
-        //     << "\n\n";
         new_route1.add_address(this->at(k));
     }
-    // std::cout << "route 2:\n";
     // Route2:
     // retain start
     for (int k=0;k<n;k++){
-        // std::cout << "loop from: " 
-        //     << 0 << "--" << n-1
-        //     << "\nlength: " << route2.size() 
-        //     << "\n\n";
         if (k < route2.size()){
             new_route2.add_address(route2.at(k));
         }
     }
     // append range of route1
     for (int k=i;k<j;k++){
-        // std::cout << "loop from: " 
-        //     << i << "--" << j-1
-        //     << "\nlength: " << address_vec.size() 
-        //     << "\n\n";
         if (k < this->size()){
             new_route2.add_address(this->at(k));
         }
     }
     // retain end
     for (int k=m;k<route2.size();k++){
-        // std::cout << "loop from: " 
-        //     << m << "--" << route2.size()-1
-        //     << "\nlength: " << route2.size() 
-        //     << "\n\n";
-
         new_route2.add_address(route2.at(k));
     }
     route2 = new_route2;
     address_vec = new_route1.get_vec();
-    // std::cout << "\n\n";
 
 }
 void Route::display(){
