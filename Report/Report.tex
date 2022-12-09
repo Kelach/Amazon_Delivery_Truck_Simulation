@@ -147,7 +147,7 @@
     The improvements from the greedy algorithm seem to suggest that it 
     will play an important role in developing our Amazon route scheduling 
     algorithm. With this in mind, we attempted explore other local search methods that may be more effective than the greedy approach. One approach we can adopt is based on the opt-2 
-    heuristic. The opt-2 heuristic suggests that optimal routes are generally 
+    heuristic \cite[p.~457]{cite:eijkhout2022}. The opt-2 heuristic suggests that optimal routes are generally 
     not “entangled” (i.e no intersections). Therefore, if we can work to “detangle” 
     a given list of points we can find its optimal path. Rather than aim to algorithmically identify the intersections in a given path, 
     we can try to “detangle” a path by reversing segments of it and checking to 
@@ -261,14 +261,12 @@ Route Route::opt2(){
     sum of a triangular number sequence.} the overall time complexity of 
     this algorithm is O(2n\textsuperscript3)  which simplifies to 
     O(n\textsuperscript3). Fortunately the efficiency of this algorithm 
-    can be slightly improved. Instead of reversing segments of our route 
-    we can choose to swap pairs of \verb|Addresses| instead.  Additionally, rather 
-    than call \emph{length()} to compare the \emph{total distances} between the 
+    can be slightly improved. Rathan than call \emph{length()} to compare the \emph{total distances} between the 
     modified and original path, we can focus our comparisons on just the 
     \emph{change in distance} caused by each swap.
     Consequently, the time complexity can be reduced to 
-    O(n\textsuperscript2) (same as our greedy algorithm!). Thus, our opt-2 algorithm seems to be a noticeable 
-    improvement from the greedy algorithm. Yet, even this 
+    O(n\textsuperscript3). Thus, our opt-2 algorithm seems to be a noticeable 
+    improvement from the greedy algorithm at the cost of efficiency. Yet, even this 
     approach may not always produce accurate results. Figure \ref*{figure:opt2_vs_greedy_2} demonstrates this below:
     
     \begin{figure}[h]
@@ -337,13 +335,9 @@ Route Route::opt2(){
     \end{figure}
 
     Thus, to develop more optimal solutions we could choose to employ our 
-    greedy algorithm followed by opt-2. In addition, because both algorithms 
-    have a time complexity of O(n\textsuperscript2) the overall time complexity of running 
-    both algorithms would be O(2n\textsuperscript2) which simplifies back to O(n\textsuperscript2). 
-    Although this approach is well-suited for single delivery routes, 
-    we can extend the opt-heuristic to optimize two routes simultaneously 
-    as well. In other words, we can further shorten the paths of two routes 
-    by swapping segments of one out for segments of the other. This may be more 
+    greedy algorithm followed by opt-2. Using both algorithms would lead to a time complexity of O(n\textsuperscript2 + n\textsuperscript3), so the overall time complexity would be O(n\textsuperscript3). Due to having a larger overall time complexity, it may be more effective to only use our greedy algorithm when optimizing routes. Moreover, although this approach is well-suited for single delivery routes, 
+    we may also wish to extend the opt-heuristic to optimize two routes simultaneously. In other words, we may wish to further shorten the paths of two routes 
+    by swapping segments of one route out for segments of another. This may be more 
     desirable, as it introduces more flexibility, and thus could lead to identifying 
     potentially shorter paths.
 
@@ -534,7 +528,7 @@ For all possible segments for both routes
     \end{figure}
 
     \newpage
-    Notice how in Figure \ref*{figure:swap_1} we achieve a smaller total distance at the expense of increasing the individual distance of route 1 of the routes. Whereas in Figure \ref*{figure:swap_2} we optimize for the individual distances of each route at the expense of having a larger total distance (from taking the sum of both routes). As a result, it seems we may want to optimize for total distance and individual distance on a case-by-case basis. For example, in the scenario of scheduling routes for multiple (in this case two) Amazon truck drivers it may seem more logical to optimize for individual distances. This is because having lopsided routes similar to that shown in Figure \ref*{figure:swap_2} can lead to undelivered packages (in the event that one route is so long all points cannot be visited in a single shift of work). Conversely, in the scenario that we were trying to optimize two routes belonging to the same truck driver, it seems more logical to optimize for total distance traveled across both routes (although this is assuming delivery timing is not a factor)\footnote{this is because swapping segments containing different delivery times would lead to some packages being delivered early while others being delivered too late. We don't mind early deliveries, but late deliveries are unacceptable.}. For our final product, we will strategically use the algoritms discussed to most effectivly optimize routes for truck drivers.
+    Notice how in Figure \ref*{figure:swap_1} we achieve a smaller \emph{total} distance at the expense of increasing the \emph{individual distance} of route 1 of the routes. Whereas in Figure \ref*{figure:swap_2} we optimize for the \emph{individual distances} of each route at the expense of having a larger \emph{total distance} (from taking the sum of both routes). As a result, it seems we may want to optimize for total distance and individual distance on a case-by-case basis. For example, in the scenario of scheduling routes for multiple (in this case two) Amazon truck drivers it may seem more logical to optimize for individual distances. This is because having lopsided routes similar to that shown in Figure \ref*{figure:swap_2} can lead to undelivered packages (in the event that one route is so long all points cannot be visited in a single shift of work). Conversely, in the scenario that we were trying to optimize two routes belonging to the same truck driver, it seems more logical to optimize for total distance traveled across both routes (although this is assuming delivery timing is not a factor)\footnote{this is because swapping segments containing different delivery times would lead to some packages being delivered early while others being delivered too late. We don't mind early deliveries, but late deliveries are unacceptable.}. For our final product, we will strategically use the algoritms discussed to most effectivly optimize routes for truck drivers.
     
     % Talk about how swap algorithm works. Figure \ref{figure:swapdemo} provides a simple example of how this algorithm improves the total distance. (Now prove it with data! What are the distances before and after?) ALSO: Talk about how the gray and black Addresses are symmetrical, but the trucks take different Routes. Is this okay, or does one or both of them need to go through greedy/opt2???
 

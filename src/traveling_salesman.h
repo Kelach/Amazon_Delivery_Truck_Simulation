@@ -257,6 +257,7 @@ namespace TravelingSalesman {
          * @returns Route Object.
         */
         Route opt2();
+        void opti_opt2();
         /**
          * @brief Swaps segment of Route with the segments of another Route
          * @param route2 Route to be swapped with

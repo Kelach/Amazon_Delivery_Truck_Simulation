@@ -237,7 +237,26 @@ Route Route::greedy_route(){
 return new_route;
 
 }
-
+void Route::opti_opt2(){
+    bool found_better = false;
+    int vec_size = this->size();
+    double current_length = this->length();
+    for(int i=0; i <= this->size() - 2; i++) {
+        for(int j=i+1; j <= this->size() - 1; j++) {
+            // calculating length change
+            int length_delta = - this->at(i).distance(this->at((i + 1) % vec_size)) 
+            - this->at(j).distance(this->at((j + 1) % vec_size))
+            + this->at(i).distance(this->at(j))
+            + this->at((i + 1) % vec_size).distance(this->at((j + 1) % vec_size));
+            
+            if (length_delta < 0) {
+                this->reverse(i+1, j+1, true);
+                current_length += length_delta;
+                found_better = true;
+            }
+        }
+    }
+}
 Route Route::opt2(){
     AddressList address_list(address_vec);
 
