@@ -38,7 +38,7 @@
     \label{section:Introduction}
     Imagine that a delivery company has a series of orders that it needs to fulfill. It has a truck that can stop at each address and make the delivery. The company naturally wants to save on time and fuel costs, so it tries to find the shortest path from its warehouse to cover all of the stops. This is the basic premise of the Traveling Salesman problem. Our team chose to solve it for our final project in COE 322: Scientific Computation at the University of Texas at Austin for the fall of 2022.
     
-    In Section \ref{section:Methodology} we discuss the algorithm that we used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations. However, we will first further define the problem for our purposes and apply some limitations and assumptions in the following subsections.
+    In Section \ref{section:Methodology} we discuss the algorithm that we used to solve the simple Traveling Salesman Problem, and expansions upon it to construct our final program. In Section \ref{section:Results}, we display the outcomes of several test scenarios and discuss the results. Finally, in Section \ref{section:Conclusion}, we offer our final thoughts and reflect on ethical considerations. However, we will first further define the problem for our purposes and apply some limitations and assumptions.
 
     \subsection{Limiting Assumptions}
     \label{subsection:Limiting_Assumptions}
@@ -49,7 +49,7 @@
 
     \subsection{Extensions to the Problem}
     There are also a few ways in which we expand upon the problem. After the simple case, we expand to optimizing stops split between two and then multiple trucks. Then, in our simulations, we implement a maximum permissible route distance. This means that not every stop can be reached in a single day. Because of this, stops are given an ideal due date which sets their priority for removal. In these simulations we expand to dynamically adding more orders across multiple days.
-    
+
     \section{Methodology}
     \label{section:Methodology}
     % Notes: Talk about how we're solving the problem (C++, TACC super computer, icpc compiler) and how the program works (e.g. reads in text file, spits out text file). Then go into the development process/timeline (we started simple with address/list classes, tested functionality, and then expand it a bit)
