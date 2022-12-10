@@ -2,6 +2,7 @@
  * 
  * Function testing File for Traveling Salesman Project
 */
+// Ashton C, Hannah B, Kelechi E
 
 #include "traveling_salesman.h" // imports TSP header file
 #include <iostream>             // imports standard library thingies
